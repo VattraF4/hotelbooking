@@ -4,7 +4,7 @@ $Domain = $_SERVER['HTTP_HOST'];
 if (strpos($Domain, "localhost") !== false) {
     define("APP_URL", "/hotelbooking/"); //localhost/hotelbooking
 } else {
-    define("APP_URL", "https://$Domain/"); //www.example.com
+    define("APP_URL", "https://$Domain/hotelbooking/"); //www.example.com
 }
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
