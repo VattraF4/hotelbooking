@@ -13,6 +13,6 @@ jobs:
       with:
         # server: ${{ secrets.FTP_SERVER }}
         # username: ${{ secrets.FTP_USERNAME }}
-        server: e4g7wad.com
+        server: ftp.e4g7wad.com
         username: hotelbooking@ranavattra.com
         password: ${{ secrets.FTP_PASSWORD }}
