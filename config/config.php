@@ -14,9 +14,9 @@ try {
         //database name
         define("DB_NAME", "e4g7wad_hotel-booking");
         //database user
-        define("DB_USER", "root");
+        define("DB_USER", "e4g7wad_root");
         //database password
-        define("DB_PASS", "");
+        define("DB_PASS", "3C]apZ6Fip;x");
     }
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
