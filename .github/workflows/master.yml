@@ -1,17 +1,23 @@
-on: push
-name: 🚀 Deploy website on push
+name: Publish Website to CPanel
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    
-    - name: 📂 Sync files
-      uses: Penguibird/FTP-Deploy-Action@4.2.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        # server-dir: /public_html
+      - name: Checkout repository
+        uses: actions/checkout@v2.1.0
+        with:
+          fetch-depth: 2
+
+      - name: Deploy to FTP Server
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # server-dir: /public_html
