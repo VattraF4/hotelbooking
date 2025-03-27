@@ -7,12 +7,12 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2
-    
+
     - name: 📂 Sync files
       uses: Penguibird/FTP-Deploy-Action@4.2.0
       with:
-        # server: ${{ secrets.FTP_SERVER }}
-        # username: ${{ secrets.FTP_USERNAME }}
-        server: ftp.e4g7wad.com
+        server: ftp.ranavattra.com  # Updated FTP server hostname
         username: hotelbooking@ranavattra.com
         password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./   # Adjust if needed
+        # server-dir: /public_html/  # Adjust based on hosting setup
