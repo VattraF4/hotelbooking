@@ -1,7 +1,8 @@
-# DROP DATABASE IF EXISTS `hotel-booking`;
-CREATE DATABASE IF NOT EXISTS `hotel-booking`;
+DROP DATABASE IF EXISTS `e4g7wad_hotel-booking`;
+CREATE DATABASE IF NOT EXISTS `e4g7wad_hotel-booking`;
 
-USE `hotel-booking`;
+
+USE `e4g7wad_hotel-booking`;
 
 # Create user Table
 CREATE TABLE user
@@ -13,6 +14,20 @@ CREATE TABLE user
     my_password VARCHAR(200)                          NOT NULL,
     create_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
 );
+CREATE TABLE bookings
+(
+    id           INT(5) PRIMARY KEY                    NOT NULL AUTO_INCREMENT,
+    email        VARCHAR(255)                          NOT NULL,
+    phone_number VARCHAR(50)                           NOT NULL,
+    hotel_name   VARCHAR(200)                          NOT NULL,
+    room_name    VARCHAR(200)                          NOT NULL,
+    room_id      INT(5)                                NOT NULL,
+    user_id      INT(5)                                NOT NULL,
+    check_in     VARCHAR(200)                                  NOT NULL,
+    check_out    VARCHAR(200)                                NOT NULL,
+    create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
+);
+
 INSERT INTO bookings(email, phone_number, hotel_name, room_name, room_id, user_id, check_in, check_out, create_at)
 VALUES ('ravattrasmartboy@gmail.com',
         '0975361899',
@@ -80,26 +95,7 @@ CREATE TABLE utilities
     room_id     int(5)                                not null,
     create_at   timestamp default current_timestamp() not null
 );
-CREATE TABLE bookings
-(
-    id           INT(5) PRIMARY KEY                    NOT NULL AUTO_INCREMENT,
-    email        VARCHAR(255)                          NOT NULL,
-    phone_number VARCHAR(50)                           NOT NULL,
-    hotel_name   VARCHAR(200)                          NOT NULL,
-    room_name    VARCHAR(200)                          NOT NULL,
-    room_id      INT(5)                                NOT NULL,
-    user_id      INT(5)                                NOT NULL,
-    check_in     DATE                                  NOT NULL,
-    check_out    DATE                                  NOT NULL,
-    create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
-);
-ALTER TABLE bookings
-MODIFY
-    check_in VARCHAR(200) NOT NULL ;
 
-ALTER TABLE bookings
-MODIFY
-    check_out VARCHAR(200) NOT NULL ;
 
 
 ##----------INSERT DATA----------------##

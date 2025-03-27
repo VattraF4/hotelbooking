@@ -5,7 +5,7 @@ try {
     //host
     define("DB_HOST", "localhost");
     //database name
-    define("DB_NAME", "hotel-booking");
+    define("DB_NAME", "e4g7wad_hotel-booking");
     //database user
     define("DB_USER", "root");
     //database password

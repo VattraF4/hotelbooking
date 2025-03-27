@@ -1,7 +1,7 @@
 <?php
 session_start(); //start the session
 $URL = "http://localhost";
-define("APP_URL", "$URL /hotel-booking/");
+define("APP_URL", "$URL/hotel-booking/");
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 ?>
