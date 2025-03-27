@@ -14,5 +14,4 @@ jobs:
         server: ftp.ranavattra.com  # Updated FTP server hostname
         username: hotelbooking@ranavattra.com
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./   # Adjust if needed
-        server-dir: /public_html/  # Adjust based on hosting setup
+       
