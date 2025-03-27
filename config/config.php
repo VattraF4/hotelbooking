@@ -9,7 +9,7 @@ try {
         define("DB_PASS", "");
     } else {
         //host
-        // define("DB_HOST", "localhost");
+        // define("DB_HOST", "bh-34.webhostbox.net");
         define("DB_HOST", "bh-34.webhostbox.net");
         //database name
         define("DB_NAME", "e4g7wad_hotel-booking");

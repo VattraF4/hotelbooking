@@ -1,7 +1,11 @@
 <?php
 session_start(); //start the session
-$URL = "http://localhost";
-define("APP_URL", "$URL/hotel-booking/");
+$Domain = $_SERVER['HTTP_HOST'];
+if (strpos($Domain, "localhost") !== false) {
+    define("APP_URL", "/hotelbooking/"); //localhost/hotelbooking
+} else {
+    define("APP_URL", "https://$Domain/"); //www.example.com
+}
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 ?>
