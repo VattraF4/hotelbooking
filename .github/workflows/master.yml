@@ -1,24 +1,18 @@
-name: Publish Website to CPanel
-on:
-  push:
-    branches:
-      - main
-
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Ensures it's a valid Git repository
-
-      - name: Deploy to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./  
-          server-dir: /public_html/  # Adjust this path based on your CPanel setup
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+    
+    - name: 📂 Sync files
+      uses: Penguibird/FTP-Deploy-Action@4.2.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        # server: ftp.e4g7wad.com
+        # username: hotelbooking@ranavattra.com
+        password: ${{ secrets.FTP_PASSWORD }}
