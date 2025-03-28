@@ -81,6 +81,7 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
 						?>
 						<li class="nav-item"><a href="<?php echo APP_URL; ?>auth/login.php" class="nav-link">Login</a></li>
 						<li class="nav-item"><a href="<?php echo APP_URL; ?>auth/register.php" class="nav-link">Register</a>
+							
 						</li>
 						<?php
 					else:

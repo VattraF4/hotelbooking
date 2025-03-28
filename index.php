@@ -2,13 +2,12 @@
 require "include/header.php";
 require "config/config.php";
 //check username
-if(!isset($username)){
+if(empty($username)){
 	header("Location: " . APP_URL . "auth/logout.php");
 	exit();
 }
 
 ?>
-<!-- END nav -->
 
 <?php // Query to get all hotels
 $hotel = $conn->query("SELECT * FROM `hotels` WHERE  status =1"); //connect to the database and query
