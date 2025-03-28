@@ -2,10 +2,10 @@
 require "include/header.php";
 require "config/config.php";
 //check username
-// if(!isset($username)){
-// 	header("Location: " . APP_URL . "auth/logout.php");
-// 	exit();
-// }
+if(!isset($username)){
+	header("Location: " . APP_URL . "auth/logout.php");
+	exit();
+}
 
 ?>
 <!-- END nav -->
