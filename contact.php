@@ -27,6 +27,11 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
+<?php
+	if (!isset($username)) {
+		header("Location: " . APP_URL . "auth/login.php");
+		exit();
+	} ?>
 <body>
 	<div class="wrap">
 		<div class="container">

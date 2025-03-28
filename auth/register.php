@@ -1,105 +1,187 @@
-<?php require "../include/header.php"; ?>
-<?php require "../config/config.php"; ?>
+<?php 
+require "../include/header.php"; 
+require "../config/config.php"; 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require '../vendor/autoload.php';
 
-<?php
 if (isset($_SESSION['username'])) {
-  echo "<script>window.location.href = '" . APP_URL . "';</script>"; //redirect to the home page with javascript
-  // header("Location: " . APP_URL . ""); //redirect to the home page but error because of the header is already sent
+    echo "<script>window.location.href = '" . APP_URL . "';</script>";
 }
-if (isset($_POST['submit'])) {
-  if (empty($_POST['username']) or empty($_POST['email']) or empty($_POST['password']) or empty($_POST['phone'])or empty($_POST['confirm_password'])) {
-    echo "<script>alert('One or more input are emty')</script>";
-  } else {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password $_POST['password'];
-    if ($_POST['password'] !== $_POST['confirm_password']) {
-      echo "<script>alert('Password does not match')</script>";
-    } else {
-      $phone = $_POST['phone'];
-    }
-    // insert username and password to database (Encrypted)
-    $insert = $conn->prepare("INSERT INTO user (username, email,phone, my_password) VALUES (:username, :email,:phone, :mypassword)");
-    //prepare() is used to prepare a statement for execution and returns a statement object.
 
-    //Excecute sql
-    $insert->execute([
-      ':username' => $username,
-      ':email' => $email,
-      ':phone' => $phone,
-      ':mypassword' => $password,
-    ]);
-    header("location: login.php");
-  }
+// Handle OTP verification
+if (isset($_POST['verify_otp'])) {
+    session_start();
+    if ($_POST['otp'] == $_SESSION['otp']) {
+        // OTP verified, proceed with registration
+        $username = $_SESSION['reg_data']['username'];
+        $email = $_SESSION['reg_data']['email'];
+        $password = $_SESSION['reg_data']['password'];
+        $phone = $_SESSION['reg_data']['phone'];
+        
+        $insert = $conn->prepare("INSERT INTO user (username, email, phone, my_password) VALUES (:username, :email, :phone, :mypassword)");
+        $insert->execute([
+            ':username' => $username,
+            ':email' => $email,
+            ':phone' => $phone,
+            ':mypassword' => $password,
+        ]);
+        
+        // Clear session data
+        unset($_SESSION['otp']);
+        unset($_SESSION['reg_data']);
+        
+        header("location: login.php");
+        exit;
+    } else {
+        echo "<script>alert('Invalid OTP. Please try again.');</script>";
+    }
+}
+
+// Handle initial registration form submission (send OTP)
+if (isset($_POST['submit'])) {
+    if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['phone']) || empty($_POST['confirm_password'])) {
+        echo "<script>alert('One or more inputs are empty')</script>";
+    } else {
+        if ($_POST['password'] !== $_POST['confirm_password']) {
+            echo "<script>alert('Password does not match')</script>";
+        } else {
+            $username = $_POST['username'];
+            $email = $_POST['email'];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $phone = $_POST['phone'];
+            
+            // Check if email already exists
+            $check = $conn->prepare("SELECT * FROM user WHERE email = :email");
+            $check->execute([':email' => $email]);
+            if ($check->rowCount() > 0) {
+                echo "<script>alert('Email already exists. Please use a different email.')</script>";
+            } else {
+                // Generate OTP
+                $otp = mt_rand(100000, 999999);
+                
+                // Store OTP and registration data in session
+                // session_start();
+                $_SESSION['otp'] = $otp;
+                $_SESSION['reg_data'] = [
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $password,
+                    'phone' => $phone
+                ];
+                
+                // Send OTP via email
+                $mail = new PHPMailer(true);
+                try {
+                    // SMTP settings
+                    $mail->isSMTP();
+                    $mail->Host = 'mail.ranavattra.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'ra.vattra.official@ranavattra.com';
+                    $mail->Password = 'v$Is$0f7s4aC';
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    // Recipients
+                    $mail->setFrom('ra.vattra.official@ranavattra.com', 'Ra Vattra Official');
+                    $mail->addAddress($email);
+
+                    // Content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Your OTP for Registration';
+                    $mail->Body = 'Your OTP for registration is: <b>' . $otp . '</b> Do not share this code with anyone'.'<br><b>Thanks!</b><br><b>Team Ra Vattra</b>';
+
+                    $mail->send();
+                    $otp_sent = true;
+                } catch (Exception $e) {
+                    echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
+                }
+            }
+        }
+    }
 }
 ?>
 
-<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
-  data-stellar-background-ratio="0.5">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
-      data-scrollax-parent="true">
-      <div class="col-md-7 ftco-animate">
-        <!-- <h2 class="subheading">Welcome to Vacation Rental</h2>
-            <h1 class="mb-4">Rent an appartment for your vacation</h1>
-            <p><a href="#" class="btn btn-primary">Learn more</a> <a href="#" class="btn btn-white">Contact us</a></p> -->
-      </div>
+<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-md-7 ftco-animate"></div>
+        </div>
     </div>
-  </div>
 </div>
 
 <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
-  <div class="container">
-    <div class="row justify-content-middle" style="margin-left: 397px;">
-      <div class="col-md-6 mt-5">
-        <!-- Register form  -->
-        <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
-          <h3 class="mb-3">Register</h3>
-          <!-- Username Row -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Username">
-              </div>
+    <div class="container">
+        <div class="row justify-content-middle" style="margin-left: 397px;">
+            <div class="col-md-6 mt-5">
+                <?php if (isset($otp_sent) && $otp_sent): ?>
+                    <!-- OTP Verification Form -->
+                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
+                        <h3 class="mb-3">Verify OTP</h3>
+                        <p>We've sent a 6-digit OTP to your email <?php echo htmlspecialchars($_POST['email']); ?>. Please check your inbox.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php else: ?>
+                    <!-- Registration Form -->
+                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
+                        <h3 class="mb-3">Register</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php endif; ?>
             </div>
-            <!-- Email Row -->
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Email">
-              </div>
-            </div>
-            <!-- Phone Row -->
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="phone" name="phone" class="form-control" placeholder="Phone Number">
-              </div>
-            </div>
-            <!-- Password Row -->
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password">
-              </div>
-            </div>
-            <!-- Confirm Password Row -->
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
-              </div>
-            </div>
-
-
-            <div class="col-md-12">
-              <div class="form-group">
-                <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
-              </div>
-            </div>
-
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <?php require "../include/footer.php"; ?>

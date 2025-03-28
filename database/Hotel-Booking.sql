@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS `e4g7wad_hotel-booking`;
 
 USE `e4g7wad_hotel-booking`;
 
-# Create user Table
+# 1 Create user Table
 CREATE TABLE user
 (
     id          INT(10) AUTO_INCREMENT PRIMARY KEY,
@@ -14,6 +14,7 @@ CREATE TABLE user
     my_password VARCHAR(200)                          NOT NULL,
     create_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
 );
+#2 Create table bookings
 CREATE TABLE bookings
 (
     id           INT(5) PRIMARY KEY                    NOT NULL AUTO_INCREMENT,
@@ -23,28 +24,19 @@ CREATE TABLE bookings
     room_name    VARCHAR(200)                          NOT NULL,
     room_id      INT(5)                                NOT NULL,
     user_id      INT(5)                                NOT NULL,
-    check_in     VARCHAR(200)                                  NOT NULL,
-    check_out    VARCHAR(200)                                NOT NULL,
+    check_in     VARCHAR(200)                          NOT NULL,
+    check_out    VARCHAR(200)                          NOT NULL,
     create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
 );
 
-INSERT INTO bookings(email, phone_number, hotel_name, room_name, room_id, user_id, check_in, check_out, create_at)
-VALUES ('ravattrasmartboy@gmail.com',
-        '0975361899',
-        'The Plaza Hotel',
-        'Suite Room',
-        1,
-        1,
-        '2023-01-01',
-        '2023-01-02',
-        CURRENT_TIMESTAMP);
+
 #If  phone is not null we use update and set can't not insert
 # UPDATE user
 # SET phone = '0975361899'
 # WHERE email = 'ravattrasmartboy@gmail.com';
 
 
-#Create `hotels` table
+#3 Create `hotels` table
 CREATE TABLE hotels
 (
     id          INT(10) auto_increment NOT NULL PRIMARY KEY,
@@ -55,17 +47,8 @@ CREATE TABLE hotels
     status      INT(5)                 NOT NULL DEFAULT 1,
     create_at   TIMESTAMP                       DEFAULT CURRENT_TIMESTAMP() NOT NULL ON UPDATE CURRENT_TIMESTAMP()
 );
-INSERT INTO hotels (name, image, description, location, status)
-VALUES ('Sheraton', 'services-1.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
-							unorthographic.', 'Cairo', 1),
-       ('The Plaza Hotel', 'image_4.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
-							unorthographic.', 'New York', 1),
-       ('The Ritz', 'image_4.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
-							unorthographic.', 'Paris', 1);
-#Insert a column name status in to hotels table with default value 1
-# ALTER TABLE hotels
-#     ADD COLUMN status INT(5) NOT NULL DEFAULT 1;#Create `rooms` table
 
+#4 Create rooms
 create table rooms
 (
     id         int(15) primary key                   not null auto_increment,
@@ -80,12 +63,16 @@ create table rooms
     status     int(1)    default 1                   not null,
     create_at  timestamp default current_timestamp() not null
 );
-INSERT INTO rooms (name, images, num_person, size, view, num_bed, hotel_id, hotel_name, status)
-VALUES ('Suite Room', 'room-1.jpg', 3, 45, 'Sea View', 1, 1, 'Sheraton', 1),
-       ('Standard Room', 'room-2.jpg', 3, 60, 'Sea View', 2, 2, 'The Plaza Hotel', 1),
-       ('Family Room', 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 'The Ritz', 1),
-       ('Deluxe Room', 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 'Sheraton', 1);
+#Alter Table in this statement use to add new column
+ALTER TABLE rooms
+    ADD Column price decimal(10, 2) after images;
 
+
+
+# ALTER TABLE hotels
+#     ADD COLUMN status INT(5) NOT NULL DEFAULT 1;#Create `rooms` table
+
+#5 Create utilities
 CREATE TABLE utilities
 (
     id          int(5) auto_increment primary key,
@@ -99,8 +86,39 @@ CREATE TABLE utilities
 
 
 ##----------INSERT DATA----------------##
+#1 Insert User
+
+#2 Insert Booking
+INSERT INTO bookings(email, phone_number, hotel_name, room_name, room_id, user_id, check_in, check_out, create_at)
+VALUES ('ravattrasmartboy@gmail.com',
+        '0975361899',
+        'The Plaza Hotel',
+        'Suite Room',
+        1,
+        1,
+        '2023-01-01',
+        '2023-01-02',
+        CURRENT_TIMESTAMP);
+
+#3 Insert Hotel
+INSERT INTO hotels (name, image, description, location, status)
+VALUES ('Sheraton', 'services-1.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
+							unorthographic.', 'Cairo', 1),
+       ('The Plaza Hotel', 'image_4.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
+							unorthographic.', 'New York', 1),
+       ('The Ritz', 'image_4.jpg', 'Even the all-powerful Pointing has no control about the blind texts it is an almost
+							unorthographic.', 'Paris', 1);
+#Insert a column name status in to hotels table with default value 1
+
+# 4 Insert Into Room
+INSERT INTO rooms (name, images, price, num_person, size, view, num_bed, hotel_id, hotel_name, status)
+VALUES ('Suite Room', 200, 'room-1.jpg', 3, 45, 'Sea View', 1, 1, 'Sheraton', 1),
+       ('Standard Room', 100, 'room-2.jpg', 3, 60, 'Sea View', 2, 2, 'The Plaza Hotel', 1),
+       ('Family Room', 89, 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 'The Ritz', 1),
+       ('Deluxe Room', 95, 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 'Sheraton', 1);
 
 
+#5 Insert Utilities
 INSERT INTO utilities (name, icon, description, room_id)
 VALUES ('Tea Coffee', 'flaticon-diet',
         'A small river named Tole Sap River flows by their place and supplies it with the necessary', 1),

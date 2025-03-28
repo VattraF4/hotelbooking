@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 	$singleRoom = $room->fetch(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
 	//grapping utilities
-	$utilities = $conn->query("SELECT * FROM utilities WHERE status =1 "); //connect to the database and query
+	$utilities = $conn->query("SELECT * FROM utilities WHERE room_id = '$id' "); //connect to the database and query
 	$utilities->execute(); //execute the query
 	$allUtilities = $utilities->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
@@ -31,6 +31,9 @@ if (isset($_GET['id'])) {
 			$hotel_name = $singleRoom->hotel_name;
 			$user_id = $_SESSION['id'];
 
+			//grapping price through session
+			$price = $_SESSION['price'];
+
 			if (date("Y-m-d") > $check_in or date("Y-m-d") > $check_out) {
 				echo "<script>alert('Please select a valid date start from tomorrow')</script>";
 			} else {
@@ -41,7 +44,7 @@ if (isset($_GET['id'])) {
 					room_name, room_id, user_id, check_in, check_out, create_at) 
 					VALUES(:email,:phone_number, :hotel_name, :room_name, :room_id, :user_id, :check_in, :check_out,:create_at)");
 
-					$booking ->execute([
+					$booking->execute([
 						':email' => $email,
 						':phone_number' => $phone_number,
 						':hotel_name' => $hotel_name,

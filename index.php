@@ -1,5 +1,13 @@
-<?php require "include/header.php"; ?>
-<?php require "config/config.php"; ?>
+<?php
+require "include/header.php";
+require "config/config.php";
+//check username
+// if(!isset($username)){
+// 	header("Location: " . APP_URL . "auth/logout.php");
+// 	exit();
+// }
+
+?>
 <!-- END nav -->
 
 <?php // Query to get all hotels
@@ -13,7 +21,6 @@ $room->execute(); //execute the query
 $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
 ?>
-
 <div class="hero-wrap js-fullheight" style="background-image: url('images/image_2.jpg');"
 	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
@@ -75,13 +82,15 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 								<!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
 								<h3 class="mb-3"><a
 										href="<?php echo APP_URL; ?>rooms/single-room.php?id=<?php echo $room->id; ?>"></a>
-										<?php echo $room->name; ?></a>
+									<?php echo $room->name; ?></a>
 								</h3>
 								<ul class="list-accomodation">
 									<li><span>Max:</span> <?php echo $room->num_person; ?> Persons</li>
-									<li><span>Size:</span> <?php echo $room->size; ?> m2</li>
+									<li><span>Size:</span> <?php echo $room->size; ?> m&sup2</li>
 									<li><span>View:</span> <?php echo $room->view; ?></li>
 									<li><span>Bed:</span> <?php echo $room->num_bed; ?></li>
+									<li><span>Price per night:</span> <?php echo "$";
+									echo $room->price; ?></li>
 								</ul>
 								<p class="pt-1"><a
 										href="<?php echo APP_URL; ?>rooms/room-single.php?id=<?php echo $room->id; ?>"

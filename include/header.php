@@ -1,11 +1,6 @@
 <?php
 session_start(); //start the session
-$Domain = $_SERVER['HTTP_HOST'];
-if (strpos($Domain, "localhost") !== false) {
-    define("APP_URL", "/hotelbooking/"); //localhost/hotelbooking
-} else {
-    define("APP_URL", "https://$Domain/hotelbooking/"); //www.example.com
-}
+require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 ?>
@@ -44,8 +39,9 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col d-flex align-items-center">
-					<p class="mb-0 phone"><span class="mailus">Phone no:</span> <a href="tel://+855 969 666 961">+855 969 666 961</a> or <span
-							class="mailus">email us:</span> <a href="mailto:ravattrasmartboy@gmail">ravattrasmartboy@gmail.com</a></p>
+					<p class="mb-0 phone"><span class="mailus">Phone no:</span> <a href="tel://+855 969 666 961">+855
+							969 666 961</a> or <span class="mailus">email us:</span> <a
+							href="mailto:ravattrasmartboy@gmail">ravattrasmartboy@gmail.com</a></p>
 				</div>
 				<div class="col d-flex justify-content-end">
 					<div class="social-media">
@@ -73,19 +69,20 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
 			</button>
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="<?php echo APP_URL; ?>index.php" class="nav-link">Home</a></li>
+					<li class="nav-item active"><a href="<?php echo APP_URL; ?>" class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="<?php echo APP_URL; ?>about.php" class="nav-link">About</a></li>
-					<li class="nav-item"><a href="<?php echo APP_URL; ?>services.html" class="nav-link">Services</a>
+					<li class="nav-item"><a href="<?php echo APP_URL; ?>services.php" class="nav-link">Services</a>
 					</li>
-					<li class="nav-item"><a href="<?php echo APP_URL; ?>rooms.html" class="nav-link">Apartment Room</a>
+					<li class="nav-item"><a href="<?php echo APP_URL; ?>rooms.php" class="nav-link">Apartment Room</a>
 					</li>
 					<li class="nav-item"><a href="<?php echo APP_URL; ?>contact.php" class="nav-link">Contact</a></li>
 					<?php
 					if (!isset($_SESSION['username'])):
 						?>
 						<li class="nav-item"><a href="<?php echo APP_URL; ?>auth/login.php" class="nav-link">Login</a></li>
-						<li class="nav-item"><a href="<?php echo APP_URL; ?>auth/register.php" class="nav-link">Register</a></li>
-					<?php
+						<li class="nav-item"><a href="<?php echo APP_URL; ?>auth/register.php" class="nav-link">Register</a>
+						</li>
+						<?php
 					else:
 						?>
 						<li class="nav-item dropdown">
@@ -98,11 +95,12 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/logout.php">Logout</a></li>
-								<li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/changepassword.php"><i class="fa fa-cog"></i> Change Password</a></li>
+								<li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/changepassword.php"><i
+											class="fa fa-cog"></i> Change Password</a></li>
 							</ul>
 						</li>
 
-					<?php
+						<?php
 					endif;
 					?>
 				</ul>

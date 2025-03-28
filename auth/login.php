@@ -3,11 +3,12 @@
 
 
 <?php
+//declare error
+$error='';
 if (isset($_SESSION['username'])) {
   echo "<script>window.location.href = '" . APP_URL . "';</script>"; //redirect to the home page with javascript
   // header("Location: " . APP_URL . ""); //redirect to the home page but error because of the header is already sent
 }
-
 if (isset($_POST['submit'])) { // check if the form has been submitted
   if (empty($_POST['email']) or empty($_POST['password'])) { // check if the email and password fields are empty when the form is submitted
     echo "<script>alert('Please fill all fields')</script>";
@@ -39,11 +40,13 @@ if (isset($_POST['submit'])) { // check if the form has been submitted
         header("Location: " . APP_URL . "");
 
       } else {
+       $error = 'Your password is wrong';
       }
     } else {
-      echo "<script>alert('Can't find email')</script>";
+      $error = 'Can\'t find this address';
     }
   }
+
 }
 ?>
 
@@ -88,10 +91,16 @@ if (isset($_POST['submit'])) { // check if the form has been submitted
                 <input type="submit" name="submit" value="Login" class="btn btn-primary py-3 px-4">
               </div>
             </div>
+            <label style=" color: red; text-align: center; margin-left:100px ;"><?php echo $error; ?></label>
           </div>
-        </form>
+          <div class="dropdown-divider"></div>
+          <a>New around here?<a href="register.php"> Sign up</></a><br>
+          <!-- <a class="dropdown-item" href="#">Forgot password?</a> -->
+          <a  href="forgotpassword.php">Forgot password?</a>
       </div>
+      </form>
     </div>
   </div>
+  </div>
 </section>
-<?php require "../include/footer.php"; ?> 
+<?php require "../include/footer.php"; ?>
