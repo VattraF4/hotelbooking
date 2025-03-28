@@ -3,7 +3,7 @@ require 'include/header.php';
 
 if (empty($username)) {
 	header("Location: " . APP_URL . "auth/login.php");
-	exit();
+	// exit();
 } ?>
 
 <section class="hero-wrap hero-wrap-2" style="background-image: url('images/image_2.jpg');"
