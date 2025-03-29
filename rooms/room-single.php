@@ -60,6 +60,10 @@ if (isset($_GET['id'])) {
 						':check_out' => $check_out,
 						':create_at' => date("Y-m-d H:i:s")
 					]);
+
+					if ($booking) {
+						echo "<script>window.location.href='" . APP_URL . "rooms/thankful.php?id=$id';</script>";
+					}
 				}
 			}
 		}
