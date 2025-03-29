@@ -2,6 +2,9 @@
 <?php require "../config/config.php"; ?>
 
 <?php
+if(!isset($_SESSION['username'])) {
+	header("Location: " . APP_URL . "auth/login.php");
+}
 if (isset($_GET['id'])) {
 	$id = $_GET['id'];
 
@@ -29,10 +32,11 @@ if (isset($_GET['id'])) {
 			$user_id = $_SESSION['id'];
 			$room_name = $singleRoom->name;
 			$hotel_name = $singleRoom->hotel_name;
-			$user_id = $_SESSION['id'];
+			
 
 			//grapping price through session
-			$price = $_SESSION['price'];
+			// $price = $_SESSION['price'];
+			$price = $singleRoom->price;
 
 			if (date("Y-m-d") > $check_in or date("Y-m-d") > $check_out) {
 				echo "<script>alert('Please select a valid date start from tomorrow')</script>";
@@ -58,9 +62,7 @@ if (isset($_GET['id'])) {
 				}
 			}
 		}
-	} else {
-		echo "<script>alert('submit condition not worked')</script>";
-	}
+	} 
 }
 ?>
 

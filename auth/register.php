@@ -100,8 +100,8 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-?>
 
+?>
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
                     <!-- OTP Verification Form -->
                     <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
                         <h3 class="mb-3">Verify OTP</h3>
-                        <p>We've sent a 6-digit OTP to your email <?php echo htmlspecialchars($_POST['email']); ?>. Please check your inbox.</p>
+                        <p>We've sent a 6-digit OTP to your email <b><?php echo htmlspecialchars($_POST['email']); ?></b>. Please check your inbox.</p>
                         
                         <div class="row">
                             <div class="col-md-12">
@@ -133,11 +133,12 @@ if (isset($_POST['submit'])) {
                                     <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
                                 </div>
                             </div>
+                         
                         </div>
                     </form>
                 <?php else: ?>
                     <!-- Registration Form -->
-                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
+                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -600px;">
                         <h3 class="mb-3">Register</h3>
                         
                         <div class="row">

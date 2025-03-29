@@ -1,11 +1,6 @@
 <?php
 require "include/header.php";
 require "config/config.php";
-//check username
-if(empty($username)){
-	header("Location: " . APP_URL . "auth/logout.php");
-	exit();
-}
 
 ?>
 
