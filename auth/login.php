@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) { // check if the form has been submitted
             <!-- Email Row -->
             <div class="col-md-12">
               <div class="form-group">
-                <input type="email" name="email" value='ravattrasmartboy@gmail.com' class="form-control"
+                <input type="email" name="email" placeholder='ravattrasmartboy@gmail.com' class="form-control"
                   placeholder="Email">
               </div>
             </div>

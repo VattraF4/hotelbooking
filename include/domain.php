@@ -8,5 +8,5 @@ if (strpos($Domain, "localhost") !== false) { //stringPos is a function that ret
 else {
     define("APP_URL", "https://$Domain/hotelbooking/"); //www.example.com
 }
-echo APP_URL;
+echo '<script>console.log("' . APP_URL . '")</script>';
 ?>
