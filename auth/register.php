@@ -1,6 +1,6 @@
-<?php 
-require "../include/header.php"; 
-require "../config/config.php"; 
+<?php
+require "../include/header.php";
+require "../config/config.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
@@ -18,7 +18,7 @@ if (isset($_POST['verify_otp'])) {
         $email = $_SESSION['reg_data']['email'];
         $password = $_SESSION['reg_data']['password'];
         $phone = $_SESSION['reg_data']['phone'];
-        
+
         $insert = $conn->prepare("INSERT INTO user (username, email, phone, my_password) VALUES (:username, :email, :phone, :mypassword)");
         $insert->execute([
             ':username' => $username,
@@ -26,13 +26,13 @@ if (isset($_POST['verify_otp'])) {
             ':phone' => $phone,
             ':mypassword' => $password,
         ]);
-        
+
         // Clear session data
         unset($_SESSION['otp']);
         unset($_SESSION['reg_data']);
-        
+
         // Redirect to login page
-        echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+        echo "<script>window.location.href = '" . APP_URL . "auth/login.php';</script>";
         exit;
     } else {
         echo "<script>alert('Invalid OTP. Please try again.');</script>";
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
             $email = $_POST['email'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $phone = $_POST['phone'];
-            
+
             // Check if email already exists
             $check = $conn->prepare("SELECT * FROM user WHERE email = :email");
             $check->execute([':email' => $email]);
@@ -62,9 +62,8 @@ if (isset($_POST['submit'])) {
             } else {
                 // Generate OTP
                 $otp = mt_rand(100000, 999999);
-                
+
                 // Store OTP and registration data in session
-                // session_start();
                 $_SESSION['otp'] = $otp;
                 $_SESSION['reg_data'] = [
                     'username' => $username,
@@ -72,7 +71,7 @@ if (isset($_POST['submit'])) {
                     'password' => $password,
                     'phone' => $phone
                 ];
-                
+
                 // Send OTP via email
                 $mail = new PHPMailer(true);
                 try {
@@ -92,7 +91,7 @@ if (isset($_POST['submit'])) {
                     // Content
                     $mail->isHTML(true);
                     $mail->Subject = 'Your OTP for Registration';
-                    $mail->Body = 'Your OTP for registration is: <b>' . $otp . '</b> Do not share this code with anyone'.'<br><b>Thanks!</b><br><b>Team Ra Vattra</b>';
+                    $mail->Body = 'Your OTP for registration is: <b>' . $otp . '</b> Do not share this code with anyone' . '<br><b>Thanks!</b><br><b>Team Ra Vattra</b>';
 
                     $mail->send();
                     $otp_sent = true;
@@ -103,8 +102,8 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
 ?>
+
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -116,71 +115,49 @@ if (isset($_POST['submit'])) {
 
 <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
     <div class="container">
-        <div class="row justify-content-middle" style="margin-left: 397px;">
-            <div class="col-md-6 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
                 <?php if (isset($otp_sent) && $otp_sent): ?>
                     <!-- OTP Verification Form -->
-                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -568px;">
+                    <form action="register.php" method="post" class="appointment-form">
                         <h3 class="mb-3">Verify OTP</h3>
                         <p>We've sent a 6-digit OTP to your email <b><?php echo htmlspecialchars($_POST['email']); ?></b>. Please check your inbox.</p>
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
-                                </div>
-                            </div>
-                         
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
                         </div>
                     </form>
                 <?php else: ?>
                     <!-- Registration Form -->
-            
-                    <form action="register.php" method="post" class="appointment-form" >
+                    <form action="register.php" method="post" class="appointment-form">
                         <h3 class="mb-3">Register</h3>
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="username" placeholder="Username" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
-                                </div>
-                            </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
                         </div>
                     </form>
                 <?php endif; ?>
@@ -190,3 +167,22 @@ if (isset($_POST['submit'])) {
 </section>
 
 <?php require "../include/footer.php"; ?>
+
+<!-- Additional CSS for better responsiveness -->
+<style>
+    @media (max-width: 768px) {
+        .hero-wrap {
+            background-position: center center;
+            background-size: cover;
+        }
+        .row.justify-content-center {
+            margin-left: 0;
+        }
+        .appointment-form {
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background: white;
+        }
+    }
+</style>
