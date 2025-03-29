@@ -1,7 +1,6 @@
 <?php
 require "include/header.php";
 require "config/config.php";
-
 ?>
 
 <?php // Query to get all hotels
