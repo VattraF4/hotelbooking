@@ -31,10 +31,13 @@ if (isset($_POST['verify_otp'])) {
         unset($_SESSION['otp']);
         unset($_SESSION['reg_data']);
         
-        header("location: login.php");
+        // Redirect to login page
+        echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
         exit;
     } else {
         echo "<script>alert('Invalid OTP. Please try again.');</script>";
+        echo "<script>window.location.href = '" . APP_URL . "auth/register.php';</script>";
+        exit;
     }
 }
 
@@ -138,7 +141,8 @@ if (isset($_POST['submit'])) {
                     </form>
                 <?php else: ?>
                     <!-- Registration Form -->
-                    <form action="register.php" method="post" class="appointment-form" style="margin-top: -600px;">
+            
+                    <form action="register.php" method="post" class="appointment-form" >
                         <h3 class="mb-3">Register</h3>
                         
                         <div class="row">

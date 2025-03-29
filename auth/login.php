@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
                 $_SESSION['my_password'] = $fetch['my_password'];
 
                 // Redirect to the home page
-                echo "<script>window.location.href = '" . APP_URL . "';</script>";
+                echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
             } else {
                 $error = 'Your password is incorrect';
             }
