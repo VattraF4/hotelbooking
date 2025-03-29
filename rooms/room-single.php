@@ -2,8 +2,9 @@
 <?php require "../config/config.php"; ?>
 
 <?php
-if(!isset($_SESSION['username'])) {
-	header("Location: " . APP_URL . "auth/login.php");
+if (!isset($_SESSION['username'])) {
+    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+    exit;
 }
 if (isset($_GET['id'])) {
 	$id = $_GET['id'];

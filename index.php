@@ -2,6 +2,12 @@
 require "include/header.php";
 require "config/config.php";
 ?>
+<?php
+if (!isset($_SESSION['username'])) {
+    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+    exit;
+}
+?>
 
 <?php // Query to get all hotels
 $hotel = $conn->query("SELECT * FROM `hotels` WHERE  status =1"); //connect to the database and query
@@ -53,6 +59,7 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 	</div>
 </section>
 
+<!-- Rooms -->
 <section class="ftco-section bg-light">
 	<div class="container-fluid px-md-0">
 		<div class="row no-gutters justify-content-center pb-5 mb-3">

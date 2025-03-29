@@ -111,11 +111,11 @@ VALUES ('Sheraton', 'services-1.jpg', 'Even the all-powerful Pointing has no con
 #Insert a column name status in to hotels table with default value 1
 
 # 4 Insert Into Room
-INSERT INTO rooms (name, images, price, num_person, size, view, num_bed, hotel_id, hotel_name, status)
+INSERT INTO rooms (name, price, images,  num_person, size, view, num_bed, hotel_id, hotel_name, status)
 VALUES ('Suite Room', 200, 'room-1.jpg', 3, 45, 'Sea View', 1, 1, 'Sheraton', 1),
        ('Standard Room', 100, 'room-2.jpg', 3, 60, 'Sea View', 2, 2, 'The Plaza Hotel', 1),
-       ('Family Room', 89, 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 'The Ritz', 1),
-       ('Deluxe Room', 95, 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 'Sheraton', 1);
+       ('Family Room',89, 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 'The Ritz', 1),
+       ('Deluxe Room',95, 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 'Sheraton', 1);
 
 
 #5 Insert Utilities

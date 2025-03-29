@@ -1,9 +1,5 @@
 <?php require "include/header.php"; ?>
-<?php
-if (!isset($username)) {
-  header("Location: " . APP_URL . "auth/login.php");
-  exit();
-} ?>
+
 <section class="hero-wrap hero-wrap-2" style="background-image: url('images/image_2.jpg');"
   data-stellar-background-ratio="0.5">
   <div class="overlay"></div>
