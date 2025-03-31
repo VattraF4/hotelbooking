@@ -33,37 +33,48 @@ if (isset($_GET['id'])) {
 			$user_id = $_SESSION['id'];
 			$room_name = $singleRoom->name;
 			$hotel_name = $singleRoom->hotel_name;
+			$status = 'pending';
+			$payment = $singleRoom->price;
 			
-
 			//grapping price through session
-			// $price = $_SESSION['price'];
+			$_SESSION['price'] = $singleRoom->price;
+			
 			$price = $singleRoom->price;
+		
+			$dateIn = new DateTime($check_in);
+			$dateOut = new DateTime($check_out);
+			$interval = $dateIn->diff($dateOut);
+			$dayCount = $interval->format('%d');
+
+			$grandTotal = $dayCount * $payment;
+
 
 			if (date("Y-m-d") > $check_in or date("Y-m-d") > $check_out) {
 				echo "<script>alert('Please select a valid date start from tomorrow')</script>";
+			} else if ($check_in > $check_out or $check_in == date("Y-m-d")) {
+				echo "<script>alert('Please select a valid date, Wrong with check-in date')</script>";
 			} else {
-				if ($check_in > $check_out or $check_in == date("Y-m-d")) {
-					echo "<script>alert('Please select a valid date, Wrong with check-in date')</script>";
-				} else {
-					$booking = $conn->prepare("INSERT INTO bookings (email, phone_number, hotel_name, 
-					room_name, room_id, user_id, check_in, check_out, create_at) 
-					VALUES(:email,:phone_number, :hotel_name, :room_name, :room_id, :user_id, :check_in, :check_out,:create_at)");
+				$booking = $conn->prepare("INSERT INTO bookings (email, phone_number, hotel_name, 
+					room_name, status,payment,room_id, user_id, check_in, check_out, create_at) 
+					VALUES(:email,:phone_number, :hotel_name, :room_name,:status,:payment, :room_id, :user_id, :check_in, :check_out,:create_at)");
 
-					$booking->execute([
-						':email' => $email,
-						':phone_number' => $phone_number,
-						':hotel_name' => $hotel_name,
-						':room_name' => $room_name,
-						':room_id' => $id,
-						':user_id' => $user_id,
-						':check_in' => $check_in,
-						':check_out' => $check_out,
-						':create_at' => date("Y-m-d H:i:s")
-					]);
+				$booking->execute([
+					':email' => $email,
+					':phone_number' => $phone_number,
+					':hotel_name' => $hotel_name,
+					':room_name' => $room_name,
+					':status' => $status,
+					':payment' => $grandTotal,
+					':room_id' => $id,
+					':user_id' => $user_id,
+					':check_in' => $check_in,
+					':check_out' => $check_out,
+					':create_at' => date("Y-m-d H:i:s")
+				]);
+				echo "<script>window.locatioin.href='pay.php';</script>";
 
-					if ($booking) {
-						echo "<script>window.location.href='" . APP_URL . "rooms/thankful.php?id=$id';</script>";
-					}
+				if ($booking) {
+					echo "<script>window.location.href='" . APP_URL . "rooms/payment.php?id=$id';</script>";
 				}
 			}
 		}

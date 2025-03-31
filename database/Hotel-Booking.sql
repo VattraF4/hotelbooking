@@ -28,6 +28,10 @@ CREATE TABLE bookings
     check_out    VARCHAR(200)                          NOT NULL,
     create_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
 );
+ALTER TABLE bookings
+ADD COLUMN status VARCHAR(50) NOT NULL DEFAULT 'pending' AFTER room_name,
+ADD COLUMN payment DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER status;
+
 
 
 #If  phone is not null we use update and set can't not insert
