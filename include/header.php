@@ -98,6 +98,8 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
                                 <?php echo $_SESSION['username']; ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <!-- Booking with user id -->
+                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>users/booking.php?id=<?php echo $_SESSION['id'] ?>">Booking</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/logout.php">Logout</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/changepassword.php"><i class="fa fa-cog"></i> Change Password</a></li>
                             </ul>

@@ -3,17 +3,21 @@
 
 <?php
 if (!isset($_SESSION['username'])) {
-    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
-    exit;
+	echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+	exit;
 }
 if (isset($_GET['id'])) {
+	//room_id
 	$id = $_GET['id'];
 
 	$room = $conn->query("SELECT * FROM rooms WHERE status =1 and id = '$id'"); //connect to the database and query
 	$room->execute(); //execute the query
 
 	$singleRoom = $room->fetch(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
-
+	if (!$singleRoom) {
+		echo "<script>window.location.href='" . APP_URL . "error';</script>";
+		exit;
+	}
 	//grapping utilities
 	$utilities = $conn->query("SELECT * FROM utilities WHERE room_id = '$id' "); //connect to the database and query
 	$utilities->execute(); //execute the query
@@ -35,12 +39,12 @@ if (isset($_GET['id'])) {
 			$hotel_name = $singleRoom->hotel_name;
 			$status = 'pending';
 			$payment = $singleRoom->price;
-			
+
 			//grapping price through session
 			$_SESSION['price'] = $singleRoom->price;
-			
+
 			$price = $singleRoom->price;
-		
+
 			$dateIn = new DateTime($check_in);
 			$dateOut = new DateTime($check_out);
 			$interval = $dateIn->diff($dateOut);
@@ -55,8 +59,8 @@ if (isset($_GET['id'])) {
 				echo "<script>alert('Please select a valid date, Wrong with check-in date')</script>";
 			} else {
 				$booking = $conn->prepare("INSERT INTO bookings (email, phone_number, hotel_name, 
-					room_name, status,payment,room_id, user_id, check_in, check_out, create_at) 
-					VALUES(:email,:phone_number, :hotel_name, :room_name,:status,:payment, :room_id, :user_id, :check_in, :check_out,:create_at)");
+					room_name, status, payment, room_id, user_id, check_in, check_out) 
+					VALUES(:email, :phone_number, :hotel_name, :room_name, :status, :payment, :room_id, :user_id, :check_in, :check_out)");
 
 				$booking->execute([
 					':email' => $email,
@@ -68,9 +72,9 @@ if (isset($_GET['id'])) {
 					':room_id' => $id,
 					':user_id' => $user_id,
 					':check_in' => $check_in,
-					':check_out' => $check_out,
-					':create_at' => date("Y-m-d H:i:s")
+					':check_out' => $check_out
 				]);
+
 				echo "<script>window.locatioin.href='pay.php';</script>";
 
 				if ($booking) {
@@ -78,12 +82,15 @@ if (isset($_GET['id'])) {
 				}
 			}
 		}
-	} 
+	}
+} else {
+	echo "<script>window.location.href='" . APP_URL . "error';</script>";
+	exit;
 }
 ?>
 
 <div class="hero-wrap js-fullheight"
-	style="background-image: url('<?php echo APP_URL; ?>images/<?php echo $singleRoom->images; ?>');"
+	style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<?php echo APP_URL; ?>images/<?php echo $singleRoom->images; ?>');"
 	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
@@ -134,8 +141,9 @@ if (isset($_GET['id'])) {
 							<div class="form-group">
 								<div class="input-wrap">
 									<div class="icon"><span class="ion-md-calendar"></span></div>
-									<input type="text" name="check_in" class="form-control appointment_date-check-in"
-										placeholder="Check-In">
+									<input type="text" id="check_in" name="check_in"
+										class="form-control appointment_date-check-in" placeholder="Check-In"
+										onblur="formatDate(this)">
 								</div>
 							</div>
 						</div>

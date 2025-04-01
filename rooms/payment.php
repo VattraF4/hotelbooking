@@ -8,17 +8,21 @@ if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
+// Step 1: Delete pending payments older than 48 hours
+$deletePendingPayments = $conn->prepare("DELETE FROM bookings WHERE status = 'pending' AND create_at <= NOW() - INTERVAL 48 HOUR AND user_id  IN (SELECT  id FROM user WHERE username = '" . $_SESSION['username'] . "')");
+$deletePendingPayments->execute();
 
+// Step 2: Get the latest pending payment
 $idRoom = $_GET['id'];
 $booking = $conn->prepare("SELECT * FROM bookings WHERE room_id = '$idRoom' AND id=(SELECT MAX(id) FROM bookings WHERE room_id = '$idRoom')");
-$booking->execute();   
+$booking->execute();
 
 
 $Book = $booking->fetch(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
-echo "<pre>";
-print_r($Book);
-echo "</pre>";
+// echo "<pre>";
+// print_r($Book);
+// echo "</pre>";
 
 ?>
 
@@ -39,20 +43,28 @@ echo "</pre>";
                 <div class="col-md-6 mt-5">
                     <div class="welcome-container">
                         <h1>Thanks, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-                        <p>for booking <b><?php echo $Book->room_name; ?></b> of <b><?php echo $Book->hotel_name; ?></b> hotel</p>
+                        <p>for booking <b><?php echo $Book->room_name; ?></b> of <b><?php echo $Book->hotel_name; ?></b>
+                            hotel</p>
                         <p>Check-in date: <b><?php echo $Book->check_in; ?></b></p>
                         <p>Check-out date: <b><?php echo $Book->check_out; ?></b></p>
-                        <p>Payment: <b>$<?php echo $Book->payment; ?>/day</b></p>
-                        <!-- Grapping Payment -->
-                        <?php $_SESSION['payment'] = $Book->payment; ?>
+                        <p>Booking DateTime: <b><?php echo $Book->create_at; ?></b></p>
+                        
 
                         <!-- Count Days -->
-                         <?php 
-                         $dateIn = new DateTime($Book->check_in);
-                         $dateOut = new DateTime($Book->check_out);
-                         $interval = $dateIn->diff($dateOut);
-                         $dayCount = $interval->format('%d');
-                         ?>
+                        <?php
+                        $dateIn = new DateTime($Book->check_in);
+                        $dateOut = new DateTime($Book->check_out);
+                        $interval = $dateIn->diff($dateOut);
+                        $dayCount = $interval->format('%d');
+                        ?>
+                        <p>Payment: <b>$<?php echo $Book->payment/$dayCount; ?>/day</b></p>
+                        <p>Total: <b>$<?php echo $Book->payment; ?></b></p>
+
+                        <!-- Grapping Payment  and BookingID-->
+                        <?php
+                        $_SESSION['payment'] = $Book->payment;
+                        $_SESSION['booking_id'] = $Book->id;
+                        ?>
 
                         <p>Days: <b><?php echo $dayCount; ?></b></p>
                         <!-- Button to go to home page -->
@@ -61,7 +73,7 @@ echo "</pre>";
                         </form> -->
 
                         <?php require 'pay.php' ?>
-                        
+
                     </div>
                 </div>
             </div>

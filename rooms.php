@@ -1,9 +1,17 @@
 <?php require "include/header.php";
 require "config/config.php";
+
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
+	$statment = "SELECT * FROM `rooms` WHERE hotel_id = '$id' and status =1";
+} else {
+	$statment ="SELECT * FROM `rooms` WHERE status =1";
+}
 //Query to get all rooms
-$room = $conn->query("SELECT * FROM `rooms` WHERE  status =1"); //connect to the database and query
-$room->execute(); //execute the query
-$allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
+$getRoom = $conn->query($statment); //connect to the database and query
+$getRoom->execute(); //execute the query
+$getAllRooms = $getRoom->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
+
 ?>
 <!-- Banner -->
 <section class="hero-wrap hero-wrap-2" style="background-image: url('images/image_2.jpg');"
@@ -15,7 +23,7 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 				<p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
 								class="fa fa-chevron-right"></i></a></span> <span>Rooms <i
 							class="fa fa-chevron-right"></i></span></p>
-				<h1 class="mb-0 bread">Apartment Room</h1>
+				<h1 class="mb-0 bread">Apartments</h1>
 			</div>
 		</div>
 	</div>
@@ -164,55 +172,72 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 		</div>
 	</section> -->
 
-<!-- Room -->
+
 <!-- Rooms -->
-<section class="ftco-section bg-light">
-	<div class="container-fluid px-md-0">
-		<div class="row no-gutters justify-content-center pb-5 mb-3">
-			<div class="col-md-7 heading-section text-center ftco-animate">
-				<h2>Apartment Room</h2>
+<?php if (!$getAllRooms): ?>
+	<section class="ftco-section bg-light">
+		<div class="container-fluid px-md-0">
+			<div class="row no-gutters justify-content-center pb-5 mb-3">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<?php echo "<h2>Room Not Found</h2>";
+					echo '<a href="javascript:history.back()">Go Back</a>';
+					?>
+				</div>
 			</div>
 		</div>
+	</section>
 
-		<div class="row no-gutters">
+<?php else: ?>
 
-			<?php foreach ($allRooms as $room): ?>
-				<div class="col-lg-6">
-					<div class="room-wrap d-md-flex">
-						<a href="#" class="img" style="background-image: url(images/<?php echo $room->images; ?>);"></a>
-						<div class="half left-arrow d-flex align-items-center">
-							<div class="text p-4 p-xl-5 text-center">
-								<p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-										class="fa fa-star"></span><span class="fa fa-star"></span><span
-										class="fa fa-star"></span></p>
-								<!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
-								<h3 class="mb-3"><a
-										href="<?php echo APP_URL; ?>rooms/single-room.php?id=<?php echo $room->id; ?>"></a>
-									<?php echo $room->name; ?></a>
-								</h3>
-								<ul class="list-accomodation">
-									<li><span>Max:</span> <?php echo $room->num_person; ?> Persons</li>
-									<li><span>Size:</span> <?php echo $room->size; ?> m&sup2</li>
-									<li><span>View:</span> <?php echo $room->view; ?></li>
-									<li><span>Bed:</span> <?php echo $room->num_bed; ?></li>
-									<li><span>Price per night:</span> <?php echo "$";
-									echo $room->price; ?></li>
-								</ul>
-								<p class="pt-1"><a
-										href="<?php echo APP_URL; ?>rooms/room-single.php?id=<?php echo $room->id; ?>"
-										class="btn-custom px-3 py-2">View Room Details
-										<span class="icon-long-arrow-right"></span></a>
-								</p>
+	<section class="ftco-section bg-light">
+		<div class="container-fluid px-md-0">
+			<div class="row no-gutters justify-content-center pb-5 mb-3">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h2>Rooms</h2>
+				</div>
+			</div>
+
+			<div class="row no-gutters">
+
+				<?php foreach ($getAllRooms as $room): ?>
+					<div class="col-lg-6">
+						<div class="room-wrap d-md-flex">
+
+							<a href="#" class="img" style="background-image: url(images/<?php echo $room->images; ?>);"></a>
+							<div class="half left-arrow d-flex align-items-center">
+								<div class="text p-4 p-xl-5 text-center">
+									<p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
+											class="fa fa-star"></span><span class="fa fa-star"></span><span
+											class="fa fa-star"></span></p>
+									<!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
+									<h3 class="mb-3"><a
+											href="<?php echo APP_URL; ?>rooms/single-room.php?id=<?php echo $room->id; ?>"></a>
+										<?php echo $room->name; ?></a>
+									</h3>
+									<ul class="list-accomodation">
+										<li><span>Max:</span> <?php echo $room->num_person; ?> Persons</li>
+										<li><span>Size:</span> <?php echo $room->size; ?> m&sup2</li>
+										<li><span>View:</span> <?php echo $room->view; ?></li>
+										<li><span>Bed:</span> <?php echo $room->num_bed; ?></li>
+										<li><span>Price per night:</span> <?php echo "$";
+										echo $room->price; ?></li>
+									</ul>
+									<p class="pt-1"><a
+											href="<?php echo APP_URL; ?>rooms/room-single.php?id=<?php echo $room->id; ?>"
+											class="btn-custom px-3 py-2">View Room Details
+											<span class="icon-long-arrow-right"></span></a>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
 
 
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+<?php endif; ?>
 
 <!-- Footer -->
 <footer class="footer">

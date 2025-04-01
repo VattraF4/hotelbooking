@@ -1,6 +1,13 @@
 <?php
-// require '../include/header.php'
-    ?>
+
+
+if (!isset($_SERVER['HTTP_REFERER'])) {
+    // redirect them to your desired location
+    echo "<script>window.location.href='../auth/logout.php';</script>";
+    exit;
+
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,7 +20,7 @@
 </head>
 
 <body>
-<!-- 
+    <!-- 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div class="container" style="margin-top: none">
             <a class="navbar-brand  text-white" href="#">Pay Page</a>
@@ -42,7 +49,7 @@
                         purchase_units: [{
                             amount: {
                                 // value: '300' // Can also reference a variable or function
-                                value: '<?php echo $_SESSION['payment']; ?>' 
+                                value: '<?php echo $_SESSION['payment']; ?>'
                             }
                         }]
                     });
@@ -51,7 +58,7 @@
                 onApprove: (data, actions) => {
                     return actions.order.capture().then(function (orderData) {
 
-                        window.location.href = '<?php echo APP_URL; ?>';
+                        window.location.href = '<?php echo APP_URL; ?>rooms/updatePayment.php?status=success&id=<?php echo $_SESSION['booking_id']; ?>';
                     });
                 }
             }).render('#paypal-button-container');

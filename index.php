@@ -49,7 +49,7 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 							<h3 class="heading"><?php echo $hotel->name; ?></h3>
 							<p><?php echo $hotel->description; ?></p>
 							<p>Location: <?php echo $hotel->location; ?>.</p>
-							<p><a href="rooms.php" id="<?php echo $hotel->id; ?>" class="btn btn-primary">View rooms</a></p>
+							<p><a href="rooms.php?id=<?php echo $hotel->id; ?>" class="btn btn-primary">View rooms</a></p>
 						</div>
 					</div>
 				</div>
