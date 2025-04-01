@@ -20,7 +20,7 @@ require "../config/config.php";
     .error-code {
         font-size: 120px;
         font-weight: bold;
-        color: #d9534f;
+        color: #fd7792;
         text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
         animation: float 3s ease-in-out infinite;
     }
@@ -75,7 +75,7 @@ require "../config/config.php";
         <div class="error-code">404</div>
         <p class="error-text">Oops! The page you’re looking for doesn’t exist.</p>
         <p class="lead text-gray-800 mb-4">It might have been moved, deleted, or is temporarily unavailable.</p>
-        <a href="javascript:history.back()" class="btn-home">&larr; Back to Home</a>
+        <a href="<?php echo APP_URL ?> " class="btn-home">&larr; Back to Home</a>
     </div>
 </div>
 

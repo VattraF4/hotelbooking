@@ -87,6 +87,17 @@ CREATE TABLE utilities
     create_at   timestamp default current_timestamp() not null
 );
 
+#6 Create 'Admin' Table
+DROP TABLE  IF EXISTS  admin;
+CREATE TABLE admin
+(
+    id       INT(5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    adminname VARCHAR(200)      NOT NULL,
+    email    VARCHAR(200)      NOT NULL,
+    my_password VARCHAR(200)      NOT NULL,
+    create_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
+);
+
 
 
 ##----------INSERT DATA----------------##
@@ -141,6 +152,12 @@ Even the all-powerful Pointing has no control about the blind texts it is an alm
        ('Hot Showers', 'flaticon-workout', 'A small river named Tole Sap River flows by their place and supplies it with the necessary and
 Even the all-powerful Pointing has no control about the blind texts it is an almost un-orthographic.', 4)
 ;
+
+
+#6 Insert Admin
+INSERT INTO admin(adminname, email, my_password)
+VALUE('VattraAdmin','ravattrasmartboy@gmail.com','$2y$10$dR3GEksKBOja3ojtxPlji.YcMg8uSdotRrrpyU1fDPP.a1bg3U6Oq');
+
 
 
 

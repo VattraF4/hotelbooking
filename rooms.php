@@ -2,16 +2,23 @@
 require "config/config.php";
 
 if (isset($_GET['id'])) {
+	// Hotel_ID
 	$id = $_GET['id'];
 	$statment = "SELECT * FROM `rooms` WHERE hotel_id = '$id' and status =1";
 } else {
-	$statment ="SELECT * FROM `rooms` WHERE status =1";
+	$statment = "SELECT * FROM `rooms` WHERE status =1";
 }
+
 //Query to get all rooms
 $getRoom = $conn->query($statment); //connect to the database and query
 $getRoom->execute(); //execute the query
 $getAllRooms = $getRoom->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
+if (!$getAllRooms || empty($getAllRooms)) {
+	// echo 'Work with no results';
+	echo "<script>window.location.href='" . APP_URL . "/error';</script>";
+	exit;
+}
 ?>
 <!-- Banner -->
 <section class="hero-wrap hero-wrap-2" style="background-image: url('images/image_2.jpg');"
