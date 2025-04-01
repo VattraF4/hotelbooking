@@ -105,4 +105,4 @@ This project is open-source and available under the MIT License.
 
 ## Contributors
 
-Ra Vattra - GitHub Profile
+Ra Vattra - [Visit GitHub](https://vattraf4.github.io/My-Portfolio)
