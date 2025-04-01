@@ -64,14 +64,14 @@ Alternatively, if you're using MySQL in a Linux environment, start it with:
            define("DB_PASS", "");
        } else {
            //host
-           // define("DB_HOST", "bh-34.webhostbox.net");
-           define("DB_HOST", "bh-34.webhostbox.net");
+           
+           define("DB_HOST", "xx.xxx.com"); // Replace to you Host
            //database name
-           define("DB_NAME", "e4g7wad_hotel-booking");
+           define("DB_NAME", "DB_NAME"); //Replace to your DB Name
            //database user
-           define("DB_USER", "e4g7wad_root");
+           define("DB_USER", "DB_ROOT"); // Replace to your user of your DB
            //database password
-           define("DB_PASS", "3C]apZ6Fip;x");
+           define("DB_PASS", "DB_PASSWORD"); // Replace to password for access to your DB
        }
        $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -105,4 +105,4 @@ This project is open-source and available under the MIT License.
 
 ## Contributors
 
-Ra Vattra - [Visit GitHub](https://vattraf4.github.io/My-Portfolio)
+Ra Vattra - [Visit GitHub](https://vattraf4.github.io/)
