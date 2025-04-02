@@ -14,6 +14,8 @@
     <link href="<?php echo ADMIN_URL; ?>styles/style.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -36,21 +38,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>admins/admins.php" style="margin-left: 20px;">Admins</a>
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>admins/admins.php"
+                                    style="margin-left: 20px;">Admins</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>hotels-admins/show-hotels.php"
                                     style="margin-left: 20px;">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>rooms-admins/show-rooms.php" style="margin-left: 20px;">Rooms</a>
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>rooms-admins/show-rooms.php"
+                                    style="margin-left: 20px;">Rooms</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>bookings-admins/show-bookings.php"
                                     style="margin-left: 20px;">Bookings</a>
                             </li>
-                            <?php endif; ?>
-                        </ul>
+                        <?php endif; ?>
+                    </ul>
                     <?php if (!isset($_SESSION['adminname'])): ?>
 
                         <ul class="navbar-nav ml-md-auto d-md-flex">
