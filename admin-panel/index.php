@@ -4,7 +4,8 @@
 <?php require '../config/config.php'; ?>
 <?php
 if (!isset($_SESSION['adminname'])) {
-    echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
+    header('Location: ' . ADMIN_URL . 'admins/login-admins.php');
+    // echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
     exit;
 } else {
     $adminName = $_SESSION['adminname'];
