@@ -1,13 +1,14 @@
 <?php require '../layouts/header.php'; ?>
 <?php require '../../config/config.php'; ?>
 <?php require '../../include/domain.php'; ?>
+<?php require '../layouts/adminURL.php'; ?>
 
 <?php
 // Declare error
 $error = '';
 
 if (isset($_SESSION['adminname'])) {
-  echo "<script>window.location.href = '" . APP_URL . "';</script>"; // Redirect to the home page with JavaScript
+  echo "<script>window.location.href = '" . ADMIN_URL . "';</script>"; // Redirect to the home page with JavaScript
   exit;
 }
 
