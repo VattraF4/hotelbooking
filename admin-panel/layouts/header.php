@@ -1,6 +1,7 @@
 <?php session_start(); ?>
 <?php require 'adminURL.php'; ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
     <title>Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/style.css" rel="stylesheet">
+    <link href="<?php echo ADMIN_URL; ?>styles/style.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
@@ -19,7 +20,7 @@
     <div id="wrapper">
         <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo ADMIN_URL; ?>">LOGO</a>
+                <a class="navbar-brand" href="<?php echo ADMIN_URL; ?>index.php">LOGO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,7 +31,7 @@
 
                         <?php if (isset($_SESSION['adminname'])): ?>
                             <li class="nav-item">
-                                <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>">Home
+                                <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>index.php">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>

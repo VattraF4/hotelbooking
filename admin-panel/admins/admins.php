@@ -1,5 +1,18 @@
 <?php
 require '../layouts/header.php';
+require '../../config/config.php';
+
+if (!isset($_SESSION['adminname'])) {
+  echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
+  exit;
+}else{
+  $allAdmins = $conn->prepare("SELECT * FROM admin");
+  $allAdmins->execute();
+  $admins = $allAdmins->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+
 ?>
     <div class="container-fluid">
 
@@ -9,8 +22,8 @@ require '../layouts/header.php';
             <div class="card-body">
               <h5 class="card-title mb-4 d-inline">Admins</h5>
              <a  href="create-admins.html" class="btn btn-primary mb-4 text-center float-right">Create Admins</a>
-              <table class="table">
-                <thead>
+              <table class="table table-striped ">
+                <thead class="thead-light">
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">username</th>
@@ -18,24 +31,14 @@ require '../layouts/header.php';
                   </tr>
                 </thead>
                 <tbody>
+                  <?php $i=0; foreach ($admins as $admin): $i++;?>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
+                    <th scope="row"><?php echo $i?></th>
+                    <td><?php echo $admin ->adminname?></td>
+                    <td><?php echo $admin ->email?></td>
                    
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                   
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                   
-                  </tr>
+                  <?php endforeach;?>
                 </tbody>
               </table> 
             </div>

@@ -19,6 +19,7 @@ CREATE TABLE bookings
 (
     id           INT(5) PRIMARY KEY                    NOT NULL AUTO_INCREMENT,
     email        VARCHAR(255)                          NOT NULL,
+    full_name    VARCHAR(200)                          NOT NULL,
     phone_number VARCHAR(50)                           NOT NULL,
     hotel_name   VARCHAR(200)                          NOT NULL,
     room_name    VARCHAR(200)                          NOT NULL,
@@ -106,8 +107,9 @@ CREATE TABLE admin
     VALUES ('Ra Vattra', '0975361899', 'ravattrasmartboy@gmail.com', '$2y$10$dR3GEksKBOja3ojtxPlji.YcMg8uSdotRrrpyU1fDPP.a1bg3U6Oq');
 
 #2 Insert Booking
-INSERT INTO bookings(email, phone_number, hotel_name, room_name, room_id, user_id, check_in, check_out, create_at)
+INSERT INTO bookings(email, full_name, phone_number, hotel_name, room_name, room_id, user_id, check_in, check_out, create_at)
 VALUES ('ravattrasmartboy@gmail.com',
+        'Ra Vattra',
         '0975361899',
         'The Plaza Hotel',
         'Suite Room',
