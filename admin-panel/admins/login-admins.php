@@ -10,6 +10,9 @@ $error = '';
 if (isset($_SESSION['adminname'])) {
   echo "<script>window.location.href = '" . ADMIN_URL . "';</script>"; // Redirect to the home page with JavaScript
   exit;
+}else {
+  echo "<script>window.location.href = '" . ADMIN_URL . "admins/login-admins.php';</script>";
+  exit;
 }
 
 if (isset($_POST['submit'])) { // Check if the form has been submitted
