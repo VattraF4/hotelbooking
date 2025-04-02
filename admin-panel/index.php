@@ -1,19 +1,23 @@
-<?php 
-  require 'layouts/header.php';
-?>
 <?php require '../config/config.php'; ?>
+<?php require 'layouts/adminURL.php'; ?>
 <?php
+session_start();
 if (!isset($_SESSION['adminname'])) {
-    echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
-    exit;
+  if (!isset($_SESSION['adminname'])) {
+    header("Location: " . ADMIN_URL . "admins/login-admins.php");
+    exit; // Always exit after header() to stop execution
+  }
 } else {
-    $adminName = $_SESSION['adminname'];
+  $adminName = $_SESSION['adminname'];
 }
+
+require 'layouts/header.php';
+
 $rooms = $conn->prepare("SELECT * FROM rooms");
 $rooms->execute();
 $roomsCount = $rooms->rowCount(); //count the number rows of rooms in the database
 
-$hotels = $conn->prepare("SELECT * FROM hotels"); 
+$hotels = $conn->prepare("SELECT * FROM hotels");
 $hotels->execute();
 $hotelsCount = $hotels->rowCount(); //count the number rows of hotels in the database
 
@@ -57,6 +61,6 @@ $adminsCount = $admins->rowCount(); //count the number rows of admins in the dat
     </div>
   </div>
 
-  <?php 
+  <?php
   require 'layouts/footer.php';
-?>
+  ?>

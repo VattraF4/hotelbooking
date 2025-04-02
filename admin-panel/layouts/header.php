@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+
+<?php
+//To protect multiple use
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <?php require 'adminURL.php'; ?>
 
 
@@ -15,7 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
 
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo ADMIN_URL; ?>styles/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
