@@ -6,9 +6,10 @@
 // Declare error
 $error = '';
 
-// if (isset($_SESSION['username'])) {
-//   echo "<script>window.location.href = '" . APP_URL . "';</script>"; // Redirect to the home page with JavaScript
-// }
+if (isset($_SESSION['adminname'])) {
+  echo "<script>window.location.href = '" . APP_URL . "';</script>"; // Redirect to the home page with JavaScript
+  exit;
+}
 
 if (isset($_POST['submit'])) { // Check if the form has been submitted
   if (empty($_POST['email']) || empty($_POST['password'])) { // Check if the email and password fields are empty
