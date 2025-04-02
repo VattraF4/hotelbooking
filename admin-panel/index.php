@@ -4,12 +4,12 @@ require 'layouts/header.php';
 <?php require '../config/config.php'; ?>
 
 <?php
-if (!isset($_SERVER['HTTP_REFERER'])) {
-  // redirect them to your desired location
-  echo "<script>window.location.href='../error/';</script>";
-  exit;
+// if (!isset($_SERVER['HTTP_REFERER'])) {
+//   // redirect them to your desired location
+//   echo "<script>window.location.href='../error/';</script>";
+//   exit;
 
-}
+// }
 if (!isset($_SESSION['adminname'])) {
   header('Location: ' . ADMIN_URL . 'admins/login-admins.php');
   // echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
