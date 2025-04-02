@@ -19,7 +19,7 @@ if (!isset($_SESSION['adminname'])) {
         <div class="card-body">
           <h5 class="card-title mb-4 d-inline">Admins</h5>
           <a href="create-admins.html" class="btn btn-primary mb-4 text-center float-right">Create Admins</a>
-          <div class="table-responsive-sm">
+          <div class="table-responsive">
             <table class="table table-striped">
               <thead style="background-color:#007BFF; color: white;">
                 <tr>

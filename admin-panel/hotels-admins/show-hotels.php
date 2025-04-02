@@ -21,15 +21,15 @@ if (!isset($_SESSION['adminname'])) {
           <h5 class="card-title mb-4 d-inline">Hotels</h5>
           <a href="create-hotels.html" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
           <style>
-            table td,
+            /* table td,
             table th {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-            }
+            } */
           </style>
-          <div class="table-responsive-sm">
-            <table class="table table-striped">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
               <thead style="background-color:#007BFF; color: white;">
                 <tr>
                   <th scope="col">#</th>
