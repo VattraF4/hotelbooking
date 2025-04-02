@@ -6,7 +6,7 @@ if (!isset($_SESSION['adminname'])) {
   echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
   exit;
 } else {
-  $allAdmins = $conn->prepare("SELECT * FROM admin");
+  $allAdmins = $conn->prepare("SELECT * FROM user");
   $allAdmins->execute();
   $admins = $allAdmins->fetchAll(PDO::FETCH_OBJ);
 }
@@ -18,7 +18,7 @@ if (!isset($_SESSION['adminname'])) {
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-4 d-inline">Admins</h5>
-          <a href="create-admins.html" class="btn btn-primary mb-4 text-center float-right">Create Admins</a>
+          <!-- <a href="create-user.php" class="btn btn-primary mb-4 text-center float-right">Create Admins</a> -->
           <div class="table-responsive-sm">
             <table class="table table-striped">
               <thead style="background-color:#007BFF; color: white;">
@@ -26,6 +26,7 @@ if (!isset($_SESSION['adminname'])) {
                   <th scope="col">#</th>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">Created</th>
                 </tr>
               </thead>
@@ -35,8 +36,9 @@ if (!isset($_SESSION['adminname'])) {
                   $i++; ?>
                   <tr>
                     <th scope="row"><?php echo $i ?></th>
-                    <td><?php echo $admin->adminname ?></td>
+                    <td><?php echo $admin->username ?></td>
                     <td><?php echo $admin->email ?></td>
+                    <td><?php echo $admin->phone ?></td>
                     <td><?php echo $admin->create_at ?></td>
 
                   </tr>

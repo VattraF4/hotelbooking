@@ -58,6 +58,10 @@
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>bookings-admins/show-bookings.php"
                                     style="margin-left: 20px;">Bookings</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>users-admins/user.php"
+                                    style="margin-left: 20px;">View Users</a>
+                            </li>
                         <?php endif; ?>
                     </ul>
                     <?php if (!isset($_SESSION['adminname'])): ?>
