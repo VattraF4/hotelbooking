@@ -1,13 +1,6 @@
 <?php session_start(); ?>
 <?php require 'adminURL.php'; ?>
-<?php
-// if (!isset($_SESSION['adminname'])) {
-//     echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
-//     exit;
-// } else {
-//     $adminName = $_SESSION['adminname'];
-// }
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +19,7 @@
     <div id="wrapper">
         <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">LOGO</a>
+                <a class="navbar-brand" href="<?php echo ADMIN_URL; ?>">LOGO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,38 +27,39 @@
 
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav side-nav">
+
                         <?php if (isset($_SESSION['adminname'])): ?>
                             <li class="nav-item">
-                                <a class="nav-link" style="margin-left: 20px;" href="index.php">Home
+                                <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="admins/admins.php" style="margin-left: 20px;">Admins</a>
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>admins/admins.php" style="margin-left: 20px;">Admins</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="hotels-admins/show-hotels.php"
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>hotels-admins/show-hotels.php"
                                     style="margin-left: 20px;">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="rooms-admins/show-rooms.php" style="margin-left: 20px;">Rooms</a>
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>rooms-admins/show-rooms.php" style="margin-left: 20px;">Rooms</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="bookings-admins/show-bookings.php"
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>bookings-admins/show-bookings.php"
                                     style="margin-left: 20px;">Bookings</a>
                             </li>
+                            <?php endif; ?>
                         </ul>
-
-
-                    <?php endif; ?>
                     <?php if (!isset($_SESSION['adminname'])): ?>
+
                         <ul class="navbar-nav ml-md-auto d-md-flex">
 
                             <li class="nav-item">
-                                <a class="nav-link" href="admins/login-admins.php">login
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>admins/login-admins.php">login
                                 </a>
                             </li>
                         </ul>
+
                     <?php else: ?>
                         <ul class="navbar-nav ml-md-auto d-md-flex">
                             <li class="nav-item">
@@ -80,12 +74,11 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="<?php echo ADMIN_URL; ?>admins/logout.php">Logout</a>
-
+                                </div>
                             </li>
-
-
                         </ul>
                     <?php endif; ?>
+
                 </div>
             </div>
         </nav>

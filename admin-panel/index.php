@@ -1,6 +1,14 @@
 <?php 
   require 'layouts/header.php';
 ?>
+<?php
+if (!isset($_SESSION['adminname'])) {
+    echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
+    exit;
+} else {
+    $adminName = $_SESSION['adminname'];
+}
+?>
 <div class="container-fluid">
 
   <div class="row">
