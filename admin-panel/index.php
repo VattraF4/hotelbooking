@@ -1,7 +1,7 @@
 <?php require '../config/config.php'; ?>
 <?php require 'layouts/adminURL.php'; ?>
 <?php
-session_start();
+require 'layouts/header.php';
 if (!isset($_SESSION['adminname'])) {
   if (!isset($_SESSION['adminname'])) {
     header("Location: " . ADMIN_URL . "admins/login-admins.php");
@@ -11,7 +11,6 @@ if (!isset($_SESSION['adminname'])) {
   $adminName = $_SESSION['adminname'];
 }
 
-require 'layouts/header.php';
 
 $rooms = $conn->prepare("SELECT * FROM rooms");
 $rooms->execute();
