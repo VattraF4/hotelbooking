@@ -18,6 +18,25 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
         $email = $_POST['email']; // Capture the email from the form
         $password = $_POST['password']; // Capture the password (no hashing needed for comparison)
 
+        // Validate the email with a query to admin table
+        $adminLogin = $conn->query("SELECT * FROM admin WHERE email = '$email'");  // Connect to the database and query
+        $adminLogin->execute(); // Execute the query
+        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ); // Fetch the query result as an associative array
+
+        if ($adminLogin->rowCount() > 0) {
+            if (password_verify($password, $adminFetch->my_password)) {
+                // Set session variables upon successful login
+                $_SESSION['email'] = $adminFetch->email;
+                $_SESSION['id'] = $adminFetch->id;
+                $_SESSION['adminname'] = $adminFetch->adminname;
+                $_SESSION['my_password'] = $adminFetch->my_password;
+
+                // Redirect to the home page
+                echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
+            } else {
+                $error = 'Your password is incorrect';
+            }
+        }
         // Validate the email with a query
         $login = $conn->query("SELECT * FROM user WHERE email = '$email'");  // Connect to the database and query
         $login->execute(); // Execute the query

@@ -98,6 +98,10 @@ CREATE TABLE admin
     my_password VARCHAR(200)      NOT NULL,
     create_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL
 );
+#6 Insert Admin
+INSERT INTO admin(adminname, email, my_password)
+VALUE('admin','admin@ranavattra.com','$2y$10$sS5MNye1rH4wYZIp79K01uRl1FlFKmLwtdYUO.Li9gD6.UlDbKzhW');
+
 
 
 
@@ -156,9 +160,6 @@ Even the all-powerful Pointing has no control about the blind texts it is an alm
 ;
 
 
-#6 Insert Admin
-INSERT INTO admin(adminname, email, my_password)
-VALUE('VattraAdmin','ravattrasmartboy@gmail.com','$2y$10$dR3GEksKBOja3ojtxPlji.YcMg8uSdotRrrpyU1fDPP.a1bg3U6Oq');
 
 
 

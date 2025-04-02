@@ -57,20 +57,20 @@ if (!isset($_SESSION['adminname'])) {
                   <th scope="row"><?php echo $room->name ?></th>
                   <!-- Image with Modal -->
                   <th scope="row">
-                      <a href="#" data-toggle="modal" data-target="#myModal<?php echo $i ?>">
-                        <img src="<?php echo APP_URL . "images/" . $room->images ?>" width="35" height="35">
-                      </a>
-                      
-                      <!-- The Modal -->
-                      <div class="modal fade" id="myModal<?php echo $i ?>">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-body">
-                              <img src="<?php echo APP_URL . "images/" . $room->images ?>" style="width:100%">
-                            </div>
+                    <a href="#" data-toggle="modal" data-target="#myModal<?php echo $i ?>">
+                      <img src="<?php echo APP_URL . "images/" . $room->images ?>" width="35" height="35">
+                    </a>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="myModal<?php echo $i ?>">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <img src="<?php echo APP_URL . "images/" . $room->images ?>" style="width:100%">
                           </div>
                         </div>
                       </div>
+                    </div>
                   </th>
                   <th scope="row"><?php echo $room->price ?></th>
                   <th scope="row"><?php echo $room->num_person ?></th>

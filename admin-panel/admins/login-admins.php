@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
 
             </div>
 
-            <label style="color: red; text-align: center;"><?php echo $error; ?></label>
+            <label style="color: red; text-align: center;"><?php echo $error; ?></label><br>
 
             <!-- Submit button -->
             <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center">Login</button>
