@@ -12,37 +12,37 @@ if (!isset($_SERVER['HTTP_REFERER'])) {
 if (!isset($_SESSION['adminname'])) {
   echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
   exit;
-} else {
-  if (isset($_POST['submit'])) {
-    if (empty($_POST['adminname']) || empty($_POST['email']) || empty($_POST['my_password']) || empty($_POST['confirm_password'])) {
+}
+if (isset($_POST['submit'])) {
+  if (empty($_POST['adminname']) || empty($_POST['email']) || empty($_POST['my_password']) || empty($_POST['confirm_password'])) {
 
-      $alert = 'One or more inpute are empty';
+    $alert = 'One or more inpute are empty';
+  } else {
+    if ($_POST['my_password'] !== $_POST['confirm_password']) {
+      $alert = 'Password does not match';
     } else {
-      if ($_POST['my_password'] !== $_POST['confirm_password']) {
-        $alert = 'Password does not match';
-      } else {
-        $username = $_POST['adminname'];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['my_password'], PASSWORD_DEFAULT);
+      $username = $_POST['adminname'];
+      $email = $_POST['email'];
+      $password = password_hash($_POST['my_password'], PASSWORD_DEFAULT);
 
-        // Check if email already exists
-        $check = $conn->prepare("SELECT * FROM admin WHERE email = '$email'");
-        $check->execute();
-        if ($check->rowCount() > 0) {
-          $alert = 'Email already exists. Please use a different email.';
-        } else {
-          // Insert admin into database
-          $insert = $conn->prepare("INSERT INTO admin (adminname, email, my_password) VALUES (:adminname, :email, :my_password)");
-          $insert->execute([
-            ':adminname' => $username,
-            ':email' => $email,
-            ':my_password' => $password
-          ]);
-        }
+      // Check if email already exists
+      $check = $conn->prepare("SELECT * FROM admin WHERE email = '$email'");
+      $check->execute();
+      if ($check->rowCount() > 0) {
+        $alert = 'Email already exists. Please use a different email.';
+      } else {
+        // Insert admin into database
+        $insert = $conn->prepare("INSERT INTO admin (adminname, email, my_password) VALUES (:adminname, :email, :my_password)");
+        $insert->execute([
+          ':adminname' => $username,
+          ':email' => $email,
+          ':my_password' => $password
+        ]);
       }
     }
   }
 }
+
 ?>
 <div class="container-fluid">
   <div class="row">
@@ -58,7 +58,8 @@ if (!isset($_SESSION['adminname'])) {
             </div>
 
             <div class="form-outline mb-4">
-              <input type="text" name="adminname" id="form2Example1" class="form-control" placeholder="admin username" />
+              <input type="text" name="adminname" id="form2Example1" class="form-control"
+                placeholder="admin username" />
             </div>
             <div class="form-outline mb-4">
               <input type="password" name="my_password" id="form2Example1" class="form-control"

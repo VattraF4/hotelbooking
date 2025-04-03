@@ -11,52 +11,51 @@ if (isset($_SESSION['username'])) {
     echo "<script>window.location.href = '" . APP_URL . "';</script>"; // Redirect to the home page with JavaScript
 }
 
-if (isset($_POST['submit'])) { // Check if the form has been submitted
-    if (empty($_POST['email']) || empty($_POST['password'])) { // Check if the email and password fields are empty
-        echo "<script>alert('Please fill all fields')</script>";
+if (isset($_POST['submit'])) {
+    if (empty($_POST['email']) || empty($_POST['password'])) {
+        $error = 'Please fill all fields';
     } else {
-        $email = $_POST['email']; // Capture the email from the form
-        $password = $_POST['password']; // Capture the password (no hashing needed for comparison)
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-        // Validate the email with a query to admin table
-        $adminLogin = $conn->query("SELECT * FROM admin WHERE email = '$email'");  // Connect to the database and query
-        $adminLogin->execute(); // Execute the query
-        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ); // Fetch the query result as an associative array
+        // Admin login check
+        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
+        $adminLogin->execute([':email' => $email]);
+        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
 
         if ($adminLogin->rowCount() > 0) {
             if (password_verify($password, $adminFetch->my_password)) {
-                // Set session variables upon successful login
                 $_SESSION['email'] = $adminFetch->email;
                 $_SESSION['id'] = $adminFetch->id;
                 $_SESSION['adminname'] = $adminFetch->adminname;
                 $_SESSION['my_password'] = $adminFetch->my_password;
 
-                // Redirect to the home page
                 echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
-            } else {
-                $error = 'Your password is incorrect';
-            }
-        }
-        // Validate the email with a query
-        $login = $conn->query("SELECT * FROM user WHERE email = '$email'");  // Connect to the database and query
-        $login->execute(); // Execute the query
-        $fetch = $login->fetch(PDO::FETCH_ASSOC); // Fetch the query result as an associative array
-
-        if ($login->rowCount() > 0) {
-            if (password_verify($password, $fetch['my_password'])) {
-                // Set session variables upon successful login
-                $_SESSION['email'] = $fetch['email'];
-                $_SESSION['id'] = $fetch['id'];
-                $_SESSION['username'] = $fetch['username'];
-                $_SESSION['my_password'] = $fetch['my_password'];
-
-                // Redirect to the home page
-                echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+                exit();
             } else {
                 $error = 'Your password is incorrect';
             }
         } else {
-            $error = 'Cannot find this email address';
+            // User login check
+            $login = $conn->prepare("SELECT * FROM user WHERE email = :email");
+            $login->execute([':email' => $email]);
+            $fetch = $login->fetch(PDO::FETCH_ASSOC);
+
+            if ($login->rowCount() > 0) {
+                if (password_verify($password, $fetch['my_password'])) {
+                    $_SESSION['email'] = $fetch['email'];
+                    $_SESSION['id'] = $fetch['id'];
+                    $_SESSION['username'] = $fetch['username'];
+                    $_SESSION['my_password'] = $fetch['my_password'];
+
+                    echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+                    exit();
+                } else {
+                    $error = 'Your password is incorrect';
+                }
+            } else {
+                $error = 'Cannot find this email address';
+            }
         }
     }
 }

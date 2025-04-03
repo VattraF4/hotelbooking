@@ -19,7 +19,7 @@ if (!isset($_SESSION['adminname'])) {
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-4 d-inline">Hotels</h5>
-          <a href="create-hotels.html" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
+          <a href="create-hotels.php" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
           <style>
             /* table td,
             table th {
@@ -52,9 +52,10 @@ if (!isset($_SESSION['adminname'])) {
                     <td><?php echo $hotel->status ?></td>
 
 
-                    <td><a href="status.html" class="btn btn-warning text-white text-center ">status</a></td>
-                    <td><a href="update-category.html" class="btn btn-warning text-white text-center ">Update </a></td>
-                    <td><a href="delete-category.html" class="btn btn-danger  text-center ">Delete </a></td>
+                    <td><a href="status-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-primary text-white text-center ">status</a></td>
+                    <td><a href="update-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-primary text-white text-center ">Update </a></td>
+                    <!-- <td><a href="update-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-warning text-white text-center ">Update </a></td> -->
+                    <td><a href="delete-category.php" class="btn btn-danger  text-center ">Delete </a></td>
                   </tr>
                 <?php endforeach; ?>
 

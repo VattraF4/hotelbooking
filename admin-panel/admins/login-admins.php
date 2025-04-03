@@ -7,16 +7,16 @@
 // Declare error
 $error = '';
 
-// if (isset($_SESSION['adminname'])) {
-//   echo "<script>window.location.href = '" . ADMIN_URL . "';</script>"; // Redirect to the home page with JavaScript
-//   exit;
-// }else {
-//   echo $_SESSION['adminname'];
-// }
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  // redirect them to your desired location
+  echo "<script>window.location.href='../';</script>";
+  exit;
+
+}
 
 if (isset($_POST['submit'])) { // Check if the form has been submitted
   if (empty($_POST['email']) || empty($_POST['password'])) { // Check if the email and password fields are empty
-    echo "<script>alert('Please fill all fields')</script>";
+    $error = 'Please fill all fields';
   } else {
     $email = $_POST['email']; // Capture the email from the form
     $password = $_POST['password']; // Capture the password (no hashing needed for comparison)

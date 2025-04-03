@@ -77,7 +77,7 @@
                     <?php else: ?>
                         <ul class="navbar-nav ml-md-auto d-md-flex">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php">Home
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>index.php">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
