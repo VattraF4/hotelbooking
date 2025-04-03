@@ -3,11 +3,11 @@ require "../include/header.php";
 require "../config/config.php"; 
 
 // Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    // If the user is not logged in, redirect to login page
-    header("Location: login.php");
-    exit();
-}
+// if (!isset($_SESSION['username'])) {
+//     // If the user is not logged in, redirect to login page
+//     header("Location: login.php");
+//     exit();
+// }
 ?>
 
 <!DOCTYPE html>
