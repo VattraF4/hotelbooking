@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
                 $_SESSION['username'] = $fetch['username'];
                 $_SESSION['my_password'] = $fetch['my_password'];
 
-                $error = 'You have successfully logged in with'.$_SESSION['username'];
+                $error = 'You have successfully logged in with '.$_SESSION['username'];
 
                 // Redirect to the welcome page
                 // echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";

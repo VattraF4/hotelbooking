@@ -1,15 +1,14 @@
-<!-- If We put !isset($_SERVER['HTTP_REFERER']) then it will redirect to error page if you enter url -->
+<?php session_start(); ?><!-- Start the session -->
 <?php
-// if (!isset($_SERVER['HTTP_REFERER'])) {
-//     // redirect them to your desired location
-//     echo "<script>window.location.href='../hotelbooking/error/';</script>";
-//     exit;
-
-// }
-session_start(); // Start the session
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
+$username = '';
+if(!isset($_SESSION['username'])) {
+    $username=$_SESSION['username'] = 'Guest';
+}else{
+    $username= $_SESSION['username'];
+}
 ?>
 <!-- Purpose: Header file for the website. -->
 <!DOCTYPE html>
@@ -35,7 +34,7 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
     <meta name="twitter:image" content="<?php echo APP_URL; ?>images/vacation-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Vacation Rental - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Vacation Rental </title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
