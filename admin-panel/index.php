@@ -16,12 +16,6 @@ if (!isset($_SESSION['adminname'])) {
   exit;
 }
 
-echo "<script>alert('Welcome Back " . $_SESSION['adminname'] . "')</script>";
-// if (!isset($_SESSION['adminname'])) {
-//   echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
-//   exit;
-// }
-
 $adminName = $_SESSION['adminname'];
 
 $rooms = $conn->prepare("SELECT * FROM rooms");
