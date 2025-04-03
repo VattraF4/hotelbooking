@@ -1,12 +1,12 @@
 <?php
 require "../include/header.php";
 require "../config/config.php";
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     // If the user is not logged in, redirect to login page
-    echo "<script>window.location.href = 'login.php';</script>";
+    // echo "<script>window.location.href = 'login.php';</script>";
+    echo "<script>alert('not logged in! can't access session');</script>";
     exit();
 }else{
     echo "<script>alert('Welcome');</script>";
