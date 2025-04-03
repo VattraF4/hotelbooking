@@ -1,5 +1,4 @@
-<?php
-require "../include/header.php";
+<?php require "../include/header.php";
 require "../config/config.php";
 
 // Check if the user is logged in
@@ -8,10 +7,7 @@ if (!isset($_SESSION['username'])) {
     // echo "<script>window.location.href = 'login.php';</script>";
     echo "<script>window.location.href = '" . APP_URL . "auth/login.php';</script>";
     exit();
-}else{
-    echo "<script>alert('Welcome');</script>";
 }
-echo "Welcome to the welcome page!";
 ?>
 
 <!DOCTYPE html>

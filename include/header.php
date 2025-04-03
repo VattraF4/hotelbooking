@@ -1,7 +1,6 @@
 <?php session_start(); ?> <!--  // Start the session-->
 
 <?php
-
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
@@ -12,7 +11,7 @@ if(!isset($_SESSION['username'])) {
     $username= $_SESSION['username'];
 }
 ?>
-?>
+
 <!-- Purpose: Header file for the website. -->
 <!DOCTYPE html>
 <html lang="en">
