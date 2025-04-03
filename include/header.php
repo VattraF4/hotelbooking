@@ -5,7 +5,7 @@ define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 $username = '';
 if(!isset($_SESSION['username'])) {
-    $username=$_SESSION['username'] = 'Guest';
+    $username=$_SESSION['username'] = null;
 }else{
     $username= $_SESSION['username'];
 }
