@@ -1,3 +1,17 @@
+<?php
+// Add this at the VERY TOP of your file (before any HTML/output)
+session_start();
+
+// For debugging - remove these lines after fixing
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check if config paths are correct
+require __DIR__ . "/../include/header.php";
+require __DIR__ . "/../config/config.php";
+
+// Rest of your existing PHP code...
+?>
 <?php 
 require "../include/header.php"; 
 require "../config/config.php"; 
@@ -6,11 +20,6 @@ require "../config/config.php";
 <?php
 // Declare error
 $error = '';
-// if (isset($_SESSION['username'])) {
-//     header('Location: ' . APP_URL); // Redirect to the home page without JavaScript
-//     exit;
-// }
-
 if (isset($_POST['submit'])) {
     if (empty($_POST['email']) || empty($_POST['password'])) {
         $error = 'Please fill all fields';
