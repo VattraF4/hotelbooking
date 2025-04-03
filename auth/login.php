@@ -1,85 +1,60 @@
 <?php
 require "../include/header.php";
 require "../config/config.php";
+?>
 
-// Start session securely
-if (session_status() === PHP_SESSION_NONE) {
-    session_start([
-        'cookie_lifetime' => 86400,
-        'cookie_secure' => isset($_SERVER['HTTPS']),
-        'cookie_httponly' => true,
-        'cookie_samesite' => 'Lax'
-    ]);
-}
-
+<?php
 // Declare error
 $error = '';
-
 if (isset($_POST['submit'])) {
     if (empty($_POST['email']) || empty($_POST['password'])) {
         $error = 'Please fill all fields';
     } else {
-        $email = trim($_POST['email']);
+        $email = $_POST['email'];
         $password = $_POST['password'];
 
-        try {
-            // First check admin table
-            $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
-            $adminLogin->bindParam(':email', $email);
-            $adminLogin->execute();
-            
-            if ($adminLogin->rowCount() > 0) {
-                $admin = $adminLogin->fetch(PDO::FETCH_OBJ);
-                
-                if (password_verify($password, $admin->my_password)) {
-                    // Set admin session
-                    $_SESSION['admin'] = [
-                        'id' => $admin->id,
-                        'email' => $admin->email,
-                        'name' => $admin->adminname,
-                        'is_admin' => true
-                    ];
-                    
-                    header("Location: " . APP_URL . "admin-panel/index.php");
+        // Admin login check
+        // $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email'");
+        // $adminLogin->execute();
+        // $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
+
+        // if ($adminLogin->rowCount() > 0) {
+        //     if (password_verify($password, $adminFetch->my_password)) {
+        //         $_SESSION['email'] = $adminFetch->email;
+        //         $_SESSION['id'] = $adminFetch->id;
+        //         $_SESSION['adminname'] = $adminFetch->adminname;
+        //         $_SESSION['my_password'] = $adminFetch->my_password;
+
+        //         echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
+        //         exit();
+        //     } else {
+        //         $error = 'Your password is incorrect';
+        //     }
+        // } else {
+            // User login check
+            $login = $conn->prepare("SELECT * FROM user WHERE email = '$email'");
+            $login->execute();
+            $fetch = $login->fetch(PDO::FETCH_ASSOC);
+
+            if ($login->rowCount() > 0) {
+                if (password_verify($password, $fetch['my_password'])) {
+                    $_SESSION['email'] = $fetch['email'];
+                    $_SESSION['id'] = $fetch['id'];
+                    $_SESSION['username'] = $fetch['username'];
+                    $_SESSION['my_password'] = $fetch['my_password'];
+                    // echo "<script>alert('Welcome.php');</script>";
+                    echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
                     exit();
                 } else {
                     $error = 'Your password is incorrect';
                 }
             } else {
-                // Check user table if not admin
-                $userLogin = $conn->prepare("SELECT * FROM user WHERE email = :email");
-                $userLogin->bindParam(':email', $email);
-                $userLogin->execute();
-                
-                if ($userLogin->rowCount() > 0) {
-                    $user = $userLogin->fetch(PDO::FETCH_ASSOC);
-                    
-                    if (password_verify($password, $user['my_password'])) {
-                        // Set user session
-                        $_SESSION['user'] = [
-                            'id' => $user['id'],
-                            'email' => $user['email'],
-                            'username' => $user['username'],
-                            'is_admin' => false
-                        ];
-                        
-                        header("Location: " . APP_URL . "auth/welcome.php");
-                        exit();
-                    } else {
-                        $error = 'Your password is incorrect';
-                    }
-                } else {
-                    $error = 'Email address not found';
-                }
+                $error = 'Cannot find this email address';
             }
-        } catch (PDOException $e) {
-            $error = 'Database error: ' . $e->getMessage();
         }
     }
-}
+// }
 ?>
-
-<!-- Rest of your HTML remains the same -->
 <!-- I disable Image for better look -->
 
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
