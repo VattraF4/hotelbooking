@@ -6,10 +6,10 @@ require "../config/config.php";
 <?php
 // Declare error
 $error = '';
-
-if (isset($_SESSION['username'])) {
-    echo "<script>window.location.href = '" . APP_URL . "';</script>"; // Redirect to the home page with JavaScript
-}
+// if (isset($_SESSION['username'])) {
+//     header('Location: ' . APP_URL); // Redirect to the home page without JavaScript
+//     exit;
+// }
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['email']) || empty($_POST['password'])) {
