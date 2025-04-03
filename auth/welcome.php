@@ -1,35 +1,41 @@
-<?php 
-require "../include/header.php"; 
-require "../config/config.php"; 
-
+<?php
+require "../include/header.php";
+require "../config/config.php";
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     // If the user is not logged in, redirect to login page
     header("Location: login.php");
     exit();
 }
+echo "Welcome to the welcome page!";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <link rel="stylesheet" href="styles.css"> <!-- Add your own stylesheet -->
 </head>
+
 <body>
-     
-<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-            <div class="col-md-7 ftco-animate">
-                <!-- Optional: Add heading or subheading here -->
+
+    <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
+        data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+                data-scrollax-parent="true">
+                <div class="col-md-7 ftco-animate">
+                    <!-- Optional: Add heading or subheading here -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
         <div class="container">
@@ -54,4 +60,5 @@ if (!isset($_SESSION['username'])) {
         </div>
     </section>
 </body>
+
 </html>
