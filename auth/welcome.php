@@ -8,6 +8,8 @@ if (!isset($_SESSION['username'])) {
     // If the user is not logged in, redirect to login page
     echo "<script>window.location.href = 'login.php';</script>";
     exit();
+}else{
+    echo "<script>alert('Welcome');</script>";
 }
 echo "Welcome to the welcome page!";
 ?>

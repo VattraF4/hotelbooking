@@ -1,11 +1,6 @@
-<!-- If We put !isset($_SERVER['HTTP_REFERER']) then it will redirect to error page if you enter url -->
-<?php
-// if (!isset($_SERVER['HTTP_REFERER'])) {
-//     // redirect them to your desired location
-//     echo "<script>window.location.href='../hotelbooking/error/';</script>";
-//     exit;
 
-// }
+<?php
+
 session_start(); // Start the session
 echo $_SESSION['username'];
 require 'domain.php';
