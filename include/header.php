@@ -1,10 +1,17 @@
+<?php session_start(); ?> <!--  // Start the session-->
 
 <?php
 
-session_start(); // Start the session
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
+$username = '';
+if(!isset($_SESSION['username'])) {
+    $username=$_SESSION['username'] = null;
+}else{
+    $username= $_SESSION['username'];
+}
+?>
 ?>
 <!-- Purpose: Header file for the website. -->
 <!DOCTYPE html>
