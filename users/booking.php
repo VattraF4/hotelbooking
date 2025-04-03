@@ -27,7 +27,8 @@ if ($getBooking->rowCount() == 0) {
 <div class="alert alert-danger text-center" role="alert">
     <h1>All Pending Payment Will Be Deleted Permanently After 48 Hours</h1>
 </div>
-<table class="table table-bordered">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-responsive table-bordered">
     <thead>
         <tr>
             <th scope="col">No</th>
@@ -48,7 +49,6 @@ if ($getBooking->rowCount() == 0) {
         foreach ($booking as $allBooking):
             $i++;
             ?>
-
             <tr>
                 <th scope="row"><?php echo $i ?></th>
                 <th scope="row"><?php echo $allBooking->room_name; ?></th>
@@ -65,6 +65,7 @@ if ($getBooking->rowCount() == 0) {
         <?php endforeach; ?>
     </tbody>
 </table>
+</div>
 <?php
 require '../include/footer.php';
 ?>

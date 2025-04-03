@@ -4,8 +4,8 @@ require "config/config.php";
 ?>
 <?php
 if (!isset($_SESSION['username'])) {
-    // echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
-	header('Location: ' . APP_URL . 'auth/login.php');
+    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+	// header('Location: ' . APP_URL . 'auth/login.php');
     exit;
 }
 ?>
