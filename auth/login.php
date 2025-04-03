@@ -14,8 +14,8 @@ if (isset($_POST['submit'])) {
         $password = $_POST['password'];
 
         // Admin login check
-        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
-        $adminLogin->execute([':email' => $email]);
+        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email'");
+        $adminLogin->execute();
         $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
 
         if ($adminLogin->rowCount() > 0) {
@@ -32,8 +32,8 @@ if (isset($_POST['submit'])) {
             }
         } else {
             // User login check
-            $login = $conn->prepare("SELECT * FROM user WHERE email = :email");
-            $login->execute([':email' => $email]);
+            $login = $conn->prepare("SELECT * FROM user WHERE email = '$email'");
+            $login->execute();
             $fetch = $login->fetch(PDO::FETCH_ASSOC);
 
             if ($login->rowCount() > 0) {

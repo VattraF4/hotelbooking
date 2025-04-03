@@ -2,7 +2,6 @@
 <?php
 
 session_start(); // Start the session
-echo $_SESSION['username'];
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
