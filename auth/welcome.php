@@ -2,20 +2,18 @@
 require "../include/header.php";
 require "../config/config.php";
 
-echo "<h2>Debug Information</h2>";
-echo "<pre>Session ID: " . session_id() . "</pre>";
-echo "<pre>Session Status: " . session_status() . " (2=active)</pre>";
-echo "<pre>Session Contents: ";
-print_r($_SESSION);
-echo "</pre>";
-
+// Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    echo "<p style='color:red'>NOT LOGGED IN - username not in session</p>";
-    echo "<p>Session cookie exists: " . (isset($_COOKIE[session_name()]) ? 'YES' : 'NO') . "</p>";
-} else {
-    echo "<p style='color:green'>LOGGED IN AS: " . htmlspecialchars($_SESSION['username']) . "</p>";
+    // If the user is not logged in, redirect to login page
+    // echo "<script>window.location.href = 'login.php';</script>";
+    echo "<script>window.location.href = '" . APP_URL . "auth/login.php';</script>";
+    exit();
+}else{
+    echo "<script>alert('Welcome');</script>";
 }
+echo "Welcome to the welcome page!";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
