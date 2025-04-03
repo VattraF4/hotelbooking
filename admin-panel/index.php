@@ -14,9 +14,10 @@ if (!isset($_SESSION['adminname'])) {
   header('Location: ' . ADMIN_URL . 'admins/login-admins.php');
   // echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
   exit;
-} else {
-  $adminName = $_SESSION['adminname'];
 }
+
+$adminName = $_SESSION['adminname'];
+
 $rooms = $conn->prepare("SELECT * FROM rooms");
 $rooms->execute();
 $roomsCount = $rooms->rowCount(); //count the number rows of rooms in the database
