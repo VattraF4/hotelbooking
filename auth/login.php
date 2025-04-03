@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
                 $error = 'You have successfully logged in with '.$_SESSION['username'];
 
                 // Redirect to the welcome page
-                // echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+                echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
             } else {
                 $error = 'Your password is incorrect';
             }
