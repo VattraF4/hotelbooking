@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     // If the user is not logged in, redirect to login page
-    header("Location: login.php");
+    echo "<script>window.location.href = 'login.php';</script>";
     exit();
 }
 echo "Welcome to the welcome page!";
