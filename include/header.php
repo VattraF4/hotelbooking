@@ -7,6 +7,7 @@
 
 // }
 session_start(); // Start the session
+echo $_SESSION['username'];
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
@@ -35,7 +36,7 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
     <meta name="twitter:image" content="<?php echo APP_URL; ?>images/vacation-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Vacation Rental - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Vacation Rental </title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -65,7 +66,7 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
                 <div class="col d-flex align-items-center">
                     <p class="mb-0 phone">
                         <span class="mailus">Phone no:</span> <a href="tel://+855 969 666 961">+855 969 666 961</a> or 
-                        <span class="mailus">email us:</span> <a href="mailto:ravattrasmartboy@gmail">ravattrasmartboy@gmail.com</a>
+                        <span class="mailus">Email us:</span> <a href="mailto:ravattrasmartboy@gmail">ravattrasmartboy@gmail.com</a>
                     </p>
                 </div>
                 <div class="col d-flex justify-content-end">
