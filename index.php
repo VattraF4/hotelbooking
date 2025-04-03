@@ -3,10 +3,10 @@ require "include/header.php";
 require "config/config.php";
 ?>
 <?php
-if (!isset($_SESSION['username'])) {
-    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
-    exit;
-}
+// if (!isset($_SESSION['username'])) {
+//     echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+//     exit;
+// }
 ?>
 
 <?php // Query to get all hotels
