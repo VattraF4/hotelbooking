@@ -11,10 +11,16 @@ require 'layouts/header.php';
 
 // }
 if (!isset($_SESSION['adminname'])) {
-  header('Location: ' . ADMIN_URL . 'admins/login-admins.php');
-  // echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
+  // header('Location: ' . ADMIN_URL . 'admins/login-admins.php');
+  echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
   exit;
 }
+
+echo "<script>alert('Welcome Back " . $_SESSION['adminname'] . "')</script>";
+// if (!isset($_SESSION['adminname'])) {
+//   echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
+//   exit;
+// }
 
 $adminName = $_SESSION['adminname'];
 
