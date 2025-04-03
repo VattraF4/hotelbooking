@@ -1,6 +1,6 @@
-<?php 
-require "../include/header.php"; 
-require "../config/config.php"; 
+<?php
+require "../include/header.php";
+require "../config/config.php";
 ?>
 
 <?php
@@ -43,11 +43,13 @@ if (isset($_POST['submit'])) { // Check if the form has been submitted
 }
 ?>
 <!-- I disable Image for better look -->
- 
-<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
+
+<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
+    data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+            data-scrollax-parent="true">
             <div class="col-md-7 ftco-animate">
                 <!-- Optional: Add heading or subheading here -->
             </div>
