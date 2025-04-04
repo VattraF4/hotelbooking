@@ -25,7 +25,7 @@ if ($getBooking->rowCount() == 0) {
 }
 ?>
 <div class="alert alert-danger text-center" role="alert">
-    <h1>All Pending Payment Will Be Deleted Permanently After 48 Hours</h1>
+    <h3>All Pending Payment Will Be Deleted Permanently After 48 Hours</h3>
 </div>
 
 <style>
