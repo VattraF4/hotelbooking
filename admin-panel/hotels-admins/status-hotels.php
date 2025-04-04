@@ -20,6 +20,7 @@ if (!isset($_SESSION['adminname'])) {
     $id = $_GET['id'];
     if(isset($_POST['status'])){
       $status = $_POST['status'];
+      // echo $status;
       $allHotels = $conn->prepare("UPDATE hotels SET status = '$status' WHERE id = '$id'");
       $allHotels->execute();
       echo '<script>window.location.href="' . ADMIN_URL . 'hotels-admins/show-hotels.php";</script>';
@@ -40,7 +41,7 @@ if (!isset($_SESSION['adminname'])) {
           <form method="POST" action="" enctype="multipart/form-data">
             <!-- Email input -->
             <select style="margin-top: 15px;" name="status" class="form-control">
-              <option>Choose Status</option>
+              <option value="" disabled selected>Choose Status</option>
               <option>1</option>
               <option>0</option>
             </select>
