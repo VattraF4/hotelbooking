@@ -1,22 +1,25 @@
 <?php
+require '../vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+echo __DIR__ . '<br>';
 try {
     // Check if running on localhost
     if ($_SERVER['HTTP_HOST'] === 'localhost') {
         // Local Development
-        define("DB_HOST", "localhost");
-        define("DB_NAME", "e4g7wad_hotel-booking"); // Your local DB name
-        define("DB_USER", "root");
-        define("DB_PASS", "");
+        define("DB_HOST", $_ENV['DB_HOST_LOCAL']);
+        define("DB_NAME", $_ENV['DB_NAME_LOCAL']);
+        define("DB_USER", $_ENV['DB_USER_LOCAL']);
+        define("DB_PASS", $_ENV['DB_PASS_LOCAL']);
     } else {
-        //host
-        // define("DB_HOST", "bh-34.webhostbox.net");
-        define("DB_HOST", "bh-34.webhostbox.net");
-        //database name
-        define("DB_NAME", "e4g7wad_hotel-booking");
-        //database user
-        define("DB_USER", "e4g7wad_root");
-        //database password
-        define("DB_PASS", "3C]apZ6Fip;x");
+        // Production
+        define("DB_HOST", $_ENV['DB_HOST_PROD']);
+        define("DB_NAME", $_ENV['DB_NAME_PROD']);
+        define("DB_USER", $_ENV['DB_USER_PROD']);
+        define("DB_PASS", $_ENV['DB_PASS_PROD']);
     }
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

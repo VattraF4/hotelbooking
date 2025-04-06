@@ -34,20 +34,15 @@ if ($getBooking->rowCount() == 0) {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    table {
-        margin-left: auto;
-        margin-right: auto;
     }
 
-    }
-
-    /* .table-responsive-sm {
+    .table-responsive-sm {
         overflow-x: auto;
-    } */
+    }
 </style>
-<div class="table-responsive-sm" style="width: 100vw;">
-    <table class="table table-striped table-responsive table-bordered table-hover " style="width: 100vw;">
-        <thead thead style="background-color:#007BFF; color: white;">
+<div class="table-responsive-sm" style="width: 100%; overflow-x: auto;">
+    <table class="table table-striped table-responsive table-bordered table-hover " style="width: 100%; min-width: 100%;">
+        <thead style="background-color:#007BFF; color: white;">
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Room</th>

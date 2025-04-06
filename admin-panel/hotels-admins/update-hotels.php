@@ -52,6 +52,10 @@ if (!isset($_SESSION['adminname'])) {
         echo "<script>window.location.href='" . ADMIN_URL . "admins/login-admins.php';</script>";
         exit;
     }
+    $getHotel = $conn->prepare("SELECT * FROM hotels WHERE id = :id");
+    $getHotel->bindParam(':id', $id);
+    $getHotel->execute();
+    $hotel = $getHotel->fetch(PDO::FETCH_OBJ);
 }
 ?>
 
@@ -66,21 +70,21 @@ if (!isset($_SESSION['adminname'])) {
           <form method="POST" action="" enctype="multipart/form-data">
             <!-- Email input -->
             <div class="form-outline mb-4 mt-4">
-              <input type="text" name="name" id="form2Example1" class="form-control" placeholder="name" />
+              <input type="text" name="name" id="form2Example1" class="form-control" value="<?php echo $hotel->name; ?>" placeholder="name" />
             </div>
 
             <div class="form-outline mb-4 mt-4">
               <input type="file" name="image" id="form2Example1" class="form-control" placeholder="name" />
             </div>
+            
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Description</label>
-              <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"><?php echo $hotel->description; ?></textarea>
             </div>
 
             <div class="form-outline mb-4 mt-4">
               <label for="exampleFormControlTextarea1">Location</label>
-
-              <input type="text" name="location" id="form2Example1" class="form-control" />
+              <input type="text" name="location" value="<?php echo $hotel->location; ?>" id="form2Example1" class="form-control" />
 
             </div>
 
