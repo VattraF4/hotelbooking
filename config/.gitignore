@@ -1,3 +1,4 @@
 # In your .gitignore file add:
 # Ignore environment configuration files
-config/.env
+
+# .env  #I don't ignore it!

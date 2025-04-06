@@ -5,7 +5,6 @@ require '../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-echo __DIR__ . '<br>';
 try {
     // Check if running on localhost
     if ($_SERVER['HTTP_HOST'] === 'localhost') {
