@@ -21,7 +21,11 @@ require 'include/header.php';
 	<div class="container">
 		<div class="row no-gutters">
 			<div class="col-md-8">
-				<div id="map" class="map"></div>
+				<!-- <div id="map" class="map"></div> -->
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d417.96255027452275!2d104.89074254718865!3d11.56866880280324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109519fe4077d69%3A0x20138e822e434660!2sRoyal%20University%20of%20Phnom%20Penh!5e0!3m2!1sen!2skh!4v1743937061168!5m2!1sen!2skh"
+					width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 			<div class="col-md-4 p-4 p-md-5 bg-white">
 				<h2 class="font-weight-bold mb-4">Lets get started</h2>

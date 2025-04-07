@@ -19,27 +19,36 @@ if (isset($_POST['submit'])) {
   } else {
     $name = $_POST['name'];
     $image = $_FILES['image']['name']; // Get the name of the uploaded image
+    $image = str_replace(' ', '_', $image);
     $description = $_POST['description'];
     $location = $_POST['location'];
 
     // Upload image
     $target_directory = "../../images/";
     $target_file = $target_directory . basename($image);
-    
+
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
       // Insert hotel into database
       $insert = $conn->prepare("INSERT INTO hotels (name, image, description, location) VALUES (:name, :image, :description, :location)");
       $insert->execute([
         ':name' => $name,
-        ':image' => $image,
+        ':image' => htmlspecialchars($image, ENT_QUOTES, 'UTF-8'),
         ':description' => $description,
         ':location' => $location
       ]);
+
+      if ($insert) {
+        
+        echo "<script>window.location.href='show-hotels.php';</script>";
+        exit;
+      }
+      
     } else {
       $alert = 'Failed to upload image';
     }
   }
 }
+
 ?>
 <div class="container-fluid">
   <div class="row">
@@ -71,6 +80,7 @@ if (isset($_POST['submit'])) {
               <input type="text" name="location" id="form2Example1" class="form-control" />
 
             </div>
+
 
 
             <!-- Submit button -->

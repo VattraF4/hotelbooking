@@ -33,12 +33,16 @@ if (!isset($_SESSION['adminname'])) {
         }
         if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
             $image = $_FILES['image']['name'];
-            unlink('../../images/' . $image);
+            $image = str_replace(' ', '_', $image);
+            if(file_exists('../../images/' . $image)){
+                unlink('../../images/' . $image);
+            }
+            // unlink('../../images/' . $image);
             $target_directory = "../../images/";
             $target_file = $target_directory . basename($image);
             move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
             $updateFields[] = "image = :image";
-            $updateParams[':image'] = $image;
+            $updateParams[':image'] = htmlspecialchars($image, ENT_QUOTES, 'UTF-8');
         }
         // echo "UPDATE hotels SET " . implode(', ', $updateFields) . " WHERE id = :id";
         if (!empty($updateFields)) {

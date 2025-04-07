@@ -55,7 +55,7 @@ if (!isset($_SESSION['adminname'])) {
                     <td><a href="status-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-primary text-white text-center ">status</a></td>
                     <td><a href="update-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-primary text-white text-center ">Update </a></td>
                     <!-- <td><a href="update-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-warning text-white text-center ">Update </a></td> -->
-                    <td><a href="delete-category.php" class="btn btn-danger  text-center ">Delete </a></td>
+                    <td><a href="delete-hotels.php?id=<?php echo $hotel->id ?>" class="btn btn-danger  text-center " onclick="return confirm('Are you sure you want to delete this hotel?');">Delete </a></td>
                   </tr>
                 <?php endforeach; ?>
 
