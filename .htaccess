@@ -3,3 +3,10 @@ Options -Indexes
 
 # Redirect to 404 if no index file is found
 ErrorDocument 404 /hotelbooking/error/index.html
+
+# If the request is for a directory AND no index file exists, show 404
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.php !-f
+RewriteCond %{REQUEST_FILENAME}/index.html !-f
+RewriteRule ^ - [R=404,L]

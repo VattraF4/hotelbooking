@@ -20,6 +20,7 @@
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -38,33 +39,40 @@
 
                         <?php if (isset($_SESSION['adminname'])): ?>
                             <li class="nav-item">
-                                <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>index.php">Home
+                                <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>index.php"><i
+                                        class="fa fa-home"  aria-hidden="true"></i>
+                                    Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>admins/admins.php"
-                                    style="margin-left: 20px;">Admins</a>
+                                    style="margin-left: 20px;"><i class="fas fa-user-tie"></i> Admins</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>hotels-admins/show-hotels.php"
-                                    style="margin-left: 20px;">Hotels</a>
+                                    style="margin-left: 20px;"><i class="fa fa-building" aria-hidden="true"></i>
+                                    Hotels</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>rooms-admins/show-rooms.php"
-                                    style="margin-left: 20px;">Rooms</a>
+                                    style="margin-left: 20px;"><i class="fa fa-bed" aria-hidden="true"></i>
+                                    Rooms</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>bookings-admins/show-bookings.php"
-                                    style="margin-left: 20px;">Bookings</a>
+                                    style="margin-left: 20px;"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                    Bookings</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo ADMIN_URL; ?>users-admins/user.php"
-                                    style="margin-left: 20px;">View Users</a>
+                                    style="margin-left: 20px;"><i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    View Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>users-admins/user.php"
-                                    style="margin-left: 20px;"></a>
+                                <a class="nav-link" href="<?php echo ADMIN_URL; ?>hotels-admins/showArchive.php"
+                                    style="margin-left: 20px;"><i class="fa fa-recycle" aria-hidden="true"></i></i>
+                                    RecycleBin</a>
                             </li>
                         <?php endif; ?>
                     </ul>

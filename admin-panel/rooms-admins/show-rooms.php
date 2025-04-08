@@ -20,18 +20,22 @@ if (!isset($_SESSION['adminname'])) {
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-4 d-inline">Rooms</h5>
-          <a href="create-rooms.html" class="btn btn-primary mb-4 text-center float-right">Create Room</a>
+          <a href="create-rooms.html" class="btn btn-primary mb-4 text-center float-right">Create Room</a><br>
 
           <!-- Set table No Wrap -->
           <style>
             table td,
-            table th {
+            table th,#alert {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
             }
           </style>
-          <table class="table table-striped table-responsive">
+          <table class="table table-striped table-responsive"><br><hr>
+      
+            <div class="alert alert-primary text-center" id="alert">
+             Click images to View
+           </div>
             <thead style="background-color:#007BFF; color: white;">
               <tr>
                 <th scope="col">#</th>
@@ -78,17 +82,17 @@ if (!isset($_SESSION['adminname'])) {
                   <th scope="row"><?php echo $room->view ?></th>
                   <th scope="row"><?php echo $room->num_bed ?></th>
                   <th scope="row"><?php echo $room->hotel_name ?></th>
-                  <th scope="row"><?php echo $room->status ?></th>
 
-                  <td><a href="status.html" class="btn btn-danger  text-center ">status</a></td>
-                  <td><a href="delete-country.html" class="btn btn-danger  text-center ">Delete</a></td>
+                  <?php if ($room->status == 1) {$alert = "Active";} else {$alert = "Inactive";}?>
+                  <th scope="row" style="color: <?php echo ($room->status == 1) ? 'green' : 'red' ?>"><?php echo $alert ?></th>
+
+                  <td><a href="status-rooms.php?id=<?php echo $room->id ?>" class="btn btn-primary text-white text-center ">status</a></td>
+                  <td><a href="delete-rooms.php?id=<?php echo $room->id ?>" class="btn btn-danger  text-center ">Delete</a></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
-          <div class="alert alert-primary text-center" role="alert">
-            Click images to View
-          </div>
+         
         </div>
       </div>
     </div>
