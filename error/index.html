@@ -1,10 +1,4 @@
 
-
- <?php
-require "../include/header.php";
-require "../config/config.php";
-?>
-
 <style>
     body {
         background-color:#f8f9fc;
@@ -56,7 +50,7 @@ require "../config/config.php";
         display: inline-block;
         opacity: 0;
         transform: translateY(20px);
-        animation: fadeInUp 1.5s ease-out forwards 1.5s;
+        animation: fadeInUp 1.5s ease-out forwards 0.5s;
     }
 
     @keyframes fadeInUp {
@@ -65,7 +59,7 @@ require "../config/config.php";
     }
 
     .btn-home:hover {
-        background-color: white;
+        background-color: rgb(32, 109, 211);
         transform: scale(1.05);
     }
 </style>
@@ -73,10 +67,10 @@ require "../config/config.php";
 <div class="container d-flex align-items-center justify-content-center vh-100">
     <div class="error-container">
         <div class="error-code">404</div>
-        <p class="error-text">Oops! The page you’re looking for doesn’t exist.</p>
+        <p class="error-text">Oops! The page you're looking for doesn't exist.</p>
         <p class="lead text-gray-800 mb-4">It might have been moved, deleted, or is temporarily unavailable.</p>
-        <a href="<?php echo APP_URL ?> " class="btn-home">&larr; Back to Home</a>
+        <a href="javascript:history.back()" class="btn-home">&larr; Go Back ? </a>
     </div>
 </div>
 
-<?php require "../include/footer.php"; ?>
+
