@@ -1,1 +1,5 @@
+# Disable directory listing
+Options -Indexes
+
+# Redirect to 404 if no index file is found
 ErrorDocument 404 /hotelbooking/error/index.html
