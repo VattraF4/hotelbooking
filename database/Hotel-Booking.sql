@@ -35,7 +35,7 @@ ALTER TABLE bookings
 
 
 
-#If  phone is not null we use update and set can't not insert
+#If  phone is not null we use update and set' can't not insert
 # UPDATE user
 # SET phone = '0975361899'
 # WHERE email = 'ravattrasmartboy@gmail.com';

@@ -20,7 +20,7 @@ if (!isset($_SESSION['adminname'])) {
       <div class="card">
         <div class="card-body">
           <h5 class="card-title mb-4 d-inline">Rooms</h5>
-          <a href="create-rooms.html" class="btn btn-primary mb-4 text-center float-right">Create Room</a><br>
+          <a href="create-rooms.php" class="btn btn-primary mb-4 text-center float-right">Create Room</a><br>
 
           <!-- Set table No Wrap -->
           <style>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['adminname'])) {
                   <!-- Image with Modal -->
                   <th scope="row">
                     <a href="#" data-toggle="modal" data-target="#myModal<?php echo $i ?>">
-                      <img src="<?php echo APP_URL . "images/" . $room->images ?>" width="35" height="35">
+                      <img src="<?php echo "room_images/" . $room->images ?>" width="35" height="35">
                     </a>
 
                     <!-- The Modal -->
@@ -70,7 +70,7 @@ if (!isset($_SESSION['adminname'])) {
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-body">
-                            <img src="<?php echo APP_URL . "images/" . $room->images ?>" style="width:100%">
+                            <img src="<?php echo "room_images/" . $room->images ?>" style="width:100%">
                           </div>
                         </div>
                       </div>

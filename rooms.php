@@ -210,7 +210,7 @@ if (!$getAllRooms || empty($getAllRooms)) {
 					<div class="col-lg-6">
 						<div class="room-wrap d-md-flex">
 
-							<a href="#" class="img" style="background-image: url(images/<?php echo $room->images; ?>);"></a>
+							<a href="#" class="img" style="background-image: url(admin-panel/rooms-admins/room_images/<?php echo $room->images; ?>);"></a>
 							<div class="half left-arrow d-flex align-items-center">
 								<div class="text p-4 p-xl-5 text-center">
 									<p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
