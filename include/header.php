@@ -2,17 +2,17 @@
 <?php session_start(); ?> <!--  // Start the session-->
 
 <?php
+// if(!isset($_SESSION['username'])) {
+//     $_SESSION['username'] = null;
+//     $_SESSION['id'] = null;
+// }else{
+//     $_SESSION['username'];
+//     $_SESSION['id'];
+// }
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 $username = 'Error';
-if(!isset($_SESSION['username'])) {
-    $_SESSION['username'] = null;
-    $_SESSION['id'] = null;
-}else{
-    $_SESSION['username'];
-    $_SESSION['id'];
-}
 ?>
 
 <!-- Purpose: Header file for the website. -->
@@ -88,7 +88,7 @@ if(!isset($_SESSION['username'])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Vacation<span>Rental</span></a>
+            <a class="navbar-brand" href="<?php echo APP_URL; ?>index.php">Vacation<span>Rental</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars"></span> Menu
             </button>

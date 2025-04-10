@@ -7,7 +7,7 @@ require '../include/domain.php';
 // 1. Get the token from the URL
 $token = $_GET['token'] ?? '';
 $user_id = $_GET['id'];
-echo $token;
+echo "This Token: <b><u>$token </u></b>  is unvalid now may it's expired or has benn used<br>";
 // 2. Check if the token exists and is not expired
 $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
 $stmt->execute([$token]);
