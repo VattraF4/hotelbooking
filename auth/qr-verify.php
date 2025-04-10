@@ -39,7 +39,7 @@ if ($result) {
     }
 
     $_SESSION['id'] = $user_id;
-    $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
+    // $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
     
     $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
     $getUser->execute([$user_id]);
