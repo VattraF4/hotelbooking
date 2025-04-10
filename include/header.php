@@ -5,8 +5,8 @@ if(!isset($_SESSION['username'])) {
     $_SESSION['username'] = null;
     $_SESSION['id'] = null;
 }else{
-    $_SESSION['username'];
-    $_SESSION['id'];
+    $username= $_SESSION['username'];
+    $user_id=$_SESSION['id'];
 }
 
 // echo $_SESSION['username'] ." This username is on header.php";
