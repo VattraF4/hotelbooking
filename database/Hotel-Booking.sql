@@ -106,14 +106,11 @@ VALUE('admin','admin@ranavattra.com','$2y$10$sS5MNye1rH4wYZIp79K01uRl1FlFKmLwtdY
 DROP TABLE IF EXISTS qr_tokens;
 CREATE TABLE qr_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(64) NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
     user_id INT NOT NULL,
     expires_at DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    used_at TIMESTAMP NULL DEFAULT NULL,
-    UNIQUE (token),
-    INDEX (user_id),
-    INDEX (expires_at)
+    used_at DATETIME NULL DEFAULT NULL
 );
 
 # CREATE TABLE qr_tokens (
