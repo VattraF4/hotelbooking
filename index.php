@@ -8,6 +8,12 @@ if (!isset($_SESSION['username'])) {
 	// header('Location: ' . APP_URL . 'auth/login.php');
     exit;
 }
+	// 2. Delete the token after login
+	try {
+    $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
+	}catch(PDOException $e){
+		error_log('Archive failed:'. $e->getMessage());
+	}
 ?>
 
 <?php // Query to get all hotels
