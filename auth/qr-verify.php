@@ -43,8 +43,8 @@ if ($result) {
     $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
     $getUser->execute([$user_id]);
     
+    // $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
     
-    $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
     if ($getUser->rowCount() > 0) {
         $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
         $_SESSION['username'] = $fetch['username'];
