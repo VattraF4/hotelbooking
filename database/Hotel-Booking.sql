@@ -106,11 +106,23 @@ VALUE('admin','admin@ranavattra.com','$2y$10$sS5MNye1rH4wYZIp79K01uRl1FlFKmLwtdY
 DROP TABLE IF EXISTS qr_tokens;
 CREATE TABLE qr_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(64) UNIQUE NOT NULL,
-    user_id INT NOT NULL,  -- Links to the user who will log in
-    expires_at DATETIME NOT NULL,  -- Token expiry (e.g., 2 minutes)
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+    token VARCHAR(64) NOT NULL,
+    user_id INT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    used_at TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE (token),
+    INDEX (user_id),
+    INDEX (expires_at)
 );
+
+# CREATE TABLE qr_tokens (
+#     id INT AUTO_INCREMENT PRIMARY KEY,
+#     token VARCHAR(64) UNIQUE NOT NULL,
+#     user_id INT NOT NULL,  -- Links to the user who will log in
+#     expires_at DATETIME NOT NULL,  -- Token expiry (e.g., 2 minutes)
+#     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+# );
 
 SELECT user_id FROM qr_tokens WHERE token = '1c6a66c33a541f28fbcd715501ae0f8311c55cc6fabf2956695b7efd2afcef1c' AND expires_at > NOW();
 SELECT  * FROM qr_tokens WHERE token = '6887706cb4362f0699db04604b03896090c24d7c38ea8f3ff6ab1875dfb795bf' ;
