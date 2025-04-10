@@ -29,35 +29,25 @@ $token = bin2hex(random_bytes(32));
 $expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); // 5-minute expiry
 
 // 2. Store token + email in the database
-// Replace your current query with this:
-$stmt = $conn->prepare("
-    SELECT user_id, expires_at 
-    FROM qr_tokens 
-    WHERE token = ? 
-    AND user_id = ?
-    AND used_at IS NULL
-    AND expires_at > (NOW() - INTERVAL 5 MINUTE)  /* Grace period */
-");
-$stmt->execute([$token, $user_id]);
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+$stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (?, ?, ?)");
+$result = $stmt->execute([$token, $user_id, $expiresAt]); // Hardcoded email for demo
 if (!$result) {
-    // Enhanced error reporting
-    $errorInfo = $conn->errorInfo();
-    error_log("Token verification failed. DB error: ".print_r($errorInfo, true));
-    
-    // Check if token exists at all
-    $exists = $conn->prepare("SELECT 1 FROM qr_tokens WHERE token = ?")->execute([$token]);
-    error_log("Token exists in DB: ".($exists ? 'YES' : 'NO'));
-    
-    die(json_encode([
-        'status' => 'error',
-        'message' => 'Invalid or expired token',
-        'debug' => [
-            'token_exists' => $exists ? 'yes' : 'no',
-            'db_time' => $conn->query("SELECT NOW()")->fetchColumn()
-        ]
-    ]));
+    echo "Error: " . $stmt->errorInfo()[2];
+    exit;
+}
+
+$getUser = $conn->prepare("SELECT * FROM user WHERE id = ?");
+$getUser->execute([$user_id]);
+$user = $getUser->fetch();
+
+if (!$user) {
+    echo "User not found";
+    exit;
+} else {
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['id'] = $user['id'];
+
 }
 
 
