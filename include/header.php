@@ -9,7 +9,7 @@ if(!isset($_SESSION['username'])) {
     $_SESSION['id'];
 }
 
-echo $_SESSION['username'] ." This username is on header.php";
+// echo $_SESSION['username'] ." This username is on header.php";
 
 require 'domain.php';
 define("PHONE", "+855 969 666 961");

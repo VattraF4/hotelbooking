@@ -5,7 +5,8 @@ require "../config/config.php";
 if (!isset($_SESSION['username'])) {
     echo "You are not logged in.";
 }else{
-    echo $_SESSION['username'] ." This username is on welcome.php";
+    // echo $_SESSION['username'] ." This username is on welcome.php";
+    $username = $_SESSION['username'];
 }
 ?>
 
