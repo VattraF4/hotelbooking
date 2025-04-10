@@ -5,13 +5,13 @@
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
-$username = '';
-if(isset($_SESSION['username'])) {
+$username = 'Error';
+if(!isset($_SESSION['username'])) {
+    $username=$_SESSION['username'] = null;
+    $user_id = $_SESSION['id'] = null;
+}else{
     $username= $_SESSION['username'];
     $user_id = $_SESSION['id'];
-}else{
-    $username=$_SESSION['username'] = null;
-    $user_id = $_SESSION['user_id'] = null;
 }
 ?>
 
