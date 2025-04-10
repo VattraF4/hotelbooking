@@ -38,9 +38,9 @@ $user = $getUser->fetch();
 if (!$user) {
     echo "User not found";
     exit;
-}else{
-    $_SESSION['email']= $user['email'];
-    $_SESSION['username']=$user['username'];
+} else {
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['username'] = $user['username'];
     $_SESSION['id'] = $user['id'];
 
 }
@@ -69,19 +69,40 @@ $qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . 
                     <div class="col-md-6">
                         <img src="<?php echo $qrCodeImg; ?>" alt="Scan to Log In" class="img-fluid">
                     </div>
-                    <div class="col-md-6">
+                    < class="col-md-6">
                         <br>
                         <p class="card-text">Scan this QR code to log in automatically.</p>
                         <p>This QR Code valid for 1 Device only!!</p>
-                        <a href="<?php echo $loginUrl; ?>" class="btn btn-primary">Log In</a>
-                    </div>
+                        <!-- <a href="<?php echo $loginUrl; ?>" class="btn btn-primary">Log In</a> -->
+                        <div class="input-group ">
+                            <input type="text" class="form-control" value="<?php echo $loginUrl; ?>" id="qr-login-url"
+                                readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"
+                                    onclick="copyToClipboard('#qr-login-url')">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Use script to copy -->
+                        <script>
+                            function copyToClipboard(element) {
+                                var $temp = $("<input>");
+                                $("body").append($temp);
+                                $temp.val($(element).val()).select();
+                                document.execCommand("copy");
+                                $temp.remove();
+                            }
+                        </script>
+
                 </div>
-                <div class="card-footer">
-                    <p class="card-text text-muted">Expires at: <?php echo $expiresAt; ?></p>
-                </div>
+            </div>
+            <div class="card-footer">
+                <p class="card-text text-muted">Expires at: <?php echo $expiresAt; ?></p>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>
