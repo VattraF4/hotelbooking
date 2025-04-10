@@ -42,8 +42,8 @@ if (isset($_POST['submit'])) {
                     $_SESSION['id'] = $fetch['id'];
                     $_SESSION['username'] = $fetch['username'];
                     $_SESSION['my_password'] = $fetch['my_password'];
-                    // echo "<script>alert('Welcome.php');</script>";
-                    echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+                    echo "<script>alert('Welcome.php');</script>";
+                    // echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
                     exit();
                 } else {
                     $error = 'Your password is incorrect';
