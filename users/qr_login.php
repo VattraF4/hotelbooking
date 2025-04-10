@@ -1,63 +1,78 @@
-<?php 
-require '../include/header.php';
-
-// Check referrer security
+<?php require '../include/header.php'; ?>
+<?php
+// require '../include/domain.php';
 if (!isset($_SERVER['HTTP_REFERER'])) {
+    // redirect them to your desired location
     echo "<script>window.location.href='" . APP_URL . "auth/logout.php';</script>";
     exit;
 }
+?>
+<?php
 
-// Set timezone
+// In your PHP:
 if (isset($_COOKIE['user_timezone'])) {
     date_default_timezone_set($_COOKIE['user_timezone']);
 } else {
+    // Fallback to server timezone
     date_default_timezone_set('Asia/Phnom_Penh');
 }
-
-require '../config/config.php';
-
-// Verify session
-if (!isset($_SESSION['id'])) {
-    header("Location: " . APP_URL . "auth/login.php");
-    exit;
-}
-
-$user_id = $_SESSION['id'];
-
-// 1. Generate a unique token (expires in 5 mins)
-$token = bin2hex(random_bytes(32));
-$expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:s');
-
-// 2. Store token in database - THIS IS THE CORRECT QUERY FOR QR-LOGIN.PHP
-$stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (?, ?, ?)");
-if (!$stmt->execute([$token, $user_id, $expiresAt])) {
-    error_log("Failed to store QR token: " . print_r($stmt->errorInfo(), true));
-    die("Failed to generate login token. Please try again.");
-}
-
-// 3. Get user data
-$user = $conn->prepare("SELECT * FROM user WHERE id = ?")->execute([$user_id])->fetch();
-if (!$user) {
-    die("User not found");
-}
-
-// 4. Create QR code URL
-$loginUrl = rtrim(APP_URL, '/') . "/auth/qr-verify.php?" . http_build_query([
-    'token' => $token,
-    'id' => $user_id
-]);
-
-$qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?" . http_build_query([
-    'size' => '300x300',
-    'data' => $loginUrl,
-    'format' => 'png',
-    'margin' => 10
-]);
-
-// Debug output
-error_log("Generated QR Token: $token for user $user_id, expires at $expiresAt");
 ?>
 
+<?php
+// qr-login.php
+require '../config/config.php';
+$user_id = $_SESSION['id'];
+echo $user_id;
+// 1. Generate a unique token (expires in 5 mins)
+$token = bin2hex(random_bytes(32));
+
+$expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); // 5-minute expiry
+
+// 2. Store token + email in the database
+// Replace your current query with this:
+$stmt = $conn->prepare("
+    SELECT user_id, expires_at 
+    FROM qr_tokens 
+    WHERE token = ? 
+    AND user_id = ?
+    AND used_at IS NULL
+    AND expires_at > (NOW() - INTERVAL 5 MINUTE)  /* Grace period */
+");
+$stmt->execute([$token, $user_id]);
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$result) {
+    // Enhanced error reporting
+    $errorInfo = $conn->errorInfo();
+    error_log("Token verification failed. DB error: ".print_r($errorInfo, true));
+    
+    // Check if token exists at all
+    $exists = $conn->prepare("SELECT 1 FROM qr_tokens WHERE token = ?")->execute([$token]);
+    error_log("Token exists in DB: ".($exists ? 'YES' : 'NO'));
+    
+    die(json_encode([
+        'status' => 'error',
+        'message' => 'Invalid or expired token',
+        'debug' => [
+            'token_exists' => $exists ? 'yes' : 'no',
+            'db_time' => $conn->query("SELECT NOW()")->fetchColumn()
+        ]
+    ]));
+}
+
+
+// 3. Create a QR code that links to a login URL with the token
+$loginUrl = APP_URL . "auth/qr-verify.php?token=$token&id=$user_id";
+$qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($loginUrl);
+
+// 4. Display the QR code
+// echo "<img src='$qrCodeImg' alt='Scan to Log In'>";
+// echo "<p>Scan this QR code to log in automatically.</p>";
+
+// 5. Display a link to the login page
+// echo "<a href='$loginUrl'>Log In</a>";
+// echo $expiresAt;
+?>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -67,43 +82,48 @@ error_log("Generated QR Token: $token for user $user_id, expires at $expiresAt")
                 </div>
                 <div class="card-body row">
                     <div class="col-md-6">
-                        <img src="<?= htmlspecialchars($qrCodeImg) ?>" alt="Scan to Log In" class="img-fluid">
+                        <img src="<?php echo $qrCodeImg; ?>" alt="Scan to Log In" class="img-fluid">
                     </div>
                     <div class="col-md-6">
                         <br>
                         <p class="card-text">Scan this QR code to log in automatically.</p>
                         <p>This QR Code valid for 1 Device or once only!!</p>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="<?= htmlspecialchars($loginUrl) ?>" id="qr-login-url" readonly>
+                        <!-- <a href="<?php echo $loginUrl; ?>" class="btn btn-primary">Log In</a> -->
+                        <div class="input-group ">
+                            <input type="text" class="form-control" value="<?php echo $loginUrl; ?>" id="qr-login-url"
+                                readonly>
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" onclick="copyToClipboard('#qr-login-url')">
+                                <button class="btn btn-primary" type="button"
+                                    onclick="copyToClipboard('#qr-login-url')">
                                     Copy
                                 </button>
                             </div>
                         </div>
-                    </div>
+                        <!-- Use script to copy -->
+                        <script>
+                            function copyToClipboard(element) {
+                                var $temp = $("<input>");
+                                $("body").append($temp);
+                                $temp.val($(element).val()).select();
+                                document.execCommand("copy");
+                                $temp.remove();
+                            }
+                        </script>
+
                 </div>
-                <div class="card-footer">
-                    <p class="card-text text-muted">Expires at: <?= htmlspecialchars($expiresAt) ?></p>
-                </div>
+            </div>
+            <div class="card-footer">
+                <p class="card-text text-muted">Expires at: <?php echo $expiresAt; ?></p>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 <script>
-    // Set timezone cookie
+    // Get user's timezone from browser
     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    document.cookie = `user_timezone=${encodeURIComponent(userTimezone)}; path=/; max-age=86400`;
-    
-    function copyToClipboard(element) {
-        const $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val($(element).val()).select();
-        document.execCommand("copy");
-        $temp.remove();
-        alert("URL copied to clipboard!");
-    }
+    // Send to PHP via cookie or AJAX
+    document.cookie = `user_timezone= ${userTimezone}; path=/`;
 </script>
-
 <?php require '../include/footer.php'; ?>
