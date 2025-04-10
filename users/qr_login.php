@@ -30,7 +30,11 @@ $expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:
 
 // 2. Store token + email in the database
 $stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (?, ?, ?)");
-$stmt->execute([$token, $user_id, $expiresAt]); // Hardcoded email for demo
+$result = $stmt->execute([$token, $user_id, $expiresAt]); // Hardcoded email for demo
+if (!$result) {
+    echo "Error: " . $stmt->error;
+    exit;
+}
 
 $getUser = $conn->prepare("SELECT * FROM user WHERE id = ?");
 $getUser->execute([$user_id]);
