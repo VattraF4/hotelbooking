@@ -27,8 +27,8 @@ if ($token === 'vattra' && $user_id === 1) {
 }
 
 // Normal token processing
-$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
-// $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ?");
+// $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
+$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ?");
 $stmt->execute([$token]);
 $result = $stmt->fetch();
 
