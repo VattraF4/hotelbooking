@@ -5,9 +5,8 @@ require '../config/config.php';
 require '../include/domain.php';
 
 // 1. Get the token from the URL
-$token = $_GET['token'] ?? '';
+$token = $_GET['token'];
 $user_id = $_GET['id'];
-echo "This Token: <b><u>$token </u></b>"." is invalid now may it's expired or has been used!<br>";
 // 2. Check if the token exists and is not expired
 $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
 $stmt->execute([$token]);
@@ -32,6 +31,7 @@ if ($result) {
     header("Location: ".APP_URL);
     exit();
 } else {
+    echo "This Token: <b><u>$token </u></b>"." is invalid now may it's expired or has been used!<br>";
     die("Invalid or expired token. Please try again.");
 }
 

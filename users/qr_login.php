@@ -32,7 +32,7 @@ $expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:
 $stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (?, ?, ?)");
 $result = $stmt->execute([$token, $user_id, $expiresAt]); // Hardcoded email for demo
 if (!$result) {
-    echo "Error: " . $stmt->error;
+    echo "Error: " . $stmt->errorInfo()[2];
     exit;
 }
 

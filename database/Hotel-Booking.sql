@@ -113,7 +113,7 @@ CREATE TABLE qr_tokens (
 );
 
 SELECT user_id FROM qr_tokens WHERE token = '1c6a66c33a541f28fbcd715501ae0f8311c55cc6fabf2956695b7efd2afcef1c' AND expires_at > NOW();
-SELECT  * FROM qr_tokens WHERE token = '733fddc1de53baccf61e02a7a05b24ef3a720988c9c7f958bb7eba9307eed848' ;
+SELECT  * FROM qr_tokens WHERE token = '6887706cb4362f0699db04604b03896090c24d7c38ea8f3ff6ab1875dfb795bf' ;
 
 ##----------INSERT DATA----------------##
 #1 Insert User
