@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
         $password = $_POST['password'];
 
         // Admin login check
-        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email'");
+        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email' ");
         $adminLogin->execute();
         $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
 

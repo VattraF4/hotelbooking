@@ -55,13 +55,17 @@ if (isset($_POST['submit'])) {
 
     // Upload image to server directory
     $target_directory = "room_images/";
+    $target_file = $target_directory . basename($images);
 
     // Check if the target directory exists and create it if it doesn't
     if (!file_exists($target_directory)) {
         mkdir($target_directory, 0777, true);
     }
-    $target_file = $target_directory . basename($images);
-
+    
+    //Check file exists and delete
+    if(file_exists($target_file)){
+        unlink($target_file);
+    }
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
       echo "<script>alert('Image upload successfully')</script>";
 
