@@ -22,6 +22,7 @@ if (isset($_COOKIE['user_timezone'])) {
 // qr-login.php
 require '../config/config.php';
 $user_id = $_SESSION['id'];
+echo $user_id;
 // 1. Generate a unique token (expires in 5 mins)
 $token = bin2hex(random_bytes(32));
 
@@ -72,7 +73,7 @@ $qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . 
                     <div class="col-md-6">
                         <br>
                         <p class="card-text">Scan this QR code to log in automatically.</p>
-                        <p>This QR Code valid for 1 Device only!!</p>
+                        <p>This QR Code valid for 1 Device or once only!!</p>
                         <!-- <a href="<?php echo $loginUrl; ?>" class="btn btn-primary">Log In</a> -->
                         <div class="input-group ">
                             <input type="text" class="form-control" value="<?php echo $loginUrl; ?>" id="qr-login-url"
