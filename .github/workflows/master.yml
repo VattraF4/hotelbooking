@@ -1,19 +1,19 @@
 on: push
 name: 🚀 Deploy website on push
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
 
-    - name: 📂 Sync files
-      uses: Penguibird/FTP-Deploy-Action@4.2.0
-      with:
-        server:  ${{ secrets.FTP_SERVER }} #Updated FTP server hostname
-          # ftp.ranavattra.com 
-        username: ${{ secrets.FTP_USERNAME }}
-          # hotelbooking@ranavattra.com
-        password: ${{ secrets.FTP_PASSWORD }}
-       
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: sftp
