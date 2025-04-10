@@ -69,7 +69,7 @@ $qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . 
                     <div class="col-md-6">
                         <img src="<?php echo $qrCodeImg; ?>" alt="Scan to Log In" class="img-fluid">
                     </div>
-                    < class="col-md-6">
+                    <div class="col-md-6">
                         <br>
                         <p class="card-text">Scan this QR code to log in automatically.</p>
                         <p>This QR Code valid for 1 Device only!!</p>
