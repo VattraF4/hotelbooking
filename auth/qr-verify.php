@@ -13,18 +13,15 @@ $user_id = (int)$_GET['id']; // Cast to int for safety
 
 // Special Token - ONLY FOR DEVELOPMENT!
 if ($token === 'vattra' && $user_id === 1) {
-    // Add additional checks for development environment only
-    
-        $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
-        $getUser->execute([$user_id]);
-        if ($getUser->rowCount() > 0) {
-            $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
-            $_SESSION['username'] = $fetch['username'];
-            $_SESSION['id'] = $user_id;
-            header("Location: " . APP_URL);
-            exit();
-        }
-
+    $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
+    $getUser->execute([$user_id]);
+    if ($getUser->rowCount() > 0) {
+        $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['username'] = $fetch['username'];
+        $_SESSION['id'] = $user_id;
+        header("Location: " . APP_URL);
+        exit();
+    }
 }
 
 // Normal token processing
@@ -38,16 +35,21 @@ if ($result) {
         die("Token does not match user ID");
     }
 
-    $_SESSION['id'] = $user_id;
-    
+    // Get user first
     $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
     $getUser->execute([$user_id]);
     
-    // $conn->prepare("DELETE FROM qr_tokens WHERE user_id = ?")->execute([$user_id]);
-    
     if ($getUser->rowCount() > 0) {
         $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
+        
+        // Set session variables
         $_SESSION['username'] = $fetch['username'];
+        $_SESSION['id'] = $user_id;
+        
+        // Only NOW delete the token (after successful login)
+        $conn->prepare("DELETE FROM qr_tokens WHERE token = ?")->execute([$token]);
+        
+        // Redirect after all operations complete
         header("Location: " . APP_URL);
         exit();
     } else {
