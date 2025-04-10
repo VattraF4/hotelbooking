@@ -7,11 +7,11 @@ define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 $username = 'Error';
 if(!isset($_SESSION['username'])) {
-    $username=$_SESSION['username'] = null;
-    $user_id = $_SESSION['id'] = null;
+    $_SESSION['username'] = null;
+    $_SESSION['id'] = null;
 }else{
-    $username= $_SESSION['username'];
-    $user_id = $_SESSION['id'];
+    $_SESSION['username'];
+    $_SESSION['id'];
 }
 ?>
 
