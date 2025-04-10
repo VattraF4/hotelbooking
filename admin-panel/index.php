@@ -5,7 +5,7 @@ require 'layouts/header.php';
 
 <?php
 // if (!isset($_SERVER['HTTP_REFERER'])) {
-//  // redirect them to your desired location
+
 //   echo "<script>window.location.href='../error/';</script>";
 //   exit;
 
