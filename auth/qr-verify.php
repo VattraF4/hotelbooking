@@ -1,5 +1,14 @@
 <?php
-// auth/qr-verify.php
+// Replace your session_start() with this:
+$domain = str_replace('www.', '', parse_url(APP_URL, PHP_URL_HOST));
+session_set_cookie_params([
+    'lifetime' => 86400,
+    'path' => '/',
+    'domain' => $domain,  // Main domain without subdomain
+    'secure' => true,     // Requires HTTPS
+    'httponly' => true,
+    'samesite' => 'None'  // Essential for cross-device
+]);
 session_start();
 require '../config/config.php';
 require '../include/domain.php';
