@@ -1,3 +1,4 @@
+
 <?php session_start(); ?> <!--  // Start the session-->
 
 <?php
@@ -7,8 +8,10 @@ define("EMAIL", "ravattrasmartboy@gmail.com");
 $username = '';
 if(!isset($_SESSION['username'])) {
     $username=$_SESSION['username'] = null;
+    $user_id = $_SESSION['user_id'] = null;
 }else{
     $username= $_SESSION['username'];
+    $user_id = $_SESSION['id'];
 }
 ?>
 
@@ -109,6 +112,7 @@ if(!isset($_SESSION['username'])) {
                                 <!-- Booking with user id -->
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>users/booking.php?id=<?php echo $_SESSION['id'] ?>">Booking</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>users/qr_login.php">Login via QR Code</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/changepassword.php"><i class="fa fa-cog"></i> Change Password</a></li>
                             </ul>
                         </li>
