@@ -8,7 +8,8 @@ require '../include/domain.php';
 $token = $_GET['token'];
 $user_id = $_GET['id'];
 // 2. Check if the token exists and is not expired
-$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
+// $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
+$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? ");
 $stmt->execute([$token]);
 $result = $stmt->fetch();
 
