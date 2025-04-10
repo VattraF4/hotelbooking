@@ -3,10 +3,9 @@ require "../config/config.php";
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    // If the user is not logged in, redirect to login page
-    // echo "<script>window.location.href = 'login.php';</script>";
-    // echo "<script>window.location.href = '" . APP_URL . "auth/login.php';</script>";
-    exit();
+    echo "You are not logged in.";
+}else{
+    echo $_SESSION['username'] ." This username is on welcome.php";
 }
 ?>
 
