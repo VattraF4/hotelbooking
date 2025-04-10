@@ -3,7 +3,7 @@
     // Get user's timezone from browser
     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     // Send to PHP via cookie or AJAX
-    document.cookie = `user_timezone=${userTimezone}; path=/`;
+    document.cookie = `user_timezone= ${userTimezone}; path=/`;
 </script>
 
 <?php
