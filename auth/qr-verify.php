@@ -53,7 +53,7 @@ if ($result) {
         $conn->prepare("DELETE FROM qr_tokens WHERE token = ?")->execute([$token]);
 
         // Redirect after all operations complete
-        header("Location: " . APP_URL);
+        header("Location: " . APP_URL."auth/welcome.php");
         exit();
     } else {
         die("User not found. Please try again.");
