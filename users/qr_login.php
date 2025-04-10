@@ -1,28 +1,45 @@
+// In your HTML/JavaScript:
+<script>
+    // Get user's timezone from browser
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // Send to PHP via cookie or AJAX
+    document.cookie = `user_timezone=${userTimezone}; path=/`;
+</script>
+
 <?php
-// login.php
+// In your PHP:
+if (isset($_COOKIE['user_timezone'])) {
+    date_default_timezone_set($_COOKIE['user_timezone']);
+} else {
+    // Fallback to server timezone
+    date_default_timezone_set('Asia/Phnom_Penh');
+}
+?>
+<?php
+// qr-login.php
 session_start();
-require '../config/config.php'; // Your database connection
 require '../include/domain.php';
+require '../config/config.php';
 
-// Generate a unique token (expires in 2 minutes)
+// 1. Generate a unique token (expires in 5 mins)
 $token = bin2hex(random_bytes(32));
-$expiresAt = date('Y-m-d H:i:s', time() + 5*60); // 5 minutes expiry
-$user_id = 1;
 
-// Store in the database (linked to the user who will log in)
-$stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (:token, :user_id, :expires_at)");
-$stmt->execute([
-    ':token' => $token,
-    ':user_id' => $user_id,
-    ':expires_at' => $expiresAt
-]);
+$expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); // 5-minute expiry
 
-// Generate QR code URL
-$qrUrl = "https://APP_URL/auth/confirm-login?token=$token";
-$qrCodeImage = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($qrUrl);
+// 2. Store token + email in the database
+$stmt = $conn->prepare("INSERT INTO qr_tokens (token, user_id, expires_at) VALUES (?, ?, ?)");
+$stmt->execute([$token, 1, $expiresAt]); // Hardcoded email for demo
 
-// Display QR code to the user
-echo "<img src='$qrCodeImage' alt='Scan to Login'>";
-echo urlencode($qrUrl);
 
+// 3. Create a QR code that links to a login URL with the token
+$loginUrl = "ranavattra.com/auth/qr-verify.php?token=$token";
+$qrCodeImg = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($loginUrl);
+
+// 4. Display the QR code
+echo "<img src='$qrCodeImg' alt='Scan to Log In'>";
+echo "<p>Scan this QR code to log in automatically.</p>";
+
+// 5. Display a link to the login page
+echo "<a href='$loginUrl'>Log In</a>";
+echo $expiresAt;
 ?>

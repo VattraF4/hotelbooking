@@ -102,6 +102,7 @@ CREATE TABLE admin
 INSERT INTO admin(adminname, email, my_password)
 VALUE('admin','admin@ranavattra.com','$2y$10$sS5MNye1rH4wYZIp79K01uRl1FlFKmLwtdYUO.Li9gD6.UlDbKzhW');
 -- Create Qr Token
+
 DROP TABLE IF EXISTS qr_tokens;
 CREATE TABLE qr_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -111,7 +112,8 @@ CREATE TABLE qr_tokens (
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 );
 
-
+SELECT user_id FROM qr_tokens WHERE token = '1c6a66c33a541f28fbcd715501ae0f8311c55cc6fabf2956695b7efd2afcef1c' AND expires_at > NOW();
+SELECT  * FROM qr_tokens WHERE token = '733fddc1de53baccf61e02a7a05b24ef3a720988c9c7f958bb7eba9307eed848' ;
 
 ##----------INSERT DATA----------------##
 #1 Insert User
