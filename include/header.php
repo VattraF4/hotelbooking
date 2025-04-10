@@ -2,13 +2,10 @@
 <?php session_start(); ?> <!--  // Start the session-->
 
 <?php
-// if(!isset($_SESSION['username'])) {
-//     $_SESSION['username'] = null;
-//     $_SESSION['id'] = null;
-// }else{
-//     $_SESSION['username'];
-//     $_SESSION['id'];
-// }
+
+    $_SESSION['username'];
+    $_SESSION['id'];
+
 require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
