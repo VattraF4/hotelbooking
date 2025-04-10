@@ -1,101 +1,71 @@
 <?php
-require '../include/header.php';
 require '../config/config.php';
+require '../include/domain.php';
 
-// Debugging setup
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-date_default_timezone_set('Asia/Phnom_Penh');
+// Enable CORS and secure headers
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("X-Content-Type-Options: nosniff");
+
+// Debugging
+error_log("QR Verification Request from: " . $_SERVER['HTTP_USER_AGENT']);
 
 // Validate input
-if (!isset($_GET['token']) || !isset($_GET['id'])) {
-    die(json_encode([
-        'status' => 'error',
-        'message' => 'Missing parameters',
-        'redirect' => APP_URL . 'auth/login.php'
-    ]));
+if (empty($_GET['token']) || empty($_GET['id'])) {
+    http_response_code(400);
+    die(json_encode(['status' => 'error', 'message' => 'Missing parameters']));
 }
 
 $token = trim($_GET['token']);
 $user_id = (int)$_GET['id'];
 
-// Verify token format
-if (!preg_match('/^[a-f0-9]{64}$/i', $token)) {
-    die(json_encode([
-        'status' => 'error',
-        'message' => 'Invalid token format',
-        'redirect' => APP_URL . 'auth/login.php'
-    ]));
-}
-
 try {
-    // Check token with 1-minute grace period
+    // Verify token (with 2 minute grace period)
     $stmt = $conn->prepare("
-        SELECT user_id, expires_at 
-        FROM qr_tokens 
+        SELECT user_id FROM qr_tokens 
         WHERE token = ? 
         AND user_id = ?
-        AND expires_at > DATE_SUB(NOW(), INTERVAL 1 MINUTE)
+        AND expires_at > DATE_SUB(NOW(), INTERVAL 2 MINUTE)
+        AND used_at IS NULL
     ");
     $stmt->execute([$token, $user_id]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$result) {
-        // Additional debug for missing token
-        $check_stmt = $conn->prepare("SELECT COUNT(*) FROM qr_tokens WHERE token = ?");
-        $check_stmt->execute([$token]);
-        $exists = $check_stmt->fetchColumn();
-        
-        error_log("Token exists: " . ($exists ? 'Yes' : 'No'));
-        die(json_encode([
-            'status' => 'error',
-            'message' => 'Invalid or expired token',
-            'redirect' => APP_URL . 'auth/login.php'
-        ]));
+    
+    if (!$stmt->fetch()) {
+        error_log("Invalid token attempt: $token");
+        http_response_code(401);
+        die(json_encode(['status' => 'error', 'message' => 'Invalid or expired token']));
     }
 
-    // Get user data
-    $user_stmt = $conn->prepare("SELECT * FROM user WHERE id = ?");
-    $user_stmt->execute([$user_id]);
-    $user = $user_stmt->fetch(PDO::FETCH_ASSOC);
+    // Mark token as used
+    $conn->prepare("UPDATE qr_tokens SET used_at = NOW() WHERE token = ?")->execute([$token]);
 
-    if (!$user) {
-        die(json_encode([
-            'status' => 'error',
-            'message' => 'User not found',
-            'redirect' => APP_URL . 'auth/login.php'
-        ]));
-    }
+    // Start session with cross-device support
+    session_start([
+        'cookie_lifetime' => 86400,
+        'cookie_secure' => true,
+        'cookie_httponly' => true,
+        'cookie_samesite' => 'None',
+        'cookie_domain' => '.' . parse_url(APP_URL, PHP_URL_HOST),
+    ]);
 
-    // Create session
+    // Set session data
     $_SESSION = [
-        'id' => $user['id'],
-        'username' => $user['username'],
-        'email' => $user['email'],
+        'id' => $user_id,
         'qr_verified' => true,
-        'last_login' => time()
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+        'ip_address' => $_SERVER['REMOTE_ADDR']
     ];
 
-    // Cleanup tokens
-    $conn->prepare("DELETE FROM qr_tokens WHERE token = ?")->execute([$token]);
-    $conn->prepare("DELETE FROM qr_tokens WHERE expires_at < NOW()")->execute();
-
-    // Success
+    // Return success
     echo json_encode([
         'status' => 'success',
         'message' => 'Login successful',
+        'session_id' => session_id(),
         'redirect' => APP_URL
     ]);
-    exit;
 
 } catch (PDOException $e) {
-    error_log("Database Error: " . $e->getMessage());
-    die(json_encode([
-        'status' => 'error',
-        'message' => 'System error occurred',
-        'redirect' => APP_URL . 'auth/login.php'
-    ]));
+    error_log("Database error: " . $e->getMessage());
+    http_response_code(500);
+    die(json_encode(['status' => 'error', 'message' => 'System error']));
 }
-
-require '../include/footer.php';
-?>
