@@ -25,17 +25,19 @@ if (!isset($_SESSION['adminname'])) {
           <!-- Set table No Wrap -->
           <style>
             table td,
-            table th,#alert {
+            table th,
+            #alert {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
             }
           </style>
-          <table class="table table-striped table-responsive"><br><hr>
-      
+          <table class="table table-striped table-responsive"><br>
+            <hr>
+
             <div class="alert alert-primary text-center" id="alert">
-             Click images to View
-           </div>
+              Click images to View
+            </div>
             <thead style="background-color:#007BFF; color: white;">
               <tr>
                 <th scope="col">#</th>
@@ -46,6 +48,7 @@ if (!isset($_SESSION['adminname'])) {
                 <th scope="col">Size</th>
                 <th scope="col">View</th>
                 <th scope="col">Bed</th>
+                <th scope="col">Price</th>
                 <th scope="col">Hotel</th>
                 <th scope="col">status</th>
                 <th scope="col">Update Status</th>
@@ -81,18 +84,36 @@ if (!isset($_SESSION['adminname'])) {
                   <th scope="row"><?php echo $room->size ?></th>
                   <th scope="row"><?php echo $room->view ?></th>
                   <th scope="row"><?php echo $room->num_bed ?></th>
-                  <th scope="row"><?php echo $room->hotel_name ?></th>
+                  <th scope="row"><?php echo $room->price ?></th>
+                  <?php
+                  $hotel_id = $room->hotel_id;
+                  $allHotels = $conn->prepare("SELECT * FROM hotels WHERE id=$hotel_id");
+                  $allHotels->execute();
+                  $hotels = $allHotels->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($hotels as $hotel): ?>
+                    <th scope="row"><?php echo $hotel->name ?></th>
+                    <?php
+                  endforeach;
+                  ?>
 
-                  <?php if ($room->status == 1) {$alert = "Active";} else {$alert = "Inactive";}?>
-                  <th scope="row" style="color: <?php echo ($room->status == 1) ? 'green' : 'red' ?>"><?php echo $alert ?></th>
 
-                  <td><a href="status-rooms.php?id=<?php echo $room->id ?>" class="btn btn-primary text-white text-center ">status</a></td>
-                  <td><a href="delete-rooms.php?id=<?php echo $room->id ?>" class="btn btn-danger  text-center ">Delete</a></td>
+                  <?php if ($room->status == 1) {
+                    $alert = "Active";
+                  } else {
+                    $alert = "Inactive";
+                  } ?>
+                  <th scope="row" style="color: <?php echo ($room->status == 1) ? 'green' : 'red' ?>"><?php echo $alert ?>
+                  </th>
+
+                  <td><a href="status-rooms.php?id=<?php echo $room->id ?>"
+                      class="btn btn-primary text-white text-center ">status</a></td>
+                  <td><a href="delete-rooms.php?id=<?php echo $room->id ?>"
+                      class="btn btn-danger  text-center ">Delete</a></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
-         
+
         </div>
       </div>
     </div>

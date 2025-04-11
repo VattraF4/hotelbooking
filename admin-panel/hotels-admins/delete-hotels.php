@@ -20,8 +20,8 @@ $getImage = $conn->query("SELECT * FROM hotels WHERE id = '$id'"); //connect to 
 $getImage->execute(); //execute the query
 $image = $getImage->fetch(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
-if (file_exists('../../images/' . $image->image)) {
-    unlink('../../images/' . $image->image);
+if (file_exists('hotel_images/' . $image->image)) {
+    unlink('hotel_images/' . $image->image);
 }
 
 try{

@@ -64,9 +64,9 @@ create table rooms
     view       varchar(255)                          not null,
     num_bed    int(15)                               not null,
     hotel_id   int(15)                               not null,
-    hotel_name varchar(255)                          not null,
     status     int(1)    default 1                   not null,
-    create_at  timestamp default current_timestamp() not null
+    create_at  timestamp default current_timestamp() not null,
+    FOREIGN KEY (hotel_id) REFERENCES hotels (id) ON DELETE CASCADE # on delete cascade mean if I delete hotels it will delete rooms
 );
 #Alter Table in this statement use to add new column
 ALTER TABLE rooms
@@ -142,11 +142,11 @@ VALUES
 #Insert a column name status in to hotels table with default value 1
 
 # 4 Insert Into Room
-INSERT INTO rooms (name, price, images, num_person, size, view, num_bed, hotel_id, hotel_name, status)
-VALUES ('Suite Room', 200, 'room-1.jpg', 3, 45, 'Sea View', 1, 1, 'Sheraton', 1),
-       ('Standard Room', 100, 'room-2.jpg', 3, 60, 'Sea View', 2, 2, 'The Plaza Hotel', 1),
-       ('Family Room', 89, 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 'The Ritz', 1),
-       ('Deluxe Room', 95, 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 'Sheraton', 1);
+INSERT INTO rooms (name, price, images, num_person, size, view, num_bed, hotel_id,  status)
+VALUES ('Suite Room', 200, 'room-1.jpg', 3, 45, 'Sea View', 1, 1,  1),
+       ('Standard Room', 100, 'room-2.jpg', 3, 60, 'Sea View', 2, 2, 1),
+       ('Family Room', 89, 'room-3.jpg', 4, 70, 'Sea View', 3, 3, 1),
+       ('Deluxe Room', 95, 'room-4.jpg', 5, 70, 'Sea View', 1, 1, 1);
 
 
 #5 Insert Utilities

@@ -93,7 +93,7 @@ if (isset($_GET['id'])) {
 ?>
 
 <div class="hero-wrap js-fullheight"
-	style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<?php echo APP_URL; ?>images/<?php echo $singleRoom->images; ?>');"
+	style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<?php echo APP_URL; ?>admin-panel/rooms-admins/room_images/<?php echo $singleRoom->images; ?>');"
 	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
@@ -180,7 +180,7 @@ if (isset($_GET['id'])) {
 
 		<div class="row no-gutters">
 			<div class="col-md-6 wrap-about">
-				<div class="img img-2 mb-4" style="background-image: url(<?php echo APP_URL; ?>images/image_2.jpg);">
+				<div class="img img-2 mb-4" style="background-image: url(<?php echo APP_URL; ?>admin-panel/rooms-admins/room_images/image_2.jpg);">
 				</div>
 				<h2>The most recommended vacation rental</h2>
 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a

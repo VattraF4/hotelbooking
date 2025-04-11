@@ -21,7 +21,7 @@ if ($token === 'vattra' && $user_id === 1) {
         $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
         $_SESSION['username'] = $fetch['username'];
         $_SESSION['id'] = $user_id;
-        header("Location: " . APP_URL);
+        header("Location: " . APP_URL."auth/welcome.php");
         exit();
     }
 }
