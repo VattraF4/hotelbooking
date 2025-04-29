@@ -7,11 +7,14 @@ $error = "";
 $email = "";
 $step = isset($_POST['step']) ? $_POST['step'] : 1;
 
-echo "<script>console.log('".$user_id."')</script>";
-echo "<script>console.log('".$_SESSION['username']."')</script>";
+//Check DATA for debug
+if(isset($_SESSION['username'])){
+    echo "<script>console.log('".$user_id."')</script>";
+    echo "<script>console.log('".$_SESSION['username']."')</script>";
+}
 // Handle logged-in users
 if (isset($user_id)) {
-    // echo "<script>alert('".$user_id."')</script>";
+    // echo "<script>console.log('".$user_id."')</script>";
     $stmt = $conn->prepare("SELECT email FROM user WHERE id = :user_id");
     $stmt->execute([':user_id' => $_SESSION['id']]);
     $user = $stmt->fetch(PDO::FETCH_OBJ);
