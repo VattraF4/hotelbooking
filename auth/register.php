@@ -42,67 +42,67 @@ if (isset($_POST['verify_otp'])) {
 }
 
 // Handle initial registration form submission (send OTP)
-if (isset($_POST['submit'])) {
-    if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['phone']) || empty($_POST['confirm_password'])) {
-        echo "<script>alert('One or more inputs are empty')</script>";
-    } else {
-        if ($_POST['password'] !== $_POST['confirm_password']) {
-            echo "<script>alert('Password does not match')</script>";
-        } else {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $phone = $_POST['phone'];
+// if (isset($_POST['submit'])) {
+//     if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['phone']) || empty($_POST['confirm_password'])) {
+//         echo "<script>alert('One or more inputs are empty')</script>";
+//     } else {
+//         if ($_POST['password'] !== $_POST['confirm_password']) {
+//             echo "<script>alert('Password does not match')</script>";
+//         } else {
+//             $username = $_POST['username'];
+//             $email = $_POST['email'];
+//             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+//             $phone = $_POST['phone'];
 
-            // Check if email already exists
-            $check = $conn->prepare("SELECT * FROM user WHERE email = :email");
-            $check->execute([':email' => $email]);
-            if ($check->rowCount() > 0) {
-                echo "<script>alert('Email already exists. Please use a different email.')</script>";
-            } else {
-                // Generate OTP
-                $otp = mt_rand(100000, 999999);
+//             // Check if email already exists
+//             $check = $conn->prepare("SELECT * FROM user WHERE email = :email");
+//             $check->execute([':email' => $email]);
+//             if ($check->rowCount() > 0) {
+//                 echo "<script>alert('Email already exists. Please use a different email.')</script>";
+//             } else {
+//                 // Generate OTP
+//                 $otp = mt_rand(100000, 999999);
 
-                // Store OTP and registration data in session
-                $_SESSION['otp'] = $otp;
-                $_SESSION['reg_data'] = [
-                    'username' => $username,
-                    'email' => $email,
-                    'password' => $password,
-                    'phone' => $phone
-                ];
+//                 // Store OTP and registration data in session
+//                 $_SESSION['otp'] = $otp;
+//                 $_SESSION['reg_data'] = [
+//                     'username' => $username,
+//                     'email' => $email,
+//                     'password' => $password,
+//                     'phone' => $phone
+//                 ];
 
-                // Send OTP via email
-                $mail = new PHPMailer(true);
-                try {
-                    // SMTP settings
-                    $mail->isSMTP();
-                    $mail->Host = 'mail.ranavattra.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'ra.vattra.official@ranavattra.com';
-                    $mail->Password = 'v$Is$0f7s4aC';
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+//                 // Send OTP via email
+//                 $mail = new PHPMailer(true);
+//                 try {
+//                     // SMTP settings
+//                     $mail->isSMTP();
+//                     $mail->Host = 'mail.ranavattra.com';
+//                     $mail->SMTPAuth = true;
+//                     $mail->Username = 'ra.vattra.official@ranavattra.com';
+//                     $mail->Password = 'v$Is$0f7s4aC';
+//                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//                     $mail->Port = 587;
 
-                    // Recipients
-                    $mail->setFrom('ra.vattra.official@ranavattra.com', 'Ra Vattra Official');
-                    $mail->addAddress($email);
+//                     // Recipients
+//                     $mail->setFrom('ra.vattra.official@ranavattra.com', 'Ra Vattra Official');
+//                     $mail->addAddress($email);
 
-                    // Content
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Your OTP for Registration';
-                    $mail->Body = 'Your OTP for registration is: <b>' . $otp . '</b> Do not share this code with anyone' . '<br><b>Thanks!</b><br><b>Team Ra Vattra</b>';
+//                     // Content
+//                     $mail->isHTML(true);
+//                     $mail->Subject = 'Your OTP for Registration';
+//                     $mail->Body = 'Your OTP for registration is: <b>' . $otp . '</b> Do not share this code with anyone' . '<br><b>Thanks!</b><br><b>Team Ra Vattra</b>';
 
-                    $mail->send();
-                    $otp_sent = true;
-                } catch (Exception $e) {
-                    echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
-                }
-            }
-        }
-    }
-}
-?>
+//                     $mail->send();
+//                     $otp_sent = true;
+//                 } catch (Exception $e) {
+//                     echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
+//                 }
+//             }
+//         }
+//     }
+// }
+// ?>
 
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
     data-stellar-background-ratio="0.5">

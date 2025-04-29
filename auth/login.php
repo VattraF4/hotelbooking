@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
                     <label style="color: red; text-align: center;"><?php echo $error; ?></label>
                     <div class="dropdown-divider"></div>
                     <p>New around here? <a href="register.php">Sign up</a></p>
-                    <p><a href="forgotpassword.php">Forgot password?</a></p>
+                    <p><a href="change_password.php">Forgot password?</a></p>
                 </form>
             </div>
         </div>

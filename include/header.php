@@ -133,7 +133,7 @@ $username = 'Error';
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/logout.php">Logout</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>users/qr_login.php">Login via QR
                                         Code</a></li>
-                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/changepassword.php"><i
+                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>auth/change_password.php"><i
                                             class="fa fa-cog"></i> Change Password</a></li>
                             </ul>
                         </li>
