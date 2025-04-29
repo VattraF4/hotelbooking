@@ -302,12 +302,12 @@
         <div class="col-md-6 col-lg-8">
 
           <p class="copyright mb-0">
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <!-- Link back to Colorlib can't be removed. Template is licensed under ranavattra -->
             Copyright &copy;
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
-            <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-              target="_blank">Colorlib.com</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | Designed with
+            <i class="fa fa-heart" aria-hidden="true"></i> by <a hrefhttps://ranavattra.com/hotelbooking/about.php#"
+              target="_blank">ranavattra.com</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under ranavattra -->
           </p>
         </div>
         <div class="col-md-6 col-lg-4 text-md-right">
