@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
 			$full_name = $_POST['full_name'];
 			$user_id = $_SESSION['id'];
 			$room_name = $singleRoom->name;
-			$hotel_name = $singleRoom->hotel_name;
+	
 			$status = 'pending';
 			$payment = $singleRoom->price;
 
@@ -60,15 +60,14 @@ if (isset($_GET['id'])) {
 			} else if ($check_out <= $check_in) {
 				echo "<script>alert('Please select a valid date, Wrong with check-out date')</script>";
 			} else {
-				$booking = $conn->prepare("INSERT INTO bookings (email, full_name, phone_number, hotel_name, 
+				$booking = $conn->prepare("INSERT INTO bookings (email, full_name, phone_number,
 					room_name, status, payment, room_id, user_id, check_in, check_out) 
-					VALUES(:email,:full_name, :phone_number, :hotel_name, :room_name, :status, :payment, :room_id, :user_id, :check_in, :check_out)");
+					VALUES(:email,:full_name, :phone_number, :room_name, :status, :payment, :room_id, :user_id, :check_in, :check_out)");
 
 				$booking->execute([
 					':email' => $email,
 					':full_name' => $full_name,
 					':phone_number' => $phone_number,
-					':hotel_name' => $hotel_name,
 					':room_name' => $room_name,
 					':status' => $status,
 					':payment' => $grandTotal,

@@ -104,10 +104,12 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');" data-stellar-background-ratio="0.5">
+<div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
+    data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+            data-scrollax-parent="true">
             <div class="col-md-7 ftco-animate"></div>
         </div>
     </div>
@@ -119,9 +121,11 @@ if (isset($_POST['submit'])) {
             <div class="col-md-8 col-lg-6">
                 <?php if (isset($otp_sent) && $otp_sent): ?>
                     <!-- OTP Verification Form -->
+                    <div class="container mt-5">
                     <form action="register.php" method="post" class="appointment-form">
                         <h3 class="mb-3">Verify OTP</h3>
-                        <p>We've sent a 6-digit OTP to your email <b><?php echo htmlspecialchars($_POST['email']); ?></b>. Please check your inbox.</p>
+                        <p>We've sent a 6-digit OTP to your email <b><?php echo htmlspecialchars($_POST['email']); ?></b>.
+                            Please check your inbox.</p>
 
                         <div class="form-group">
                             <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
@@ -131,35 +135,63 @@ if (isset($_POST['submit'])) {
                             <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
                         </div>
                     </form>
+                    </div>
                 <?php else: ?>
+
+
                     <!-- Registration Form -->
-                    <form action="register.php" method="post" class="appointment-form">
-                        <h3 class="mb-3">Register</h3>
+                    <div class="container mt-5">
+                        <form action="register.php" method="post" class="appointment-form">
+                            <h3 class="mb-3">Register</h3>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" class="form-control" placeholder="Phone Number" required>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
+                            <div class="form-group">
+                                <!-- <input type="password" name="password" class="form-control" placeholder="Password" required> -->
+                                <div class="mb-3 password-container">
+                                    <input type="password" class="form-control" id="password"
+                                        aria-describedby="passwordFeedback" placeholder="Password" required name="password">
+                                    <button type="button" class="password-toggle" id="togglePassword">
+                                        <i class="bi bi-eye-slash" id="showPassword"></i>
+                                    </button>
 
-                        <div class="form-group">
-                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
-                        </div>
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <input type="password" name="confirm_password" class="form-control"
+                                    placeholder="Confirm Password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="submit" value="Register" class="btn btn-primary py-3 px-4">
+                            </div>
+
+                            <div class="form-group">
+                                <div class="strength-meter">
+                                    <div class="strength-meter-fill" id="strengthMeter"></div>
+                                </div>
+                                <div id="passwordFeedback" class="invalid-feedback">
+                                    Please enter a valid password.
+                                    <!-- Enable Script and style -->
+                                    <?php require "check_password.php"; ?>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+
                 <?php endif; ?>
             </div>
         </div>
@@ -175,12 +207,14 @@ if (isset($_POST['submit'])) {
             background-position: center center;
             background-size: cover;
         }
+
         .row.justify-content-center {
             margin-left: 0;
         }
+
         .appointment-form {
             padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             background: white;
         }

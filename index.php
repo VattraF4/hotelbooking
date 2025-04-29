@@ -27,7 +27,7 @@ $room->execute(); //execute the query
 $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
 ?>
-<div class="hero-wrap js-fullheight" style="background-image: url('images/image_2.jpg');"
+<div class="hero-wrap js-fullheight" style="background-image: url('admin-panel/hotels-admins/hotel_images/image_2.jpg');"
 	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
@@ -80,7 +80,7 @@ $allRooms = $room->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database a
 			<?php foreach ($allRooms as $room): ?>
 				<div class="col-lg-6">
 					<div class="room-wrap d-md-flex">
-						<a href="#" class="img" style="background-image: url(admin-panel/rooms-admins/room_images/<?php echo htmlspecialchars($room->images); ?>);"></a>
+						<a href="#" class="img" style="background-image: url('admin-panel/rooms-admins/room_images/<?php echo htmlspecialchars($room->images); ?>');"></a>
 						<div class="half left-arrow d-flex align-items-center">
 							<div class="text p-4 p-xl-5 text-center">
 								<p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
