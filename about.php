@@ -23,7 +23,7 @@
           <div class="img" style="background-image: url(images/services-1.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Map Direction</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>Get precise directions and local area guides to make your trip stress-free.</p>
             <p><a href="#" class="btn btn-primary">Read more</a></p>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="img" style="background-image: url(images/services-2.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Accomodation Services</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>Stay in modern, fully-equipped apartments that feel like home.</p>
             <p><a href="#" class="btn btn-primary">Read more</a></p>
           </div>
         </div>
@@ -43,7 +43,7 @@
           <div class="img" style="background-image: url(images/image_2.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Great Experience</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>We offer curated stays designed for unforgettable memories.</p>
             <p><a href="#" class="btn btn-primary">Read more</a></p>
           </div>
         </div>
