@@ -117,7 +117,7 @@
                 </span>
                 <p>All reviews have the same 
                    repeated placeholder text.
-                   its very nice place</p>
+                   its very nice place and beautiful</p>
                 <p class="name">Mai Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
@@ -133,7 +133,7 @@
                 </span>
                 <p>Im Really Enjoy with this place
                    Im Really Love IT
-                   I'll be back Again.</p>
+                   I'll be back Again next sesion hahaha.</p>
                 <p class="name">Ly Panha</p>
                 <span class="position">BackEnd Devoloper</span>
               </div>
