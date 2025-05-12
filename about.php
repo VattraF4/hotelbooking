@@ -40,7 +40,7 @@
       </div>
       <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
         <div class="d-block services-wrap text-center">
-          <div class="img" style="background-image: url(![Image](https://github.com/user-attachments/assets/15a019e2-a989-4330-8954-960990702758);"></div>
+          <div class="img" style="background-image: url(images/person_2.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Great Experience</h3>
             <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
@@ -65,8 +65,7 @@
         <div class="carousel-testimony owl-carousel">
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img" style="background-image: url(![Image](https://github.com/user-attachments/assets/15a019e2-a989-4330-8954-960990702758))">
-              </div>
+              <div class="user-img" style="background-image: url(image/person_2.jpg);"></div>
               <div class="text pl-4">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
