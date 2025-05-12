@@ -84,8 +84,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>“The hosts were super helpful, and the place had
-                    everything I needed for my business trip.”</p>
+                <p>“The hosts were super helpful, and the place had everything I needed for my business trip.”</p>
                 <p class="name">Lorn Vosot</p>
                 <span class="position">Cyber Security</span>
               </div>
@@ -99,9 +98,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>“Great value and a peaceful location. 
-                    I’ll definitely book again!
-                    Lets Gooooooooo”</p>
+                <p>“Great value and a peaceful location. I’ll definitely book again! Lets Gooooooooo”</p>
                 <p class="name">Run Oudom</p>
                 <span class="position">FrontEnd</span>
               </div>
@@ -115,9 +112,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>All reviews have the same 
-                   repeated placeholder text.
-                   its very nice place and beautiful</p>
+                <p>All reviews have the same repeated placeholder text. its very nice place and beautiful</p>
                 <p class="name">Mai Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
@@ -131,9 +126,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Im Really Enjoy with this place
-                   Im Really Love IT
-                   I'll be back Again next sesion hahaha.</p>
+                <p>Im Really Enjoy with this plac Im Really Love IT  I'll be back Again next sesion hahaha.</p>
                 <p class="name">Ly Panha</p>
                 <span class="position">BackEnd Devoloper</span>
               </div>
