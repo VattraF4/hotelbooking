@@ -65,7 +65,7 @@
         <div class="carousel-testimony owl-carousel">
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img" style="background-image: url(images/person_1.jpg)">
+              <div class="user-img" style="background-image: url(![Image](https://github.com/user-attachments/assets/15a019e2-a989-4330-8954-960990702758))">
               </div>
               <div class="text pl-4">
                 <span class="quote d-flex align-items-center justify-content-center">
