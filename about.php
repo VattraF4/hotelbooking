@@ -132,7 +132,7 @@
                 </span>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
-                <p class="name">Ken Bosh</p>
+                <p class="name">Ly Panha</p>
                 <span class="position">Businesswoman</span>
               </div>
             </div>
