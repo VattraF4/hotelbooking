@@ -98,7 +98,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>“Great value and a peaceful location. I’ll definitely book again! Lets Gooooooooo”</p>
+                <p>“Great value and a peaceful location. I’ll definitely book again! Lets Gooooooooo.”</p>
                 <p class="name">Run Oudom</p>
                 <span class="position">FrontEnd</span>
               </div>
@@ -112,7 +112,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>All reviews have the same repeated placeholder text. its very nice place and beautiful</p>
+                <p>All reviews have the same repeated placeholder text. its very nice place and beautiful.</p>
                 <p class="name">Mai Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
@@ -166,7 +166,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Tea Coffee</h3>
-                <p>Start your day right — every room includes a self-service tea and coffee corner,</p>
+                <p>Start your day right — every room includes a self-service tea and coffee corner.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -175,7 +175,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Hot Showers</h3>
-                <p>After a long day of travel or sightseeing, nothing feels better than a relaxing hot shower</p>
+                <p>After a long day of travel or sightseeing, nothing feels better than a relaxing hot shower.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -193,7 +193,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Air Conditioning</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -220,7 +220,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Ironing</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -229,7 +229,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Lovkers</h3>
-                <p>We know how important it is to feel safe That’s why we offer personal lockers or in-room secure storage for all our guests</p>
+                <p>We know how important it is to feel safe That’s why we offer personal lockers or in-room secure storage for all our guests.</p>
               </div>
             </div>
           </div>
@@ -244,7 +244,7 @@
     <div class="row">
       <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
         <h2 class="footer-heading"><a href="#" class="logo">Vacation Rental</a></h2>
-        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+        <p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern travelers who want boutique experiences over generic hotel stays.</p>
         <a href="#">Read more <span class="fa fa-chevron-right" style="font-size: 11px;"></span></a>
       </div>
       <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
