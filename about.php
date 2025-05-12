@@ -166,7 +166,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Tea Coffee</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>Start your day right — every room includes a self-service tea and coffee corner,</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -175,7 +175,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Hot Showers</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>After a long day of travel or sightseeing, nothing feels better than a relaxing hot shower</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -184,7 +184,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Laundry</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>All rooms are thoroughly cleaned and sanitized before every check-in. Fresh linens, spotless surfaces, and hotel-grade hygiene are our standards — because your health and comfort matter.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -202,7 +202,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Free Wifi</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>Whether you're working remotely, streaming your favorite shows, or just staying connected, our fast and reliable internet ensures you're never offline when you need to be online.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -211,7 +211,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Kitchen</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>Cook your own meals with ease. Our kitchens come with cookware, cutlery, a microwave, fridge, kettle, and basic cooking ingredients — perfect for both short and extended stays.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -229,7 +229,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Lovkers</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+                <p>We know how important it is to feel safe That’s why we offer personal lockers or in-room secure storage for all our guests</p>
               </div>
             </div>
           </div>
