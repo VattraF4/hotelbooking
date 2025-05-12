@@ -70,8 +70,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                  the blind texts.</p>
+                <p>“The apartment was cozy, clean, and right in the heart of the city — couldn’t ask for more.”</p>
                 <p class="name">Ran navattra</p>
                 <span class="position">Devolopment</span>
               </div>
@@ -85,8 +84,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                  the blind texts.</p>
+                <p>“The hosts were super helpful, and the place had everything I needed for my business trip.”</p>
                 <p class="name">Lorn Vosot</p>
                 <span class="position">Cyber Security</span>
               </div>
@@ -100,8 +98,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                  the blind texts.</p>
+                <p>“Great value and a peaceful location. I’ll definitely book again!”</p>
                 <p class="name">Run Oudom</p>
                 <span class="position">FrontEnd</span>
               </div>
@@ -115,8 +112,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                  the blind texts.</p>
+                <p>All reviews have the same repeated placeholder text.</p>
                 <p class="name">Mai Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
@@ -130,8 +126,7 @@
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="fa fa-quote-left"></i>
                 </span>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
-                  the blind texts.</p>
+                <p>Im Really Enjoy with this place.</p>
                 <p class="name">Ly Panha</p>
                 <span class="position">BackEnd Devoloper</span>
               </div>
