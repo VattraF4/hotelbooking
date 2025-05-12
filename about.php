@@ -73,7 +73,7 @@
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
                 <p class="name">Ran navattra</p>
-                <span class="position">Father</span>
+                <span class="position">Devolopment</span>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
                 <p class="name">Lorn Vosot</p>
-                <span class="position">Businesswoman</span>
+                <span class="position">Cyber Security</span>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
                 <p class="name">Run Oudom</p>
-                <span class="position">Businesswoman</span>
+                <span class="position">FrontEnd</span>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
                 <p class="name">Mai Sreyneang</p>
-                <span class="position">Businesswoman</span>
+                <span class="position">FullStack Devoloper</span>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                   the blind texts.</p>
                 <p class="name">Ly Panha</p>
-                <span class="position">Businesswoman</span>
+                <span class="position">BackEnd Devoloper</span>
               </div>
             </div>
           </div>
