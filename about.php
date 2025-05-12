@@ -100,7 +100,8 @@
                   <i class="fa fa-quote-left"></i>
                 </span>
                 <p>“Great value and a peaceful location. 
-                    I’ll definitely book again!”</p>
+                    I’ll definitely book again!
+                    Lets Gooooooooo”</p>
                 <p class="name">Run Oudom</p>
                 <span class="position">FrontEnd</span>
               </div>
@@ -115,7 +116,8 @@
                   <i class="fa fa-quote-left"></i>
                 </span>
                 <p>All reviews have the same 
-                   repeated placeholder text.</p>
+                   repeated placeholder text.
+                   its very nice place</p>
                 <p class="name">Mai Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
@@ -130,7 +132,8 @@
                   <i class="fa fa-quote-left"></i>
                 </span>
                 <p>Im Really Enjoy with this place
-                   Im Really Love IT.</p>
+                   Im Really Love IT
+                   I'll be back Again.</p>
                 <p class="name">Ly Panha</p>
                 <span class="position">BackEnd Devoloper</span>
               </div>
