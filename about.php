@@ -72,7 +72,7 @@
                 </span>
                 <p>“The apartment was cozy, clean, and right in the heart of the city — couldn’t ask for more.”</p>
                 <p class="name">Ran navattra</p>
-                <span class="position">Devolopment</span>
+                <span class="position">FullStack Devolopment</span>
               </div>
             </div>
           </div>
