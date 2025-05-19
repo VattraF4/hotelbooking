@@ -136,7 +136,7 @@ require 'include/header.php';
 		<div class="row">
 			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
 				<h2 class="footer-heading"><a href="#" class="logo">Vacation Rental</a></h2>
-				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+				<p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern travelers who want boutique experiences over generic hotel stays.</p>
 				<a href="#">Read more <span class="fa fa-chevron-right" style="font-size: 11px;"></span></a>
 			</div>
 			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
@@ -188,12 +188,12 @@ require 'include/header.php';
 				<div class="col-md-6 col-lg-8">
 
 					<p class="copyright mb-0">
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;
 						<script>document.write(new Date().getFullYear());</script> All rights reserved | This
 						template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib.com</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							href="https://ranavattra.com/hotelbooking/services.php" target="_blank">ranavattra</a>
+						<!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
 					</p>
 				</div>
 				<div class="col-md-6 col-lg-4 text-md-right">
