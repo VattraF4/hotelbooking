@@ -155,4 +155,17 @@ require 'include/header.php';
           <li><a href="#" class="py-1 d-block">Perfect central location</a></li>
         </ul>
       </div>
+      <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+        <h2 class="footer-heading">Tag cloud</h2>
+        <div class="tagcloud">
+          <a href="#" class="tag-cloud-link">apartment</a>
+          <a href="#" class="tag-cloud-link">home</a>
+          <a href="#" class="tag-cloud-link">vacation</a>
+          <a href="#" class="tag-cloud-link">rental</a>
+          <a href="#" class="tag-cloud-link">rent</a>
+          <a href="#" class="tag-cloud-link">house</a>
+          <a href="#" class="tag-cloud-link">place</a>
+          <a href="#" class="tag-cloud-link">drinks</a>
+        </div>
+      </div>
   <?php require "include/footer.php"; ?>
