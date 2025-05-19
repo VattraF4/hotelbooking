@@ -168,49 +168,5 @@ require 'include/header.php';
           <a href="#" class="tag-cloud-link">drinks</a>
         </div>
       </div>
-      <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-        <h2 class="footer-heading">Subcribe</h2>
-        <form action="#" class="subscribe-form">
-          <div class="form-group d-flex">
-            <input type="text" class="form-control rounded-left" placeholder="Enter email address">
-            <button type="submit" class="form-control submit rounded-right"><span class="sr-only">Submit</span><i
-                class="fa fa-paper-plane"></i></button>
-          </div>
-        </form>
-        <h2 class="footer-heading mt-5">Follow us</h2>
-        <ul class="ftco-footer-social p-0">
-          <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span
-                class="fa fa-twitter"></span></a></li>
-          <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span
-                class="fa fa-facebook"></span></a></li>
-          <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span
-                class="fa fa-instagram"></span></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="w-100 mt-5 border-top py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-lg-8">
-
-          <p class="copyright mb-0">
-            <!-- Link back to ranvattra can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;
-            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
-            <i class="fa fa-heart" aria-hidden="true"></i> by <a href=https://ranavattra.com/hotelbooking/about.php"
-              target="_blank"> ranavattra.com</a>
-            <!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
-        </div>
-        <div class="col-md-6 col-lg-4 text-md-right">
-          <p class="mb-0 list-unstyled">
-            <a class="mr-md-3" href="#">Terms</a>
-            <a class="mr-md-3" href="#">Privacy</a>
-            <a class="mr-md-3" href="#">Compliances</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+     
   <?php require "include/footer.php"; ?>
