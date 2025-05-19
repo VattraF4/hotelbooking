@@ -213,4 +213,3 @@ require 'include/header.php';
       </div>
     </div>
   </div>
-  <?php require "include/footer.php"; ?>
