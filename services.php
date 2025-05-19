@@ -167,6 +167,6 @@ require 'include/header.php';
           <a href="#" class="tag-cloud-link">place</a>
           <a href="#" class="tag-cloud-link">drinks</a>
         </div>
-      </div>
+    
       
   <?php require "include/footer.php"; ?>
