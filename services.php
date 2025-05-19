@@ -35,7 +35,7 @@ require 'include/header.php';
           <div class="img" style="background-image: url(images/services-2.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Accomodation Services</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>Stay in modern, fully-equipped apartments that feel like home.</p>
             <p><a href="#" class="btn btn-primary">Read more</a></p>
           </div>
         </div>
@@ -45,7 +45,7 @@ require 'include/header.php';
           <div class="img" style="background-image: url(images/image_2.jpg);"></div>
           <div class="media-body py-4 px-3">
             <h3 class="heading">Great Experience</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>We offer curated stays designed for unforgettable memories.</p>
             <p><a href="#" class="btn btn-primary">Read more</a></p>
           </div>
         </div>
@@ -68,7 +68,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Tea Coffee</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>Start your day right — every room includes a self-service tea and coffee corner.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -77,7 +77,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Hot Showers</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>After a long day of travel or sightseeing, nothing feels better than a relaxing hot shower.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -86,7 +86,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Laundry</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>All rooms are thoroughly cleaned and sanitized before every check-in. Fresh linens, spotless surfaces, and hotel-grade hygiene are our standards — because your health and comfort matter.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -95,7 +95,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Air Conditioning</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -104,7 +104,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Free Wifi</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>Whether you're working remotely, streaming your favorite shows, or just staying connected, our fast and reliable internet ensures you're never offline when you need to be online.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -113,7 +113,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Kitchen</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>Cook your own meals with ease. Our kitchens come with cookware, cutlery, a microwave, fridge, kettle, and basic cooking ingredients — perfect for both short and extended stays.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -131,7 +131,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Lovkers</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>We know how important it is to feel safe That’s why we offer personal lockers or in-room secure storage for all our guests</p>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@ require 'include/header.php';
     <div class="row">
       <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
         <h2 class="footer-heading"><a href="#" class="logo">Vacation Rental</a></h2>
-        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+        <p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern travelers who want boutique experiences over generic hotel stays.</p>
         <a href="#">Read more <span class="fa fa-chevron-right" style="font-size: 11px;"></span></a>
       </div>
       <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
@@ -195,12 +195,12 @@ require 'include/header.php';
         <div class="col-md-6 col-lg-8">
 
           <p class="copyright mb-0">
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <!-- Link back to ranvattra can't be removed. Template is licensed under CC BY 3.0. -->
             Copyright &copy;
             <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
-            <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-              target="_blank">Colorlib.com</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <i class="fa fa-heart" aria-hidden="true"></i> by <a href=https://ranavattra.com/hotelbooking/about.php"
+              target="_blank"> ranavattra.com</a>
+            <!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
         </div>
         <div class="col-md-6 col-lg-4 text-md-right">
