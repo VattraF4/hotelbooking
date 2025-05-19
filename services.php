@@ -146,16 +146,7 @@ require 'include/header.php';
         <p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern travelers who want boutique experiences over generic hotel stays.</p>
         <a href="#">Read more <span class="fa fa-chevron-right" style="font-size: 11px;"></span></a>
       </div>
-      <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-        <h2 class="footer-heading">Services</h2>
-        <ul class="list-unstyled">
-          <li><a href="#" class="py-1 d-block">Map Direction</a></li>
-          <li><a href="#" class="py-1 d-block">Accomodation Services</a></li>
-          <li><a href="#" class="py-1 d-block">Great Experience</a></li>
-          <li><a href="#" class="py-1 d-block">Perfect central location</a></li>
-        </ul>
-      </div>
-      <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+       <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
         <h2 class="footer-heading">Services</h2>
         <ul class="list-unstyled">
           <li><a href="#" class="py-1 d-block">Map Direction</a></li>
@@ -222,5 +213,4 @@ require 'include/header.php';
       </div>
     </div>
   </div>
-      
   <?php require "include/footer.php"; ?>
