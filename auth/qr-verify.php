@@ -30,8 +30,8 @@ if ($token === 'vattra' && $user_id === 1) {
 }
 
 // Normal token processing
-// $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
-$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ?");
+$stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ? AND expires_at > NOW()");
+// $stmt = $conn->prepare("SELECT user_id FROM qr_tokens WHERE token = ?");
 $stmt->execute([$token]);
 $result = $stmt->fetch();
 
@@ -53,7 +53,7 @@ if ($result) {
         $_SESSION['id'] = $user_id;
 
         // Only NOW delete the token (after successful login)
-        $conn->prepare("DELETE FROM qr_tokens WHERE token = ?")->execute([$token]);
+        $conn->prepare("DELETE FROM qr_tokens WHERE token = ? OR expires_at < NOW()")->execute([$token]);
 
         // Redirect after all operations complete
         header("Location: " . APP_URL."auth/welcome.php");

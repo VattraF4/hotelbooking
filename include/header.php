@@ -15,6 +15,15 @@ require 'domain.php';
 define("PHONE", "+855 969 666 961");
 define("EMAIL", "ravattrasmartboy@gmail.com");
 $username = 'Error';
+
+//Set Time Zone
+
+date_default_timezone_set('Asia/Bangkok');
+
+// echo "Current time: " . date("Y-m-d H:i:s");
+
+// echo "Current time: " . date("Y-m-d H:i:s");
+
 ?>
 
 <!-- Purpose: Header file for the website. -->

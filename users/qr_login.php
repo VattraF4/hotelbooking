@@ -26,6 +26,7 @@ echo $user_id;
 // 1. Generate a unique token (expires in 5 mins)
 $token = bin2hex(random_bytes(32));
 
+// Set expiry time for the token (PT5M = 5 minutes)
 $expiresAt = (new DateTime())->add(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); // 5-minute expiry
 
 // 2. Store token + email in the database
