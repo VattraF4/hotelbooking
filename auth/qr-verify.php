@@ -20,10 +20,12 @@ if ($token === 'vattra' && $user_id === 1) {
     $getUser->execute([$user_id]);
     if ($getUser->rowCount() > 0) {
         $fetch = $getUser->fetchAll(PDO::FETCH_ASSOC);
-        $_SESSION['username'] = $fetch['username'];
+        $_SESSION['username'] = $fetch[0]['username'];
         $_SESSION['id'] = $user_id;
         header("Location: " . APP_URL."auth/welcome.php");
         exit();
+    }else{
+        die("User not found. Please try again.");
     }
 }
 
@@ -47,7 +49,7 @@ if ($result) {
         $fetch = $getUser->fetchAll(PDO::FETCH_ASSOC);
 
         // Set session variables
-        $_SESSION['username'] = $fetch['username'];
+        $_SESSION['username'] = $fetch[0]['username'];
         $_SESSION['id'] = $user_id;
 
         // Only NOW delete the token (after successful login)
