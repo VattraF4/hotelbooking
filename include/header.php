@@ -1,12 +1,12 @@
 <?php session_start(); ?> <!--  // Start the session-->
 
 <?php
-if(!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
     $_SESSION['username'] = null;
     $_SESSION['id'] = null;
-}else{
-    $username= $_SESSION['username'];
-    $user_id=$_SESSION['id'];
+} else {
+    $username = $_SESSION['username'];
+    $user_id = $_SESSION['id'];
 }
 
 // echo $_SESSION['username'] ." This username is on header.php";
@@ -45,7 +45,7 @@ $username = 'Error';
     <meta name="twitter:card" content="summary_large_image">
 
     <title>Vacation Rental </title>
-
+    <link rel="icon" type="image/jpg" href="<?php echo APP_URL; ?>images/vacation.png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">

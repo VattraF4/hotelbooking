@@ -14,7 +14,11 @@ try {
     $check->execute();
     $result = $check->fetchAll(PDO::FETCH_ASSOC);
 
-    echo "About to delete {$result['count']} old records.";
+    if(isset($result['count']) && $result['count'] > 0){
+        echo "About to delete {$result['count']} old records.";
+    }else{
+        echo "No old records to delete.";
+    }
 
     // Perform the actual delete
     if($check){
