@@ -1,5 +1,7 @@
-<?php require '../layouts/header.php'; ?>
-<?php
+<?php 
+
+require '../layouts/header.php'; 
+
 require '../../config/config.php';
 ?>
 <?php

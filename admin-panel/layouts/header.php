@@ -40,7 +40,7 @@
                         <?php if (isset($_SESSION['adminname'])): ?>
                             <li class="nav-item">
                                 <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMIN_URL; ?>index.php"><i
-                                        class="fa fa-home"  aria-hidden="true"></i>
+                                        class="fa fa-home" aria-hidden="true"></i>
                                     Home
                                     <span class="sr-only">(current)</span>
                                 </a>

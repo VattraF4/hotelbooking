@@ -17,6 +17,7 @@ try {
     echo "About to delete {$result['count']} old records.";
 
     // Perform the actual delete
+    if($check){
     $delete = $conn->prepare("
         DELETE FROM hotels_archive 
         WHERE create_at < DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
@@ -27,6 +28,7 @@ try {
     $conn->commit();
 
     echo " Successfully deleted old archive records";
+    }
 
 } catch (PDOException $e) {
     // Something went wrong - roll back all changes
@@ -35,7 +37,7 @@ try {
     echo "Error deleting archive: " . $e->getMessage();
 
     // Optional: Log the error
-    error_log("Archive cleanup failed: " . $e->getMessage());
+    // error_log("Archive cleanup failed: " . $e->getMessage());
 }
 ?>
 
@@ -55,11 +57,12 @@ try {
     </thead>
     <tbody>
         <?php
-        $allHotels = $conn->query("SELECT * FROM hotels_archive");
-        $allHotels->execute();
-        $hotels = $allHotels->fetchAll(PDO::FETCH_OBJ);
-        foreach ($hotels as $hotel) {
-            echo "<tr>
+        try {
+            $allHotels = $conn->query("SELECT * FROM hotels_archive");
+            $allHotels->execute();
+            $hotels = $allHotels->fetchAll(PDO::FETCH_OBJ);
+            foreach ($hotels as $hotel) {
+                echo "<tr>
       <th scope='row'>" . $hotel->hotel_id . "</th>
       <td>" . $hotel->name . "</td>
       <!-- <td><img src='../../images/" . $hotel->image . "' width='100'></td> -->
@@ -70,6 +73,9 @@ try {
       <td>" . $hotel->modify_by . "</td>
       <td>" . $hotel->modify_date . "</td>
     </tr>";
+            }
+        } catch (PDOException $e) {
+            // echo "Error: " . $e->getMessage();
         }
         ?>
     </tbody>

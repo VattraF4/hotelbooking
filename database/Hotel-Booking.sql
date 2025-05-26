@@ -112,9 +112,17 @@ CREATE TABLE qr_tokens (
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
 );
 
-SELECT user_id FROM qr_tokens WHERE token = '1c6a66c33a541f28fbcd715501ae0f8311c55cc6fabf2956695b7efd2afcef1c' AND expires_at > NOW();
-SELECT  * FROM qr_tokens WHERE token = '6887706cb4362f0699db04604b03896090c24d7c38ea8f3ff6ab1875dfb795bf' ;
-
+DROP TABLE IF EXISTS hotels_archive;
+CREATE TABLE hotels_archive (
+      id          INT(10) auto_increment NOT NULL PRIMARY KEY,
+    name        VARCHAR(255)           NOT NULL,
+    image       VARCHAR(255)           NOT NULL,
+    description TEXT                   NOT NULL,
+    location    VARCHAR(255)           NOT NULL,
+    status      INT(5)                 NOT NULL DEFAULT 1,
+    create_at   TIMESTAMP              DEFAULT CURRENT_TIMESTAMP() NOT NULL ON UPDATE CURRENT_TIMESTAMP(),
+    modify_by   VARCHAR(255)           NOT NULL
+);
 ##----------INSERT DATA----------------##
 #1 Insert User
     INSERT INTO  user(username, phone, email, my_password)

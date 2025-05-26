@@ -48,9 +48,6 @@ if (!isset($_SESSION['adminname'])) {
       </div>
     </div>
   </div>
-
-
-
 </div>
 <script type="text/javascript">
 

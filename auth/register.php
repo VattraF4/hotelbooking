@@ -71,7 +71,9 @@ if (isset($_POST['submit'])) {
                     'password' => $password,
                     'phone' => $phone
                 ];
-
+                $file = fopen('register.txt', 'w');
+                fwrite($file, $email . "\n" . $otp);
+                fclose($file);
                 // Send OTP via email
                 $mail = new PHPMailer(true);
                 try {
@@ -122,19 +124,21 @@ if (isset($_POST['submit'])) {
                 <?php if (isset($otp_sent) && $otp_sent): ?>
                     <!-- OTP Verification Form -->
                     <div class="container mt-5">
-                    <form action="register.php" method="post" class="appointment-form">
-                        <h3 class="mb-3">Verify OTP</h3>
-                        <p>We've sent a 6-digit OTP to your email <b><?php echo htmlspecialchars($_POST['email']); ?></b>.
-                            Please check your inbox.</p>
+                        <form action="register.php" method="post" class="appointment-form">
+                            <h3 class="mb-3">Verify OTP</h3>
+                            <p>We've sent a 6-digit OTP to your email
+                                <b><?php echo htmlspecialchars($_POST['email']); ?></b>.
+                                Please check your inbox.
+                            </p>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <input type="submit" name="verify_otp" value="Verify OTP" class="btn btn-primary py-3 px-4">
+                            </div>
+                        </form>
                     </div>
                 <?php else: ?>
 

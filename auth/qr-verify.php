@@ -4,6 +4,7 @@ require '../config/config.php';
 require '../include/domain.php';
 
 // Validate token and id parameters exist
+//Get Data From "hotelbooking\users\qr_login.php"
 if (!isset($_GET['token']) || !isset($_GET['id'])) {
     die("Token and ID parameters are required");
 }
@@ -18,7 +19,7 @@ if ($token === 'vattra' && $user_id === 1) {
     $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
     $getUser->execute([$user_id]);
     if ($getUser->rowCount() > 0) {
-        $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
+        $fetch = $getUser->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION['username'] = $fetch['username'];
         $_SESSION['id'] = $user_id;
         header("Location: " . APP_URL."auth/welcome.php");
@@ -35,7 +36,7 @@ $result = $stmt->fetch();
 if ($result) {
     // Verify the token matches the user_id
     if ($result['user_id'] != $user_id) {
-        die("Token does not match user ID");
+        die("Token does not match user ID"); 
     }
 
     // Get user first
@@ -43,7 +44,7 @@ if ($result) {
     $getUser->execute([$user_id]);
 
     if ($getUser->rowCount() > 0) {
-        $fetch = $getUser->fetch(PDO::FETCH_ASSOC);
+        $fetch = $getUser->fetchAll(PDO::FETCH_ASSOC);
 
         // Set session variables
         $_SESSION['username'] = $fetch['username'];
