@@ -12,7 +12,7 @@ try {
         WHERE create_at < DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
     ");
     $check->execute();
-    $result = $check->fetch(PDO::FETCH_ASSOC);
+    $result = $check->fetchAll(PDO::FETCH_ASSOC);
 
     echo "About to delete {$result['count']} old records.";
 
