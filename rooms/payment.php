@@ -18,7 +18,7 @@ $booking = $conn->prepare("SELECT * FROM bookings WHERE room_id = '$idRoom' AND 
 $booking->execute();
 
 
-$Book = $booking->fetch(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
+$Book = $booking->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array
 
 // echo "<pre>";
 // print_r($Book);
@@ -43,27 +43,27 @@ $Book = $booking->fetch(PDO::FETCH_OBJ); //fetch all row from the database and s
                 <div class="col-md-6 mt-5">
                     <div class="welcome-container">
                         <h1>Thanks, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-                        <p>for booking <b><?php echo $Book->room_name; ?></b> of <b><?php echo $Book->hotel_name; ?></b>
+                        <p>for booking <b><?php echo $Book[0]->room_name; ?></b> of <b><?php echo $Book[0]->hotel_name; ?></b>
                             hotel</p>
-                        <p>Check-in date: <b><?php echo $Book->check_in; ?></b></p>
-                        <p>Check-out date: <b><?php echo $Book->check_out; ?></b></p>
-                        <p>Booking DateTime: <b><?php echo $Book->create_at; ?></b></p>
+                        <p>Check-in date: <b><?php echo $Book[0]->check_in; ?></b></p>
+                        <p>Check-out date: <b><?php echo $Book[0]->check_out; ?></b></p>
+                        <p>Booking DateTime: <b><?php echo $Book[0]->create_at; ?></b></p>
                         
 
                         <!-- Count Days -->
                         <?php
-                        $dateIn = new DateTime($Book->check_in);
-                        $dateOut = new DateTime($Book->check_out);
+                        $dateIn = new DateTime($Book[0]->check_in);
+                        $dateOut = new DateTime($Book[0]->check_out);
                         $interval = $dateIn->diff($dateOut);
                         $dayCount = $interval->format('%d');
                         ?>
-                        <p>Payment: <b>$<?php echo $Book->payment/$dayCount; ?>/day</b></p>
-                        <p>Total: <b>$<?php echo $Book->payment; ?></b></p>
+                        <p>Payment: <b>$<?php echo $Book[0]->payment/$dayCount; ?>/day</b></p>
+                        <p>Total: <b>$<?php echo $Book[0]->payment; ?></b></p>
 
                         <!-- Grapping Payment  and BookingID-->
                         <?php
-                        $_SESSION['payment'] = $Book->payment;
-                        $_SESSION['booking_id'] = $Book->id;
+                        $_SESSION['payment'] = $Book[0]->payment;
+                        $_SESSION['booking_id'] = $Book[0]->id;
                         ?>
 
                         <p>Days: <b><?php echo $dayCount; ?></b></p>
