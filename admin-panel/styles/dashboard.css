@@ -1,0 +1,41 @@
+
+  .dashboard-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-header {
+    border-radius: 10px 10px 0 0 !important;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    font-weight: bold;
+  }
+  
+  .summary-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  
+  .revenue { color: #28a745; }
+  .pending { color: #ffc107; }
+  .confirmed { color: #17a2b8; }
+  .done { color: #6f42c1; }
+  
+  .section-title {
+    border-left: 5px solid #6a11cb;
+    padding-left: 10px;
+    margin: 20px 0;
+    color: #343a40;
+  }
