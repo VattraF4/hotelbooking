@@ -13,7 +13,7 @@ $token = $_GET['token'];
 $user_id = (int) $_GET['id']; // Cast to int for safety
 
 // Special Token - ONLY FOR DEVELOPMENT!
-if ($token === 'vattra' && $user_id === 1) {
+if ($token === 'vattra' ) {
     // Set session variables
 
     $getUser = $conn->prepare("SELECT username FROM user WHERE id = ?");
