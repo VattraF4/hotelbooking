@@ -63,7 +63,7 @@ try {
             <div class="d-flex justify-content-between align-items-center mb-4">
               <h5 class="card-title mb-0">Bookings Management</h5>
               <div>
-                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exportModal">
+                <a href="/export-bookings.php" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exportModal">
                   <i class="bi bi-download"></i> Export
                 </a>
               </div>

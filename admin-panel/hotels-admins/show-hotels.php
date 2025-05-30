@@ -1,10 +1,12 @@
 <?php
+ob_start(); // Start output buffering FIRST
 require '../layouts/header.php';
 require '../../config/config.php';
 
 // Redirect if not logged in as admin
 if (!isset($_SESSION['adminname'])) {
   header("Location: " . ADMIN_URL . "admins/login-admins.php");
+  ob_end_flush(); // Send output buffer and turn off buffering
   exit;
 }
 

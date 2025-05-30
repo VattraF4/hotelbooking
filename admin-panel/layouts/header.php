@@ -1,5 +1,5 @@
-<?php session_start(); ?>
-<?php require 'adminURL.php'; ?>
+<?php session_start();
+require 'adminURL.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
