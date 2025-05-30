@@ -17,10 +17,10 @@ if (isset($user_id)) {
     // echo "<script>console.log('".$user_id."')</script>";
     $stmt = $conn->prepare("SELECT email FROM user WHERE id = :user_id");
     $stmt->execute([':user_id' => $_SESSION['id']]);
-    $user = $stmt->fetch(PDO::FETCH_OBJ);
+    $user = $stmt->fetchAll(PDO::FETCH_OBJ);
     
     if ($user) {
-        $_SESSION['reset_email'] = $user->email;
+        $_SESSION['reset_email'] = $user[0]->email;
         $step = 2; // Skip email step for logged-in users
     }
 }
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 unset($_SESSION['reset_otp']);
                 unset($_SESSION['reset_email']);
                 $success = "Password updated successfully!";
-                $step = 1; // Reset to initial step
+                echo "<script>console.log('".$success."')</script>";
             }
             break;
     }

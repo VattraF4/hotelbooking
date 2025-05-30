@@ -39,28 +39,39 @@ $allArchiveCount = $allArchive->rowCount();
 // Financial statistics
 $totalRevenue = $conn->prepare("SELECT SUM(payment) as total FROM bookings WHERE status = 'done'");
 $totalRevenue->execute();
-$totalRevenue = $totalRevenue->fetch(PDO::FETCH_ASSOC)['total'];
+$totalRevenueResult = $totalRevenue->fetchAll(PDO::FETCH_ASSOC);
+$totalRevenue = $totalRevenueResult ? $totalRevenueResult[0]['total'] : 0;
 
 $pendingPayments = $conn->prepare("SELECT SUM(payment) as total FROM bookings WHERE status = 'pending'");
 $pendingPayments->execute();
-$pendingPayments = $pendingPayments->fetch(PDO::FETCH_ASSOC)['total'];
+$pendingPaymentsResult = $pendingPayments->fetchAll(PDO::FETCH_ASSOC);
+$pendingPayments = $pendingPaymentsResult ? $pendingPaymentsResult[0]['total'] : 0;
+
+$paidPayments = $conn->prepare("SELECT SUM(payment) as total FROM bookings WHERE status = 'paid'");
+$paidPayments->execute();
+$paidPaymentsResult = $paidPayments->fetchAll(PDO::FETCH_ASSOC);
+$paidPayments = $paidPaymentsResult ? $paidPaymentsResult[0]['total'] : 0;
 
 $confirmedPayments = $conn->prepare("SELECT SUM(payment) as total FROM bookings WHERE status = 'confirmed'");
 $confirmedPayments->execute();
-$confirmedPayments = $confirmedPayments->fetch(PDO::FETCH_ASSOC)['total'];
+$confirmedPaymentsResult = $confirmedPayments->fetchAll(PDO::FETCH_ASSOC);
+$confirmedPayments = $confirmedPaymentsResult ? $confirmedPaymentsResult[0]['total'] : 0;
 
 // Booking status counts
 $doneBookings = $conn->prepare("SELECT COUNT(*) as count FROM bookings WHERE status = 'done'");
 $doneBookings->execute();
-$doneBookings = $doneBookings->fetch(PDO::FETCH_ASSOC)['count'];
+$doneBookings = $doneBookings->fetchAll(PDO::FETCH_ASSOC);
+$doneBookings = $doneBookings[0]['count'];
 
 $pendingBookings = $conn->prepare("SELECT COUNT(*) as count FROM bookings WHERE status = 'pending'");
 $pendingBookings->execute();
-$pendingBookings = $pendingBookings->fetch(PDO::FETCH_ASSOC)['count'];
+$pendingBookings = $pendingBookings->fetchAll(PDO::FETCH_ASSOC);
+$pendingBookings = $pendingBookings[0]['count'];
 
 $confirmedBookings = $conn->prepare("SELECT COUNT(*) as count FROM bookings WHERE status = 'confirmed'");
 $confirmedBookings->execute();
-$confirmedBookings = $confirmedBookings->fetch(PDO::FETCH_ASSOC)['count'];
+$confirmedBookings = $confirmedBookings->fetchAll(PDO::FETCH_ASSOC);
+$confirmedBookings = $confirmedBookings[0]['count'];
 ?>
 
 <div class="container-fluid">
@@ -121,6 +132,16 @@ $confirmedBookings = $confirmedBookings->fetch(PDO::FETCH_ASSOC)['count'];
         <div class="card-header">Pending Payments</div>
         <div class="card-body text-center">
           <div class="stat-value pending">$<?php echo number_format($pendingPayments, 2); ?></div>
+          <p class="text-muted">Awaiting Confirmation</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="col-md-4">
+      <div class="card dashboard-card">
+        <div class="card-header">Paid Payments</div>
+        <div class="card-body text-center">
+          <div class="stat-value pending">$<?php echo number_format($paidPayments, 2); ?></div>
           <p class="text-muted">Awaiting Confirmation</p>
         </div>
       </div>

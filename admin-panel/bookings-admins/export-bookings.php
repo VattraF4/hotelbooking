@@ -103,18 +103,18 @@ function exportToPDF($data) {
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="bookings_export_' . date('Ymd') . '.pdf"');
     
-    $html = '<h1>Bookings Export</h1><table border="1">';
+    $html = '<style>table { border-collapse: collapse; }</style><h1>Bookings Export</h1><table border="1">';
     // Headers
     $html .= '<tr>';
     foreach (array_keys($data[0]) as $header) {
-        $html .= '<th>'.htmlspecialchars($header).'</th>';
+        $html .= '<th style="border: 1px solid #000; padding: 5px;">'.htmlspecialchars($header).'</th>';
     }
     $html .= '</tr>';
     // Data
     foreach ($data as $row) {
         $html .= '<tr>';
         foreach ($row as $cell) {
-            $html .= '<td>'.htmlspecialchars($cell).'</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 5px;">'.htmlspecialchars($cell).'</td>';
         }
         $html .= '</tr>';
     }
