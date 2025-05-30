@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
             if ($login->rowCount() > 0) {
                 if (password_verify($password, $fetch['my_password'])) {
                     $_SESSION['email'] = $fetch['email'];
-                    $_SESSION['id'] = $fetch['id'];
+                    $_SESSION['user_id'] = $fetch['id'];
                     $_SESSION['username'] = $fetch['username'];
                     $_SESSION['my_password'] = $fetch['my_password'];
                     // echo "<script>alert('Welcome.php');</script>";

@@ -1,84 +1,156 @@
 <?php
 require '../config/config.php';
 require '../include/header.php';
-?>
-<?php
-//check login user
+
+// Check login user
 if (!isset($_SESSION['username'])) {
-    echo "<script>window.location.href='" . APP_URL . "auth/login.php';</script>";
+    echo "<script>window.location.href = '" . APP_URL . "auth/login.php';</script>";
     exit;
 }
-//Grapping User ID
-if (isset($_GET['id'])) {
-    $user_id = $_GET['id'];
-    $getBooking = $conn->prepare("SELECT * FROM bookings WHERE user_id = '$user_id'");
-    // $getBooking->bindParam(':user_id', $user_id);
-    $getBooking->execute();
-    $booking = $getBooking->fetchAll(PDO::FETCH_OBJ);
-} else {
-    echo '<script>window.location.href="../error";</script>';
+
+// Validate and sanitize user input
+$user_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+if ($user_id <= 0) {
+    header("Location: ../error");
     exit;
 }
+
+// Get user bookings using prepared statement
+$getBooking = $conn->prepare("SELECT * FROM bookings WHERE user_id = :user_id ORDER BY create_at DESC");
+$getBooking->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$getBooking->execute();
+
 if ($getBooking->rowCount() == 0) {
-    echo "<script>window.location.href='../error/';</script>";
+    echo '<div class="alert alert-info mt-4">No bookings found.</div>';
+    require '../include/footer.php';
     exit;
 }
+
+$booking = $getBooking->fetchAll(PDO::FETCH_OBJ);
 ?>
-<div class="alert alert-danger text-center" role="alert">
-    <h3>All Pending Payment Will Be Deleted Permanently After 48 Hours</h3>
+<!-- Add Font Awesome below header -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> -->
+
+
+<div class="container-fluid mt-4">
+    <div class="alert alert-warning text-center">
+        <h4><i class="fa fa-exclamation-triangle"></i> All pending payments will be automatically canceled after 48
+            hours</h4>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h5 class="m-0 font-weight-bold text-primary">Your Bookings</h5>
+            <div>
+                <span class="badge badge-success">Completed:
+                    <?= count(array_filter($booking, fn($b) => $b->status === 'completed')) ?></span>
+                <span class="badge badge-warning ml-2">Pending:
+                    <?= count(array_filter($booking, fn($b) => $b->status === 'pending')) ?></span>
+                <span class="badge badge-info ml-2">Paid:
+                    <?= count(array_filter($booking, fn($b) => $b->status === 'paid')) ?></span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="bookingsTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Room</th>
+                            <th>Hotel</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Check-In</th>
+                            <th>Check-Out</th>
+                            <th>Nights</th>
+                            <th>Actions</th>
+                            <th>Booked On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($booking as $index => $bookingItem):
+                            $checkIn = new DateTime($bookingItem->check_in);
+                            $checkOut = new DateTime($bookingItem->check_out);
+                            $nights = $checkIn->diff($checkOut)->days;
+                            ?>
+                            <tr class="<?= $bookingItem->status === 'pending' ? 'table-warning' : 'table-success' ?>">
+                                <td><?= $index + 1 ?></td>
+                                <td><?= htmlspecialchars($bookingItem->room_name) ?></td>
+                                <td><?= htmlspecialchars($bookingItem->hotel_name) ?></td>
+                                <td>$<?= number_format($bookingItem->payment, 2) ?></td>
+                                <td>
+                                    <span
+                                        class="badge badge-<?= $bookingItem->status === 'completed' ? 'success' : 'warning' ?>">
+                                        <?= ucfirst($bookingItem->status) ?>
+                                    </span>
+                                </td>
+                                <td><?= $checkIn->format('M j, Y') ?></td>
+                                <td><?= $checkOut->format('M j, Y') ?></td>
+                                <td><?= $nights ?></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <?php if ($bookingItem->status === 'pending'): ?>
+                                            <!-- If booking is pending user can edit and delete -->
+                                            <!-- Always allow viewing the 3 icon when status not pending -->
+                                            <a href="<?= APP_URL ?>users/edit-booking.php?id=<?= $bookingItem->id ?>"
+                                                class="btn btn-primary" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a href="delete-booking.php?booking_id=<?= $bookingItem->id ?>"
+                                                class="btn btn-danger" title="Delete"
+                                                onclick="return confirm('Are you sure you want to delete this booking?')">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <a href="receipt.php?id=<?= $bookingItem->id ?>" class="btn btn-info"
+                                                title="View Receipt">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?= APP_URL ?>users/edit-booking.php?id=<?= $bookingItem->id ?>"
+                                                class="btn btn-primary disabled" title="Edit">
+                                                <i class="fa fa-edit" style="opacity:0.5;"></i>
+                                            </a>
+
+                                            <a href="delete-booking.php?booking_id=<?= $bookingItem->id ?>"
+                                                class="btn btn-danger disabled" title="Delete"
+                                                onclick="return confirm('Are you sure you want to delete this booking?')">
+                                                <i class="fa fa-trash" style="opacity:0.5;"></i>
+                                            </a>
+
+                                            <a href="receipt.php?id=<?= $bookingItem->id ?>" class="btn btn-info btn-sm"
+                                                title="View Receipt">
+                                                <i class="fa fa-file-text-o" style="opacity:0.5;"></i>
+                                            </a>
+
+
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                                <td><?= (new DateTime($bookingItem->create_at))->format('M j, Y g:i A') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<style>
-    table td,
-    table th {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .table-responsive-sm {
-        overflow-x: auto;
-    }
-</style>
-<div class="table-responsive-sm" style="width: 100%; overflow-x: auto;">
-    <table class="table table-striped table-responsive table-bordered table-hover " style="width: 100%; min-width: 100%;">
-        <thead style="background-color:#007BFF; color: white;">
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Room</th>
-                <th scope="col">Hotel</th>
-                <th scope="col">Payment</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Status</th>
-                <th scope="col">Check in</th>
-                <th scope="col">Check</th>
-                <th scope="col">Email</th>
-                <th scope="col">Booking Date</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <?php $i = 0;
-            foreach ($booking as $allBooking):
-                $i++;
-                ?>
-                <tr>
-                    <th scope="row"><?php echo $i ?></th>
-                    <th scope="row"><?php echo $allBooking->room_name; ?></th>
-                    <th scope="row"><?php echo $allBooking->hotel_name; ?></th>
-                    <th scope="row"><?php echo $allBooking->payment; ?></th>
-                    <th scope="row"><?php echo $allBooking->phone_number; ?></th>
-                    <th scope="row"><?php echo $allBooking->status; ?></th>
-                    <th scope="row"><?php echo $allBooking->check_in; ?></th>
-                    <th scope="row"><?php echo $allBooking->check_out; ?></th>
-                    <th scope="row"><?php echo $allBooking->email; ?></th>
-                    <th scope="row"><?php echo $allBooking->create_at; ?></th>
-
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function () {
+        $('#bookingsTable').DataTable({
+            responsive: true,
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: -1 }
+            ],
+            order: [[9, 'desc']]
+        });
+    });
+</script>
 
 <?php
 require '../include/footer.php';

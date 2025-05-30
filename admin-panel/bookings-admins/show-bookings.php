@@ -70,7 +70,8 @@ try {
             </div>
 
             <div class="table-container">
-              <table class="table table-striped table-hover">
+              <table style="margin-top: -1.5rem;" class="table table-striped table-hover table-bordered table-responsive">
+              <!-- <table class="table table-striped table-hover"> -->
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -112,11 +113,11 @@ try {
                         <td>
                           <?php
                           $statusClass = '';
-                          switch ($booking->status) {
-                            case "Confirm": $statusClass = 'text-success'; break;
-                            case "Paid": $statusClass = 'text-info'; break;
-                            case "Done": $statusClass = 'text-primary'; break;
-                            case "Pending": $statusClass = 'text-warning'; break;
+                          switch (strtolower($booking->status)) {
+                            case "confirm": $statusClass = 'text-success'; break;
+                            case "paid": $statusClass = 'text-info'; break;
+                            case "done": $statusClass = 'text-primary'; break;
+                            case "pending": $statusClass = 'text-warning'; break;
                             default: $statusClass = 'text-danger';
                           }
                           ?>

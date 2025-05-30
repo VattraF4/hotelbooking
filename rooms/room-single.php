@@ -31,15 +31,15 @@ if (isset($_GET['id'])) {
 			echo "<script>alert('One or more inputs are empty')</script>";
 		} else {
 
+			$user_id = $_SESSION['user_id'];
 			$check_in = $_POST['check_in'];
 			$check_out = $_POST['check_out'];
 			$email = $_POST['email'];
 			$phone_number = $_POST['phone_number'];
 			$full_name = $_POST['full_name'];
-			$user_id = $_SESSION['id'];
 			$room_name = $singleRoom->name;
 			$hotel_name = $singleRoom->hotel_name;
-	
+
 			$status = 'pending';
 			$payment = $singleRoom->price;
 
@@ -80,11 +80,12 @@ if (isset($_GET['id'])) {
 					':check_in' => $check_in,
 					':check_out' => $check_out
 				]);
+				$bookingId = $conn->lastInsertId();
 
 				echo "<script>window.locatioin.href='pay.php';</script>";
 
 				if ($booking) {
-					echo "<script>window.location.href='" . APP_URL . "rooms/payment.php?id=$id';</script>";
+					echo "<script>window.location.href='" . APP_URL . "rooms/payment.php?booking_id=$bookingId';</script>";
 				}
 			}
 		}
@@ -183,7 +184,8 @@ if (isset($_GET['id'])) {
 
 		<div class="row no-gutters">
 			<div class="col-md-6 wrap-about">
-				<div class="img img-2 mb-4" style="background-image: url(<?php echo APP_URL; ?>admin-panel/rooms-admins/room_images/image_2.jpg);">
+				<div class="img img-2 mb-4"
+					style="background-image: url(<?php echo APP_URL; ?>admin-panel/rooms-admins/room_images/image_2.jpg);">
 				</div>
 				<h2>The most recommended vacation rental</h2>
 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a

@@ -13,9 +13,14 @@ $deletePendingPayments = $conn->prepare("DELETE FROM bookings WHERE status = 'pe
 $deletePendingPayments->execute();
 
 // Step 2: Get the latest pending payment
-$idRoom = $_GET['id'];
-$booking = $conn->prepare("SELECT * FROM bookings WHERE room_id = '$idRoom' AND id=(SELECT MAX(id) FROM bookings WHERE room_id = '$idRoom')");
+// $idRoom = $_GET['id'];
+// $booking = $conn->prepare("SELECT * FROM bookings WHERE room_id = '$idRoom' AND id=(SELECT MAX(id) FROM bookings WHERE room_id = '$idRoom')");
+// $booking->execute();
+
+$booking_id = $_GET['booking_id'];
+$booking = $conn->prepare("SELECT * FROM bookings WHERE id = '$booking_id' AND user_id  IN (SELECT  id FROM user WHERE username = '" . $_SESSION['username'] . "')");
 $booking->execute();
+
 
 
 $Book = $booking->fetchAll(PDO::FETCH_OBJ); //fetch all row from the database and store it in an array

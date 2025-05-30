@@ -31,10 +31,10 @@ if ($_GET['id']) {
               <label for="status" class="font-weight-bold">Status</label>
               <select style="margin-top: 15px;" name="status" class="form-control" id="status" required>
                 <option value="" selected>Choose Status</option>
-                <option value="Pending">Pending</option>
-                <option value="Confirm">Confirm</option>
-                <option value="Paid">Paid</option>
-                <option value="Done">Done</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirm</option>
+                <option value="paid">Paid</option>
+                <option value="done">Done</option>
               </select>
             </div>
 

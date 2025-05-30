@@ -67,5 +67,5 @@ if (!isset($_SERVER['HTTP_REFERER'])) {
     </div>
     </div>
     </div>
-    <?php echo $_SESSION['payment']; ?>
+    <!-- <?php echo $_SESSION['payment']; ?> -->
     <?php require '../include/footer.php';

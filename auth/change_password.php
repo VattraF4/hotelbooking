@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 2:
             // Handle OTP request
             if (isset($_POST['request_otp'])) {
-                if (sendPasswordResetOTP($conn, $_SESSION['reset_email'])) {
+                if (sendPasswordResetOTP( $_SESSION['reset_email'])) {
                     $otp_sent = true;
                 } else {
                     $error = "Error sending OTP";
