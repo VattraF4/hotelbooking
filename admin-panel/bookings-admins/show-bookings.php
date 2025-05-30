@@ -114,7 +114,7 @@ try {
                           <?php
                           $statusClass = '';
                           switch (strtolower($booking->status)) {
-                            case "confirm": $statusClass = 'text-success'; break;
+                            case "confirmed": $statusClass = 'text-success'; break;
                             case "paid": $statusClass = 'text-info'; break;
                             case "done": $statusClass = 'text-primary'; break;
                             case "pending": $statusClass = 'text-warning'; break;
