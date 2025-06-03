@@ -21,7 +21,7 @@ if (isset($_COOKIE['user_timezone'])) {
 <?php
 // qr-login.php
 require '../config/config.php';
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['user_id'];
 echo $user_id;
 // 1. Generate a unique token (expires in 5 mins)
 $token = bin2hex(random_bytes(32));
