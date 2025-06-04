@@ -14,11 +14,12 @@ if (isset($_POST['submit'])) {
         $password = $_POST['password'];
 
         // Admin login check
-        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email' ");
+        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
+        $adminLogin->bindParam(':email', $email);
         $adminLogin->execute();
         $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
 
-        if ($adminLogin->rowCount() > 0) {
+        if ($adminFetch) {
             if (password_verify($password, $adminFetch->my_password)) {
                 $_SESSION['email'] = $adminFetch->email;
                 $_SESSION['id'] = $adminFetch->id;
@@ -32,19 +33,18 @@ if (isset($_POST['submit'])) {
             }
         } else {
             // User login check
-            $login = $conn->prepare("SELECT * FROM user WHERE email = '$email'");
+            $login = $conn->prepare("SELECT * FROM user WHERE email = :email");
+            $login->bindParam(':email', $email);
             $login->execute();
-            $fetch = $login->fetchAll(PDO::FETCH_ASSOC);
+            $fetch = $login->fetch(PDO::FETCH_ASSOC);
 
-            if ($login->rowCount() > 0) {
+            if ($fetch) {
                 if (password_verify($password, $fetch['my_password'])) {
                     $_SESSION['email'] = $fetch['email'];
                     $_SESSION['user_id'] = $fetch['id'];
                     $_SESSION['username'] = $fetch['username'];
                     $_SESSION['my_password'] = $fetch['my_password'];
-                    // echo "<script>alert('Welcome.php');</script>";
                     echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
-                    // echo $_SESSION['username'] ." This username is on login.php";
                     exit();
                 } else {
                     $error = 'Your password is incorrect';
@@ -56,7 +56,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-<!-- I disable Image for better look -->
 
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
     data-stellar-background-ratio="0.5">
