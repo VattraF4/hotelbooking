@@ -8,6 +8,29 @@ if (!isset($_SESSION['adminname'])) {
   exit;
 }
 
+// Fetch booking status counts
+try {
+  $statusCounts = $conn->query("
+    SELECT 
+      status,
+      COUNT(*) as count 
+    FROM bookings 
+    GROUP BY status
+  ")->fetchAll(PDO::FETCH_OBJ);
+  
+  // Initialize counts
+  $allCount = 0;
+  $statusData = [];
+  foreach ($statusCounts as $status) {
+    $statusData[strtolower($status->status)] = $status->count;
+    $allCount += $status->count;
+  }
+} catch (PDOException $e) {
+  echo "<script>alert('Error fetching status counts: " . addslashes($e->getMessage()) . "');</script>";
+  $statusData = [];
+  $allCount = 0;
+}
+
 // Fetch all bookings with error handling
 try {
   $allBookings = $conn->query("SELECT * FROM bookings ORDER BY create_at DESC");
@@ -27,6 +50,7 @@ try {
   <link rel="stylesheet" href="<?php echo ADMIN_URL; ?>styles/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
   <style>
     .table-responsive {
       overflow-x: auto;
@@ -47,11 +71,32 @@ try {
       max-height: 75vh;
       overflow-y: auto;
     }
+    .status-filter {
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .status-filter:hover {
+      transform: scale(1.05);
+    }
+    .status-filter.active {
+      border-bottom: 3px solid #007bff;
+    }
     .text-success { color: #28a745 !important; }
     .text-info { color: #17a2b8 !important; }
     .text-primary { color: #007bff !important; }
     .text-warning { color: #ffc107 !important; }
     .text-danger { color: #dc3545 !important; }
+    .badge-count {
+      font-size: 0.75rem;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    #searchInput {
+      max-width: 300px;
+    }
+    .dataTables_filter, .dataTables_length {
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -69,22 +114,56 @@ try {
               </div>
             </div>
 
+            <!-- Status Filter Tabs -->
+            <div class="mb-4">
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="status-filter badge bg-primary bg-opacity-10 text-primary p-2 active" data-status="all">
+                  All <span class="badge bg-primary badge-count"><?= $allCount ?></span>
+                </span>
+                <?php foreach ($statusCounts as $status): ?>
+                  <?php 
+                  $statusClass = '';
+                  switch (strtolower($status->status)) {
+                    case "confirmed": $statusClass = 'success'; break;
+                    case "paid": $statusClass = 'info'; break;
+                    case "done": $statusClass = 'primary'; break;
+                    case "pending": $statusClass = 'warning'; break;
+                    default: $statusClass = 'danger';
+                  }
+                  ?>
+                  <span class="status-filter badge bg-<?= $statusClass ?> bg-opacity-10 text-<?= $statusClass ?> p-2" 
+                        data-status="<?= strtolower($status->status) ?>">
+                    <?= ucfirst($status->status) ?> 
+                    <span class="badge bg-<?= $statusClass ?> badge-count"><?= $status->count ?></span>
+                  </span>
+                <?php endforeach; ?>
+              </div>
+              
+              <!-- Search Box -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search bookings...">
+                <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+            </div>
+
             <div class="table-container">
-              <table style="margin-top: -1.5rem;" class="table table-striped table-hover table-bordered table-responsive">
-              <!-- <table class="table table-striped table-hover"> -->
+              <table id="bookingsTable" class="table table-striped table-hover table-bordered" style="width:100%">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Action</th>
-                    <th scope="col">Check In</th>
-                    <th scope="col">Check Out</th>
-                    <th scope="col">Guest</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Room</th>
-                    <th scope="col">Hotel</th>
-                    <th scope="col">Payment</th>
-                    <th scope="col">Created</th>
+                    <th>#</th>
+                    <th>Action</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Guest</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Room</th>
+                    <th>Hotel</th>
+                    <th>Payment</th>
+                    <th>Created</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,22 +173,22 @@ try {
                     </tr>
                   <?php else: ?>
                     <?php foreach ($bookings as $index => $booking): ?>
-                      <tr>
-                        <th scope="row"><?php echo $index + 1; ?></th>
+                      <tr data-status="<?= strtolower($booking->status) ?>">
+                        <th scope="row"><?= $index + 1 ?></th>
                         <td>
-                          <a href="status-bookings.php?id=<?php echo $booking->id ?>" 
+                          <a href="status-bookings.php?id=<?= $booking->id ?>" 
                              class="btn btn-outline-warning btn-sm" 
                              title="Update Status">
                             <i class="bi bi-pencil-square"></i>
                           </a>
                         </td>
-                        <td><?php echo date('M d, Y', strtotime($booking->check_in)); ?></td>
-                        <td><?php echo date('M d, Y', strtotime($booking->check_out)); ?></td>
+                        <td><?= date('M d, Y', strtotime($booking->check_in)) ?></td>
+                        <td><?= date('M d, Y', strtotime($booking->check_out)) ?></td>
                         <td>
-                          <?php echo htmlspecialchars($booking->full_name); ?>
-                          <small class="text-muted d-block">ID: <?php echo $booking->id; ?></small>
+                          <?= htmlspecialchars($booking->full_name) ?>
+                          <small class="text-muted d-block">ID: <?= $booking->id ?></small>
                         </td>
-                        <td><?php echo htmlspecialchars($booking->phone_number); ?></td>
+                        <td><?= htmlspecialchars($booking->phone_number) ?></td>
                         <td>
                           <?php
                           $statusClass = '';
@@ -121,14 +200,14 @@ try {
                             default: $statusClass = 'text-danger';
                           }
                           ?>
-                          <span class="status-badge <?php echo $statusClass; ?>">
-                            <?php echo htmlspecialchars($booking->status); ?>
+                          <span class="status-badge <?= $statusClass ?>">
+                            <?= htmlspecialchars($booking->status) ?>
                           </span>
                         </td>
-                        <td><?php echo htmlspecialchars($booking->room_name); ?></td>
-                        <td><?php echo htmlspecialchars($booking->hotel_name); ?></td>
-                        <td>$<?php echo number_format($booking->payment, 2); ?></td>
-                        <td><?php echo date('M d, Y H:i', strtotime($booking->create_at)); ?></td>
+                        <td><?= htmlspecialchars($booking->room_name) ?></td>
+                        <td><?= htmlspecialchars($booking->hotel_name) ?></td>
+                        <td>$<?= number_format($booking->payment, 2) ?></td>
+                        <td><?= date('M d, Y H:i', strtotime($booking->create_at)) ?></td>
                       </tr>
                     <?php endforeach; ?>
                   <?php endif; ?>
@@ -189,18 +268,59 @@ try {
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
   <script>
-    // Show/hide custom date range fields
-    document.getElementById('dateRange').addEventListener('change', function() {
-      const customRangeDiv = document.getElementById('customDateRange');
-      customRangeDiv.style.display = this.value === 'custom' ? 'flex' : 'none';
-    });
-
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
+    $(document).ready(function() {
+      // Initialize DataTable
+      var table = $('#bookingsTable').DataTable({
+        responsive: true,
+        dom: '<"top"f>rt<"bottom"lip><"clear">',
+        pageLength: 25,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search bookings...",
+          lengthMenu: "Show _MENU_ bookings per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ bookings",
+          infoEmpty: "No bookings available",
+          infoFiltered: "(filtered from _MAX_ total bookings)"
+        }
+      });
+      
+      // Custom search box
+      $('#searchInput').keyup(function() {
+        table.search($(this).val()).draw();
+      });
+      
+      // Clear search button
+      $('#clearSearch').click(function() {
+        $('#searchInput').val('');
+        table.search('').draw();
+      });
+      
+      // Status filter tabs
+      $('.status-filter').click(function() {
+        $('.status-filter').removeClass('active');
+        $(this).addClass('active');
+        
+        var status = $(this).data('status');
+        if (status === 'all') {
+          table.column(6).search('').draw();
+        } else {
+          table.column(6).search('^' + status + '$', true, false).draw();
+        }
+      });
+      
+      // Show/hide custom date range fields
+      $('#dateRange').change(function() {
+        const customRangeDiv = $('#customDateRange');
+        customRangeDiv.css('display', this.value === 'custom' ? 'flex' : 'none');
+      });
+      
+      // Initialize tooltips
+      $('[title]').tooltip();
     });
   </script>
 </body>
