@@ -30,7 +30,7 @@ try {
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">
@@ -65,14 +65,28 @@ try {
                                             <td><?= htmlspecialchars($admin->email) ?></td>
                                             <td><?= date('M d, Y h:i A', strtotime($admin->create_at)) ?></td>
                                             <td>
-                                                <?php if ($admin->adminname != $_SESSION['adminname']): ?>
-                                                    <button class="btn btn-sm btn-outline-danger delete-admin" 
-                                                            data-id="<?= $admin->id ?>" 
+                                                <?php if ($_SESSION['adminname'] == 'super@admin.com'): ?>
+                                                    <!-- Super Admin View -->
+                                                    <?php if ($admin->adminname == $_SESSION['adminname']): ?>
+                                                        <span class="text-muted">Current Admin</span>
+                                                    <?php else: ?>
+                                                        <button class="btn btn-sm btn-outline-danger delete-admin"
+                                                            data-id="<?= $admin->id ?>"
                                                             data-name="<?= htmlspecialchars($admin->adminname) ?>">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php else: ?>
-                                                    <span class="text-muted">Current session</span>
+                                                    <!-- Regular Admin View -->
+                                                    <?php if ($admin->adminname == $_SESSION['adminname']): ?>
+                                                        <span class="text-muted">Current Admin</span>
+                                                    <?php else: ?>
+                                                        <button class="btn btn-sm btn-outline-danger delete-admin" disabled
+                                                            data-id="<?= $admin->id ?>"
+                                                            data-name="<?= htmlspecialchars($admin->adminname) ?>">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -82,7 +96,7 @@ try {
                         </table>
                     </div>
                 </div>
-                
+
                 <?php if (!empty($admins)): ?>
                     <div class="card-footer bg-light">
                         <small class="text-muted">
@@ -118,27 +132,27 @@ try {
 </div>
 
 <script>
-$(document).ready(function() {
-    // Delete admin confirmation
-    $('.delete-admin').click(function() {
-        const adminId = $(this).data('id');
-        const adminName = $(this).data('name');
-        
-        $('#adminToDelete').text(adminName);
-        $('#confirmDelete').attr('href', 'delete-admin.php?id=' + adminId);
-        $('#deleteModal').modal('show');
+    $(document).ready(function () {
+        // Delete admin confirmation
+        $('.delete-admin').click(function () {
+            const adminId = $(this).data('id');
+            const adminName = $(this).data('name');
+
+            $('#adminToDelete').text(adminName);
+            $('#confirmDelete').attr('href', 'delete-admin.php?id=' + adminId);
+            $('#deleteModal').modal('show');
+        });
+
+        // Add hover effects
+        $('tr').hover(
+            function () {
+                $(this).addClass('bg-light');
+            },
+            function () {
+                $(this).removeClass('bg-light');
+            }
+        );
     });
-    
-    // Add hover effects
-    $('tr').hover(
-        function() {
-            $(this).addClass('bg-light');
-        },
-        function() {
-            $(this).removeClass('bg-light');
-        }
-    );
-});
 </script>
 
 <?php require '../layouts/footer.php'; ?>
