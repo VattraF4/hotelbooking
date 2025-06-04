@@ -119,9 +119,9 @@ $booking = $getBooking->fetchAll(PDO::FETCH_OBJ);
                                                 <i class="fa fa-trash" style="opacity:0.5;"></i>
                                             </a>
 
-                                            <a href="receipt.php?id=<?= $bookingItem->id ?>" class="btn btn-info btn-sm"
-                                                title="View Receipt">
-                                                <i class="fa fa-file-text-o" style="opacity:0.5;"></i>
+                                            <a href="generate-pdf.php?id=<?= $bookingItem->id ?>" class="btn btn-info"
+                                                title="Download Receipt">
+                                                <i class="fa fa-file-pdf-o"></i>
                                             </a>
 
 

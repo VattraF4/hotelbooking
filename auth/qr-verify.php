@@ -50,7 +50,7 @@ if ($result) {
 
         // Set session variables
         $_SESSION['username'] = $fetch[0]['username'];
-        $_SESSION['id'] = $user_id;
+        $_SESSION['user_id'] = $user_id;
 
         // Only NOW delete the token (after successful login)
         $conn->prepare("DELETE FROM qr_tokens WHERE token = ? OR expires_at < NOW()")->execute([$token]);

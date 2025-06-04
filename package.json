@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "eruda": "^3.4.1"
+  },
+  "dependencies": {
+    "puppeteer": "^24.10.0"
   }
 }

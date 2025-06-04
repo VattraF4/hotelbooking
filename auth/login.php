@@ -16,14 +16,14 @@ if (isset($_POST['submit'])) {
         // Admin login check
         $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email' ");
         $adminLogin->execute();
-        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
+        $adminFetch = $adminLogin->fetchAll(PDO::FETCH_OBJ);
 
         if ($adminLogin->rowCount() > 0) {
-            if (password_verify($password, $adminFetch->my_password)) {
-                $_SESSION['email'] = $adminFetch->email;
-                $_SESSION['id'] = $adminFetch->id;
-                $_SESSION['adminname'] = $adminFetch->adminname;
-                $_SESSION['my_password'] = $adminFetch->my_password;
+            if (password_verify($password, $adminFetch[0]->my_password)) {
+                $_SESSION['email'] = $adminFetch[0]->email;
+                $_SESSION['id'] = $adminFetch[0]->id;
+                $_SESSION['adminname'] = $adminFetch[0]->adminname;
+                $_SESSION['my_password'] = $adminFetch[0]->my_password;
 
                 echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
                 exit();
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
             // User login check
             $login = $conn->prepare("SELECT * FROM user WHERE email = '$email'");
             $login->execute();
-            $fetch = $login->fetch(PDO::FETCH_ASSOC);
+            $fetch = $login->fetchAll(PDO::FETCH_ASSOC);
 
             if ($login->rowCount() > 0) {
                 if (password_verify($password, $fetch['my_password'])) {

@@ -1,44 +1,40 @@
 <?php
-require '../include/header.php';
 require '../config/config.php';
+require '../include/header.php';
 
-// Check if user is logged in
-if (!isset($_SESSION['username'])) {
+// Check login user
+if (!isset($_SESSION['user_id'])) {
     header("Location: " . APP_URL . "auth/login.php");
     exit;
 }
 
-// Get booking ID
+// Validate and sanitize booking ID
 $booking_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($booking_id <= 0) {
     header("Location: ../error");
     exit;
 }
 
-// Fetch booking details
-$booking = $conn->prepare("SELECT * FROM bookings WHERE id = :id AND user_id = :user_id");
-$booking->bindParam(':id', $booking_id, PDO::PARAM_INT);
-$booking->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-$booking->execute();
+// Get booking details using prepared statement
+$getBooking = $conn->prepare("SELECT * FROM bookings WHERE id = :id");
+$getBooking->bindParam(':id', $booking_id, PDO::PARAM_INT);
+$getBooking->execute();
 
-if ($booking->rowCount() == 0) {
-    header("Location: ../error");
+if ($getBooking->rowCount() == 0) {
+    echo '<div class="alert alert-danger mt-4">Booking not found.</div>';
+    require '../include/footer.php';
     exit;
 }
 
-$bookingData = $booking->fetch(PDO::FETCH_OBJ);
+$booking = $getBooking->fetchAll(PDO::FETCH_OBJ);
 
 // Calculate nights
-$checkIn = new DateTime($bookingData->check_in);
-$checkOut = new DateTime($bookingData->check_out);
+$checkIn = new DateTime($booking[0]->check_in);
+$checkOut = new DateTime($booking[0]->check_out);
 $nights = $checkIn->diff($checkOut)->days;
 
-// Format payment amount
-$paymentAmount = number_format($bookingData->payment, 2);
-
-// Format date
-$date = (new DateTime($bookingData->create_at))->format('F j, Y');
-// require '../include/header.php';
+// Check if PDF generation is requested
+$is_pdf = isset($_GET['pdf']) && $_GET['pdf'] === 'true';
 ?>
 
 <!DOCTYPE html>
@@ -46,84 +42,137 @@ $date = (new DateTime($bookingData->create_at))->format('F j, Y');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Receipt</title>
+    <title>Booking Receipt #<?= $booking[0]->id ?></title>
+    <link href="<?= APP_URL ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= APP_URL ?>assets/fontawesome/css/all.min.css" rel="stylesheet">
     <style>
-        /* Print-specific styles */
+        body {
+            background-color: #f8f9fa;
+            <?php if ($is_pdf): ?>
+            background-color: white;
+            <?php endif; ?>
+        }
+        .receipt-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: <?= $is_pdf ? 'none' : '0 0 20px rgba(0,0,0,0.1)' ?>;
+        }
+        .receipt-header {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .receipt-footer {
+            border-top: 2px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
         @media print {
             body * {
                 visibility: hidden;
             }
-            .print-receipt, .print-receipt * {
+            .receipt-container, .receipt-container * {
                 visibility: visible;
             }
-            .print-receipt {
+            .receipt-container {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
-                margin: 0;
                 padding: 0;
+                box-shadow: none;
             }
             .no-print {
                 display: none !important;
-            }
-            @page {
-                size: auto;
-                margin: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="card shadow print-receipt">
-            <div class="card-header bg-success text-white">
-                <h4><i class="fas fa-receipt"></i> Booking Receipt #<?= $bookingData->id ?></h4>
-            </div>
-            <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <p><strong>Date:</strong> <?= $date ?></p>
-                        <p><strong>Status:</strong> 
-                            <span class="badge bg-<?= $bookingData->status === 'completed' ? 'success' : 'warning' ?>">
-                                <?= ucfirst($bookingData->status) ?>
-                            </span>
-                        </p>
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <h5><?= htmlspecialchars($bookingData->hotel_name) ?></h5>
-                        <p><?= htmlspecialchars($bookingData->room_name) ?></p>
-                    </div>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2><?= htmlspecialchars($booking[0]->hotel_name) ?></h2>
+                    <p class="text-muted mb-0">Booking Receipt</p>
                 </div>
-
-                <hr>
-
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <h5>Booking Details</h5>
-                        <p><strong>Check-In:</strong> <?= $checkIn->format('F j, Y') ?></p>
-                        <p><strong>Check-Out:</strong> <?= $checkOut->format('F j, Y') ?></p>
-                        <p><strong>Nights:</strong> <?= $nights ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Payment Details</h5>
-                        <p><strong>Per Night:</strong> $<?= number_format($bookingData->payment / $nights, 2) ?></p>
-                        <p><strong>Total:</strong> $<?= $paymentAmount ?></p>
-                    </div>
-                </div>
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end no-print">
-                    <a href="bookings.php?id=<?= $_SESSION['user_id'] ?>" class="btn btn-secondary me-md-2">
-                        <i class="fa fa-arrow-left"></i> Back to Bookings
-                    </a>
-                    <button onclick="window.print()" class="btn btn-primary">
-                        <i class="fa fa-print"></i> Print Receipt
-                    </button>
+                <div class="col-md-6 text-right">
+                    <p class="mb-1"><strong>Receipt #:</strong> <?= str_pad($booking[0]->id, 5, '0', STR_PAD_LEFT) ?></p>
+                    <p class="mb-1"><strong>Date:</strong> <?= date('M j, Y') ?></p>
+                    <span class="badge badge-<?= 
+                        $booking[0]->status === 'completed' ? 'success' : 
+                        ($booking[0]->status === 'paid' ? 'primary' : 'warning') 
+                    ?>">
+                        <?= ucfirst($booking[0]->status) ?>
+                    </span>
                 </div>
             </div>
         </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>Guest Information</h5>
+                <p class="mb-1"><strong>Name:</strong> <?= htmlspecialchars($booking[0]->full_name) ?></p>
+                <p class="mb-1"><strong>Email:</strong> <?= htmlspecialchars($booking[0]->email) ?></p>
+                <p class="mb-1"><strong>Phone:</strong> <?= htmlspecialchars($booking[0]->phone_number) ?></p>
+            </div>
+            <div class="col-md-6">
+                <h5>Booking Details</h5>
+                <p class="mb-1"><strong>Room:</strong> <?= htmlspecialchars($booking[0]->room_name) ?></p>
+                <p class="mb-1"><strong>Check-in:</strong> <?= $checkIn->format('M j, Y') ?></p>
+                <p class="mb-1"><strong>Check-out:</strong> <?= $checkOut->format('M j, Y') ?></p>
+                <p class="mb-1"><strong>Nights:</strong> <?= $nights ?></p>
+            </div>
+        </div>
+
+        <div class="table-responsive mb-4">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?= htmlspecialchars($booking[0]->room_name) ?> (<?= $nights ?> night<?= $nights > 1 ? 's' : '' ?>)</td>
+                        <td class="text-right">$<?= number_format($booking[0]->payment, 2) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Total</strong></td>
+                        <td class="text-right"><strong>$<?= number_format($booking[0]->payment, 2) ?></strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="receipt-footer">
+            <div class="alert alert-light">
+                <h6>Notes:</h6>
+                <ul class="mb-0">
+                    <li>This is an official receipt for your booking.</li>
+                    <li>Please present this receipt at check-in.</li>
+                    <li>For any inquiries, please contact the hotel directly.</li>
+                </ul>
+            </div>
+            <p class="text-center text-muted small mb-0">Thank you for your booking!</p>
+        </div>
+
+        <?php if (!$is_pdf): ?>
+        <div class="no-print text-center mt-4">
+            <a href="<?= APP_URL ?>users/booking.php" class="btn btn-secondary mr-2">
+                <i class="fas fa-arrow-left"></i> Back to Bookings
+            </a>
+            <a href="<?= APP_URL ?>users/generate-pdf.php?id=<?= $booking[0]->id ?>" class="btn btn-primary">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+        </div>
+        <?php endif; ?>
     </div>
 
-    <?php require '../include/footer.php'; ?>
+    <?php if (!$is_pdf) require '../include/footer.php'; ?>
 </body>
 </html>
