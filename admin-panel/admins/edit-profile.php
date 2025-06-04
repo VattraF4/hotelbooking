@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">Update Profile</button>
-                            <a href="admin-profile.php" class="btn btn-secondary">Cancel</a>
+                            <a href="profile.php" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>
