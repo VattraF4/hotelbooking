@@ -1,5 +1,6 @@
 <?php session_start();
-require 'adminURL.php'; ?>
+require 'adminURL.php'; 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -245,9 +246,13 @@ require 'adminURL.php'; ?>
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-user-cog"></i>
                                 </a>
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="<?php echo ADMIN_URL; ?>admins/logout.php">
                                         <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </a>
+                                    <a class="dropdown-item" href="<?php echo ADMIN_URL; ?>admins/profile.php">
+                                        <i class="fas fa-user mr-2"></i> Profile
                                     </a>
                                 </div>
                             </li>

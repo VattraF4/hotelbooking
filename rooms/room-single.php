@@ -58,7 +58,7 @@ if (isset($_GET['id'])) {
 
 			if (date("Y-m-d") > $check_in or date("Y-m-d") > $check_out) {
 				echo "<script>alert('Please select a valid date start from tomorrow')</script>";
-			} else if ($check_in > $check_out or $check_in == date("Y-m-d")) {
+			} else if ($check_in > $check_out || $check_in == date("Y-m-d")) {
 				echo "<script>alert('Please select a valid date, Wrong with check-in date')</script>";
 			} else if ($check_out <= $check_in) {
 				echo "<script>alert('Please select a valid date, Wrong with check-out date')</script>";

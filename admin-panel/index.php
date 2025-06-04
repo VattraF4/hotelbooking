@@ -306,6 +306,7 @@ $paymentStatusData = [
         </div>
       </a>
     </div>
+
   </div>
 
   <!-- Charts Row -->
