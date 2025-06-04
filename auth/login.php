@@ -14,23 +14,22 @@ if (isset($_POST['submit'])) {
         $password = $_POST['password'];
 
         // Admin login check
-        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
-        $adminLogin->execute([':email' => $email]);
-        $adminFetch = $adminLogin->fetch(PDO::FETCH_ASSOC);
+        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = '$email' ");
+        $adminLogin->execute();
+        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
 
-        if ($adminFetch) {
-            if (password_verify($password, $adminFetch['my_password'])) {
-                $_SESSION['email'] = $adminFetch['email'];
-                $_SESSION['id'] = $adminFetch['id'];
-                $_SESSION['adminname'] = $adminFetch['adminname'];
-                $_SESSION['my_password'] = $adminFetch['my_password'];
+        if ($adminLogin->rowCount() > 0) {
+            if (password_verify($password, $adminFetch->my_password)) {
+                $_SESSION['email'] = $adminFetch->email;
+                $_SESSION['id'] = $adminFetch->id;
+                $_SESSION['adminname'] = $adminFetch->adminname;
+                $_SESSION['my_password'] = $adminFetch->my_password;
 
                 echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
                 exit();
             } else {
                 $error = 'Your password is incorrect';
             }
-        
         } else {
             // User login check
             $login = $conn->prepare("SELECT * FROM user WHERE email = '$email'");
