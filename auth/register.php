@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
                     // Content
                     $mail->isHTML(true);
                     $mail->Subject = 'Your OTP for Registration';
-                    $mail->$mail->Body = <<<HTML
+                    $mail->Body = <<<HTML
                     <!-- Email template -->
                     <!DOCTYPE html>
                     <html lang="en">
