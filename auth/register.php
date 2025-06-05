@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
             if ($check->rowCount() > 0) {
                 echo "<script>alert('Email already exists. Please use a different email.')</script>";
             } else {
-                require 'a.php';
+                // require 'a.php';
                 // Generate OTP
                 $otp = mt_rand(100000, 999999);
 
