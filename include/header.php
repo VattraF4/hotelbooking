@@ -60,7 +60,7 @@ date_default_timezone_set('Asia/Bangkok');
         rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,500i,600,600i,700,700i&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"> 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" scoped>
 

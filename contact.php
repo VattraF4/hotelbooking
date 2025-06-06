@@ -1,5 +1,203 @@
 <?php
+// Include the main header
 require 'include/header.php';
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// IMPORTANT: Include the Composer autoloader to load PHPMailer
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+require 'vendor/autoload.php';
+
+// Import PHPMailer classes into the global namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+// Developer and Project Information
+$developer_info = [
+	"name" => "Ra Vattra",
+	"email" => "ravattrasmartboy@gmail.com", // The email that will receive the message
+	"phone" => "+855 969 666 961",
+	"address" => "Russian Federation Blvd (110), Phnom Penh 120404",
+	"portfolio" => "https://vattraf4.github.io/My-Portfolio",
+	"website_url" => "https://ranavattra.com/hotelbooking/contact.php",
+];
+
+// SMTP Credentials from your setup
+$smtp_credentials = [
+	'host' => 'mail.ranavattra.com',
+	'username' => 'ra.vattra.official@ranavattra.com', // This will be the "From" email
+	'password' => 'v$Is$0f7s4aC', // 🔒 Best practice: Use environment variables for this!
+	'port' => 587
+];
+
+
+// Form submission handling
+$form_message = '';
+$form_error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	// Sanitize user input
+	$user_name = htmlspecialchars(strip_tags($_POST['name']));
+	$user_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+	$user_subject = htmlspecialchars(strip_tags($_POST['subject']));
+	$user_message = htmlspecialchars(strip_tags($_POST['message']));
+
+	if (!empty($user_name) && filter_var($user_email, FILTER_VALIDATE_EMAIL) && !empty($user_subject) && !empty($user_message)) {
+
+		$mail = new PHPMailer(true);
+
+		try {
+			// -- Server settings (using your provided SMTP details) --
+			// $mail->SMTPDebug = SMTP::DEBUG_SERVER;                  // Enable verbose debug output for testing
+			$mail->isSMTP();
+			$mail->Host = $smtp_credentials['host'];
+			$mail->SMTPAuth = true;
+			$mail->Username = $smtp_credentials['username'];
+			$mail->Password = $smtp_credentials['password'];
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->Port = $smtp_credentials['port'];
+
+			// -- Recipients --
+			$mail->setFrom($smtp_credentials['username'], $user_name); // Sender's email and name
+			$mail->addAddress($developer_info['email']);              // Add a recipient (your email)
+			$mail->addReplyTo($user_email, $user_name);               // So you can reply directly to the user
+
+			// -- Content --
+			$mail->isHTML(true);
+			$mail->Subject = 'Contact Form: ' . $user_subject;
+
+			// Professional HTML Body
+			// -- Content --
+			$mail->isHTML(true);
+			$mail->Subject = 'Contact Form Submission: ' . $user_subject;
+
+			// Create a timestamp
+			$timestamp = date("F j, Y, g:i a");
+
+			// Using nl2br() on the user message preserves line breaks they may have entered.
+			$formatted_message = nl2br($user_message);
+
+			// Improved HTML email body
+			$mail->Body = <<<HTML
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>New Contact Form Submission</title>
+					<style>
+						body {
+							font-family: Arial, sans-serif;
+							background-color: #f4f4f4;
+							margin: 0;
+							padding: 0;
+						}
+						.container {
+							max-width: 600px;
+							margin: 20px auto;
+							background-color: #ffffff;
+							border: 1px solid #dddddd;
+							border-radius: 5px;
+							overflow: hidden;
+						}
+						.header {
+							background-color: #0d6efd;
+							color: #ffffff;
+							padding: 20px;
+							text-align: center;
+						}
+						.header h2 {
+							margin: 0;
+						}
+						.content {
+							padding: 30px;
+							line-height: 1.6;
+							color: #333333;
+						}
+						.content table {
+							width: 100%;
+							border-collapse: collapse;
+						}
+						.content td {
+							padding: 10px 0;
+							border-bottom: 1px solid #eeeeee;
+						}
+						.content td.label {
+							font-weight: bold;
+							width: 100px;
+							color: #555555;
+						}
+						.message-box {
+							background-color: #f9f9f9;
+							border: 1px solid #eeeeee;
+							padding: 15px;
+							margin-top: 20px;
+							border-radius: 4px;
+						}
+						.footer {
+							background-color: #f4f4f4;
+							color: #888888;
+							font-size: 12px;
+							text-align: center;
+							padding: 20px;
+						}
+					</style>
+				</head>
+				<body>
+					<div class='container'>
+						<div class='header'>
+							<h2>New Website Message</h2>
+						</div>
+						<div class='content'>
+							<p>You have received a new message from your website's contact form.</p>
+							<table>
+								<tr>
+									<td class='label'>From:</td>
+									<td>{$user_name}</td>
+								</tr>
+								<tr>
+									<td class='label'>Email:</td>
+									<td>{$user_email}</td>
+								</tr>
+								<tr>
+									<td class='label'>Subject:</td>
+									<td>{$user_subject}</td>
+								</tr>
+							</table>
+							<div class='message-box'>
+								<strong>Message:</strong><br>
+								{$formatted_message}
+							</div>
+						</div>
+						<div class='footer'>
+							<p>This email was sent from the Vacation Rental contact form on {$timestamp}.</p>
+						</div>
+					</div>
+				</body>
+				</html>
+HTML;
+
+			// Create a plain text version for non-HTML mail clients
+			$mail->AltBody = "You have received a new message.\n\n" .
+				"Name: {$user_name}\n" .
+				"Email: {$user_email}\n" .
+				"Subject: {$user_subject}\n\n" .
+				"Message:\n{$user_message}\n\n" .
+				"Sent on: {$timestamp}";
+
+			// Plain text version for non-HTML mail clients
+			$mail->AltBody = "Name: {$user_name}\nEmail: {$user_email}\nSubject: {$user_subject}\n\nMessage:\n{$user_message}";
+
+			$mail->send();
+			$form_message = 'Your message has been sent. Thank you!';
+
+		} catch (Exception $e) {
+			$form_error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		}
+	} else {
+		$form_error = "Please fill out all fields with valid information.";
+	}
+}
 ?>
 
 <section class="hero-wrap hero-wrap-2" style="background-image: url('images/image_2.jpg');"
@@ -8,7 +206,7 @@ require 'include/header.php';
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-center justify-content-center">
 			<div class="col-md-9 ftco-animate text-center">
-				<p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+				<p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.php">Home <i
 								class="fa fa-chevron-right"></i></a></span> <span>Contact <i
 							class="fa fa-chevron-right"></i></span></p>
 				<h1 class="mb-0 bread">Contact Us</h1>
@@ -21,63 +219,72 @@ require 'include/header.php';
 	<div class="container">
 		<div class="row no-gutters">
 			<div class="col-md-8">
-				<!-- <div id="map" class="map"></div> -->
 				<iframe
-					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d417.96255027452275!2d104.89074254718865!3d11.56866880280324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109519fe4077d69%3A0x20138e822e434660!2sRoyal%20University%20of%20Phnom%20Penh!5e0!3m2!1sen!2skh!4v1743937061168!5m2!1sen!2skh"
-					width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.771248043235!2d104.88833431526012!3d11.568341447225883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109519fe4077d69%3A0x81c1063261394043!2sRoyal%20University%20of%20Phnom%20Penh!5e0!3m2!1sen!2skh!4v1678886789012!5m2!1sen!2skh"
+					width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy"
 					referrerpolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 			<div class="col-md-4 p-4 p-md-5 bg-white">
-				<h2 class="font-weight-bold mb-4">Lets get started</h2>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
-					live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics,
-					a large language ocean.</p>
-				<p><a href="#" class="btn btn-primary">Book Apartment Now</a></p>
+				<h2 class="font-weight-bold mb-4">About The Developer</h2>
+				<p><strong><?php echo $developer_info['name']; ?></strong> is a dedicated and skilled developer
+					currently studying Computer Science & Engineering at RUPP. He has experience in building web systems
+					using PHP, MySQL, and Bootstrap.</p>
+				<p><a href="<?php echo htmlspecialchars($developer_info['portfolio']); ?>" target="_blank"
+						class="btn btn-primary">View Portfolio</a></p>
 			</div>
+
 			<div class="col-md-12">
 				<div class="wrapper">
 					<div class="row no-gutters">
 						<div class="col-lg-8 col-md-7 d-flex align-items-stretch">
 							<div class="contact-wrap w-100 p-md-5 p-4">
 								<h3 class="mb-4">Get in touch</h3>
-								<div id="form-message-warning" class="mb-4"></div>
-								<div id="form-message-success" class="mb-4">
-									Your message was sent, thank you!
-								</div>
-								<form method="POST" id="contactForm" name="contactForm" class="contactForm">
+
+								<?php if ($form_message): ?>
+									<div class="alert alert-success" role="alert">
+										<?php echo $form_message; ?>
+									</div>
+								<?php endif; ?>
+								<?php if ($form_error): ?>
+									<div class="alert alert-danger" role="alert">
+										<?php echo $form_error; ?>
+									</div>
+								<?php endif; ?>
+
+								<form method="POST" id="contactForm" class="contactForm"
+									action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="label" for="name">Full Name</label>
 												<input type="text" class="form-control" name="name" id="name"
-													placeholder="Name">
+													placeholder="Name" required>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="label" for="email">Email Address</label>
 												<input type="email" class="form-control" name="email" id="email"
-													placeholder="Email">
+													placeholder="Email" required>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="label" for="subject">Subject</label>
 												<input type="text" class="form-control" name="subject" id="subject"
-													placeholder="Subject">
+													placeholder="Subject" required>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
-												<label class="label" for="#">Message</label>
+												<label class="label" for="message">Message</label>
 												<textarea name="message" class="form-control" id="message" cols="30"
-													rows="4" placeholder="Message"></textarea>
+													rows="4" placeholder="Message" required></textarea>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="form-group">
 												<input type="submit" value="Send Message" class="btn btn-primary">
-												<div class="submitting"></div>
 											</div>
 										</div>
 									</div>
@@ -86,40 +293,39 @@ require 'include/header.php';
 						</div>
 						<div class="col-lg-4 col-md-5 d-flex align-items-stretch">
 							<div class="info-wrap bg-primary w-100 p-md-5 p-4">
-								<h3>Let's get in touch</h3>
-								<p class="mb-4">We're open for any suggestion or just to have a chat</p>
+								<h3>Contact Information</h3>
+								<p class="mb-4">We're open for any suggestion or just to have a chat.</p>
 								<div class="dbox w-100 d-flex align-items-start">
-									<div class="icon d-flex align-items-center justify-content-center">
-										<span class="fa fa-map-marker"></span>
-									</div>
+									<div class="icon d-flex align-items-center justify-content-center"><span
+											class="fa fa-map-marker"></span></div>
 									<div class="text pl-3">
-										<p><span>Address:</span> Russian Federation Blvd (110), Phnom Penh 120404
+										<p><span>Address:</span> <?php echo $developer_info['address']; ?></p>
+									</div>
+								</div>
+								<div class="dbox w-100 d-flex align-items-center">
+									<div class="icon d-flex align-items-center justify-content-center"><span
+											class="fa fa-phone"></span></div>
+									<div class="text pl-3">
+										<p><span>Phone:</span> <a
+												href="tel://<?php echo str_replace(' ', '', $developer_info['phone']); ?>"><?php echo $developer_info['phone']; ?></a>
 										</p>
 									</div>
 								</div>
 								<div class="dbox w-100 d-flex align-items-center">
-									<div class="icon d-flex align-items-center justify-content-center">
-										<span class="fa fa-phone"></span>
-									</div>
+									<div class="icon d-flex align-items-center justify-content-center"><span
+											class="fa fa-paper-plane"></span></div>
 									<div class="text pl-3">
-										<p><span>Phone:</span> <a href="tel://1234567920">+885 969 666 961 </a></p>
-									</div>
-								</div>
-								<div class="dbox w-100 d-flex align-items-center">
-									<div class="icon d-flex align-items-center justify-content-center">
-										<span class="fa fa-paper-plane"></span>
-									</div>
-									<div class="text pl-3">
-										<p><span>Email:</span> <a href="mailto:info@yoursite.com">ravattrasmartboy@gmail.com</a>
+										<p><span>Email:</span> <a
+												href="mailto:<?php echo $developer_info['email']; ?>"><?php echo $developer_info['email']; ?></a>
 										</p>
 									</div>
 								</div>
 								<div class="dbox w-100 d-flex align-items-center">
-									<div class="icon d-flex align-items-center justify-content-center">
-										<span class="fa fa-globe"></span>
-									</div>
+									<div class="icon d-flex align-items-center justify-content-center"><span
+											class="fa fa-globe"></span></div>
 									<div class="text pl-3">
-										<p><span>Website</span> <a href="#">https://ranavattra.com/hotelbooking/contact.php</a></p>
+										<p><span>Website:</span> <a href="<?php echo $developer_info['website_url']; ?>"
+												target="_blank">View Project</a></p>
 									</div>
 								</div>
 							</div>
@@ -131,112 +337,7 @@ require 'include/header.php';
 	</div>
 </section>
 
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-				<h2 class="footer-heading"><a href="#" class="logo">Vacation Rental</a></h2>
-				<p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern travelers who want boutique experiences over generic hotel stays.</p>
-				<a href="#">Read more <span class="fa fa-chevron-right" style="font-size: 11px;"></span></a>
-			</div>
-			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-				<h2 class="footer-heading">Services</h2>
-				<ul class="list-unstyled">
-					<li><a href="#" class="py-1 d-block">Map Direction</a></li>
-					<li><a href="#" class="py-1 d-block">Accomodation Services</a></li>
-					<li><a href="#" class="py-1 d-block">Great Experience</a></li>
-					<li><a href="#" class="py-1 d-block">Perfect central location</a></li>
-				</ul>
-			</div>
-			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-				<h2 class="footer-heading">Tag cloud</h2>
-				<div class="tagcloud">
-					<a href="#" class="tag-cloud-link">apartment</a>
-					<a href="#" class="tag-cloud-link">home</a>
-					<a href="#" class="tag-cloud-link">vacation</a>
-					<a href="#" class="tag-cloud-link">rental</a>
-					<a href="#" class="tag-cloud-link">rent</a>
-					<a href="#" class="tag-cloud-link">house</a>
-					<a href="#" class="tag-cloud-link">place</a>
-					<a href="#" class="tag-cloud-link">drinks</a>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-				<h2 class="footer-heading">Subcribe</h2>
-				<form action="#" class="subscribe-form">
-					<div class="form-group d-flex">
-						<input type="text" class="form-control rounded-left" placeholder="Enter email address">
-						<button type="submit" class="form-control submit rounded-right"><span
-								class="sr-only">Submit</span><i class="fa fa-paper-plane"></i></button>
-					</div>
-				</form>
-				<h2 class="footer-heading mt-5">Follow us</h2>
-				<ul class="ftco-footer-social p-0">
-					<li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-							title="Twitter"><span class="fa fa-twitter"></span></a></li>
-					<li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-							title="Facebook"><span class="fa fa-facebook"></span></a></li>
-					<li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top"
-							title="Instagram"><span class="fa fa-instagram"></span></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="w-100 mt-5 border-top py-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-lg-8">
-
-					<p class="copyright mb-0">
-						<!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | This
-						template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-							href="https://ranavattra.com/hotelbooking/services.php" target="_blank">ranavattra</a>
-						<!-- Link back to ranavattra can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-				<div class="col-md-6 col-lg-4 text-md-right">
-					<p class="mb-0 list-unstyled">
-						<a class="mr-md-3" href="#">Terms</a>
-						<a class="mr-md-3" href="#">Privacy</a>
-						<a class="mr-md-3" href="#">Compliances</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</footer>
-
-
-
-<!-- loader -->
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-		<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-		<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-			stroke="#F96D00" />
-	</svg></div>
-
-
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-migrate-3.0.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.easing.1.3.js"></script>
-<script src="js/jquery.waypoints.min.js"></script>
-<script src="js/jquery.stellar.min.js"></script>
-<script src="js/jquery.animateNumber.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/jquery.timepicker.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/scrollax.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="js/google-map.js"></script>
-<script src="js/main.js"></script>
-
-
-
-</body>
-
-</html>
+<?php
+// Include the footer
+require 'include/footer.php';
+?>
