@@ -113,7 +113,7 @@
                   <i class="fa fa-quote-left"></i>
                 </span>
                 <p>All reviews have the same repeated placeholder text. its very nice place and beautiful.</p>
-                <p class="name">Mai Sreyneang</p>
+                <p class="name">Mom Sreyneang</p>
                 <span class="position">FullStack Devoloper</span>
               </div>
             </div>
