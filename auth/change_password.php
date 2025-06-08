@@ -16,13 +16,14 @@ if(isset($_SESSION['username'])){
 if (isset($user_id)) {
     // echo "<script>console.log('".$user_id."')</script>";
     $stmt = $conn->prepare("SELECT email FROM user WHERE id = :user_id");
-    $stmt->execute([':user_id' => $_SESSION['id']]);
+    $stmt->execute([':user_id' => $_SESSION['user_id']]);
     $user = $stmt->fetchAll(PDO::FETCH_OBJ);
     
     if ($user) {
         $_SESSION['reset_email'] = $user[0]->email;
         $step = 2; // Skip email step for logged-in users
     }
+    // $_SESSION['reset_email'] = $_SESSION['email'];
 }
 
 // Handle form submissions
