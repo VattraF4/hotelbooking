@@ -49,21 +49,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         case 2:
             // Handle OTP request
-            if (isset($_POST['request_otp'])) {
-                if (sendPasswordResetOTP( $_SESSION['reset_email'])) {
-                    $otp_sent = true;
-                } else {
-                    $error = "Error sending OTP";
-                }
-            }
+           
             // Handle OTP verification
-            elseif (isset($_POST['verify_otp'])) {
+            if (isset($_POST['verify_otp'])) {
                 if (empty($_POST['otp'])) {
                     $error = "Please enter the OTP";
                 } elseif (isset($_SESSION['reset_otp']) && $_POST['otp'] == $_SESSION['reset_otp']) {
                     $step = 3; // Move to password reset
                 } else {
                     $error = "Invalid OTP";
+                }
+            } elseif (isset($_POST['request_otp'])) {
+                if (sendPasswordResetOTP( $_SESSION['reset_email'])) {
+                    $otp_sent = true;
+                } else {
+                    $error = "Error sending OTP";
                 }
             }
             break;
