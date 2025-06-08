@@ -13,49 +13,77 @@ if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        // Admin login check
-        $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
-        $adminLogin->bindParam(':email', $email);
-        $adminLogin->execute();
-        $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
+        // Initialize attempts in session if not set
+        if (!isset($_SESSION['attempts'])) {
+            $_SESSION['attempts'] = 3;
+        }
 
-        if ($adminFetch) {
-            if (password_verify($password, $adminFetch->my_password)) {
-                $_SESSION['email'] = $adminFetch->email;
-                $_SESSION['id'] = $adminFetch->id;
-                $_SESSION['adminname'] = $adminFetch->adminname;
-                $_SESSION['my_password'] = $adminFetch->my_password;
-
-                echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
-                exit();
-            } else {
-                $error = 'Your password is incorrect';
-            }
+        // Check if account is locked
+        if (isset($_SESSION['locked']) && $_SESSION['locked'] > time()) {
+            $remaining = $_SESSION['locked'] - time();
+            $error = 'Device locked. Please try again in ' . ceil($remaining / 60) . ' minutes.';
         } else {
-            // User login check
-            $login = $conn->prepare("SELECT * FROM user WHERE email = :email");
-            $login->bindParam(':email', $email);
-            $login->execute();
-            $fetch = $login->fetch(PDO::FETCH_ASSOC);
+            // Clear lock if time has passed
+            unset($_SESSION['locked']);
 
-            if ($fetch) {
-                if (password_verify($password, $fetch['my_password'])) {
-                    $_SESSION['email'] = $fetch['email'];
-                    $_SESSION['user_id'] = $fetch['id'];
-                    $_SESSION['username'] = $fetch['username'];
-                    $_SESSION['my_password'] = $fetch['my_password'];
-                    echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+            // Admin login check
+            $adminLogin = $conn->prepare("SELECT * FROM admin WHERE email = :email");
+            $adminLogin->bindParam(':email', $email);
+            $adminLogin->execute();
+            $adminFetch = $adminLogin->fetch(PDO::FETCH_OBJ);
+
+            if ($adminFetch) {
+                if (password_verify($password, $adminFetch->my_password)) {
+                    $_SESSION['email'] = $adminFetch->email;
+                    $_SESSION['id'] = $adminFetch->id;
+                    $_SESSION['adminname'] = $adminFetch->adminname;
+                    $_SESSION['my_password'] = $adminFetch->my_password;
+
+                    echo "<script>window.location.href = '" . APP_URL . "admin-panel/index.php';</script>";
                     exit();
                 } else {
                     $error = 'Your password is incorrect';
                 }
             } else {
-                $error = 'Cannot find this email address';
+                // User login check
+                $login = $conn->prepare("SELECT * FROM user WHERE email = :email");
+                $login->bindParam(':email', $email);
+                $login->execute();
+                $fetch = $login->fetch(PDO::FETCH_ASSOC);
+
+                if ($fetch) {
+                    if (password_verify($password, $fetch['my_password'])) {
+                        // Successful login - reset attempts
+                        $_SESSION['attempts'] = 3;
+                        $_SESSION['email'] = $fetch['email'];
+                        $_SESSION['user_id'] = $fetch['id'];
+                        $_SESSION['username'] = $fetch['username'];
+                        $_SESSION['my_password'] = $fetch['my_password'];
+
+                        echo "<script>window.location.href = '" . APP_URL . "auth/welcome.php';</script>";
+                        exit();
+                    } else {
+                        // Wrong password - decrement attempts
+                        $_SESSION['attempts']--;
+
+                        if ($_SESSION['attempts'] <= 0) {
+                            // Lock the account for 30 minutes
+                            $_SESSION['locked'] = time() + (30 * 60);
+                            $error = 'Too many failed attempts. Your device locked for 30 minutes.';
+                        } else {
+                            $error = 'Invalid password. You have ' . $_SESSION['attempts'] . ' attempts remaining.';
+                        }
+                    }
+                } else {
+                    $error = 'Cannot find this email address';
+                }
             }
         }
     }
 }
 ?>
+
+<!-- Rest of your HTML remains the same -->
 
 <div class="hero-wrap js-fullheight" style="background-image: url('<?php echo APP_URL; ?>images/image_2.jpg');"
     data-stellar-background-ratio="0.5">
