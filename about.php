@@ -145,10 +145,8 @@
         <div class="img img-2 mb-4" style="background-image: url(images/image_2.jpg);">
         </div>
         <h2>The most recommended vacation rental</h2>
-        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-          paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing
-          has no control about the blind texts it is an almost unorthographic life One day however a small line of blind
-          text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+        <p>This hotel concept is built around the idea of personal comfort meets local charm, designed for modern 
+          travelers who want boutique experiences over generic hotel stays.</p>
       </div>
       <div class="col-md-6 wrap-about ftco-animate">
         <div class="heading-section">
@@ -157,8 +155,8 @@
           </div>
         </div>
         <div class="pl-md-5">
-          <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-            paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+          <p>Experience comfort, elegance, and personalized service with our all-in-one hotel offering 
+            where relaxation, dining, and unforgettable moments come together under one roof.</p>
           <div class="row">
             <div class="services-2 col-lg-6 d-flex w-100">
               <div class="icon d-flex justify-content-center align-items-center">
@@ -193,7 +191,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Air Conditioning</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
+                <p>Stay cool and comfortable all day with our modern, quiet air conditioning in every room.</p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
@@ -220,7 +218,7 @@
               </div>
               <div class="media-body pl-3">
                 <h3 class="heading">Ironing</h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
+                <p>Travel light—our professional ironing service keeps your clothes crisp and clean.</p> </p>
               </div>
             </div>
             <div class="services-2 col-lg-6 d-flex w-100">
