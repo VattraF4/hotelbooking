@@ -95,7 +95,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Air Conditioning</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary.</p>
+          <p>Stay cool and comfortable all day with our modern, quiet air conditioning in every room.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
@@ -122,7 +122,7 @@ require 'include/header.php';
         </div>
         <div class="media-body pl-3">
           <h3 class="heading">Ironing</h3>
-          <p>A small river named Duden flows by their place and supplies it with the necessary</p>
+          <p>Travel light—our professional ironing service keeps your clothes crisp and clean.</p>
         </div>
       </div>
       <div class="services-2 col-md-3 d-flex w-100 ftco-animate">
